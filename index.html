@@ -347,7 +347,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
     <div class="draw-count" id="drawCount">— kỳ</div>
   </div>
   <div class="results-list" id="resultsList">
-    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất từ VietLott</div>
+    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất</div>
   </div>
 </div>
 
@@ -588,7 +588,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
     <p><strong>Giai đoạn 2 (Australia, USA, 1980–1992):</strong> Khi sang Australia, ông chuyển sang chiến lược <em>"Buying the Pot"</em> — <strong>mua toàn bộ tổ hợp</strong> khi jackpot lớn hơn tổng chi phí mua tất cả vé. Đỉnh cao là <strong>Virginia Lottery 1992</strong>: jackpot $27 triệu, 7.1 triệu tổ hợp 6/44, đội của ông mua ~5 triệu vé và trúng đậm. Sau đó, các nước đồng loạt sửa luật cấm mua hàng loạt.</p>
 
-    <h3>Áp dụng cho Vietlott 5/35 — Sự thật khoa học</h3>
+    <h3>Áp dụng cho 535 — Sự thật khoa học</h3>
     <ul>
       <li>Tổng tổ hợp đầy đủ: <code>C(35,5) × 12 = 3,895,584 vé</code> — quá lớn để "buying the pot" (cần ~39 tỷ VND để mua hết, jackpot tối đa ~vài tỷ).</li>
       <li>Phương pháp <strong>Combinatorial Condensation</strong> vẫn áp dụng được: dùng covering wheel để tạo các bộ vé tối ưu cho 1 pool nhỏ.</li>
@@ -670,7 +670,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
 <script>
 /* ═══════════════════════════════════════════════
-   VIETLOTT 5/35 — SCIENTIFIC ANALYSIS ENGINE v2.0
+ 535 — SCIENTIFIC ANALYSIS ENGINE v2.0
    ─────────────────────────────────────────────
    Phương pháp triển khai:
    • Stefan Mandel — Combinatorial Condensation (1964)
@@ -825,12 +825,12 @@ async function fetchLatestResults() {
   const sub = document.getElementById('updSub');
   btn.disabled = true;
   icon.className = 'spin'; icon.textContent = '⟳';
-  setStatus('info', '🔍 AI đang tìm kiếm kết quả Vietlott 5/35 mới nhất...');
+  setStatus('info', '🔍 AI đang tìm kiếm kết quả 535 mới nhất...');
 
   const today = new Date();
   const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
 
-  const prompt = `Hôm nay là ${dateStr}. Hãy tìm và trả về kết quả 20 kỳ quay mới nhất của xổ số Vietlott Lotto 5/35 (Mega 5/35).
+  const prompt = `Hôm nay là ${dateStr}. Hãy tìm và trả về kết quả 20 kỳ quay mới nhất của 535 (5/35).
 
 Tìm trên: vietlott.vn, minhchinh.com, ketquadientoan.com, xosomienbac.com.vn
 
@@ -1146,7 +1146,7 @@ function renderForecastCard() {
     stale.textContent = `⚠ Dữ liệu cập nhật ${h} giờ trước — hãy bấm "Cập Nhật Ngay" hoặc bật tự động.`;
   } else if (LAST_FETCH_TS === 0) {
     stale.style.display = 'block';
-    stale.textContent = `ℹ Hiện đang dùng dữ liệu cơ sở 180 kỳ mẫu. Bấm "Cập Nhật Ngay" để lấy kỳ mới nhất từ Vietlott.`;
+    stale.textContent = `ℹ Hiện đang dùng dữ liệu cơ sở 180 kỳ mẫu. Bấm "Cập Nhật Ngay" để lấy kỳ mới nhất từ 535.`;
   } else {
     stale.style.display = 'none';
   }
@@ -1207,7 +1207,7 @@ function toggleForecastWhy() {
 async function copyForecast() {
   if (!CURRENT_FORECAST) return;
   const f = CURRENT_FORECAST;
-  const text = `Vietlott 5/35 — Bộ số gợi ý tối ưu\n` +
+  const text = `5/35 — Bộ số gợi ý tối ưu\n` +
                `Số chính: ${f.mains.map(n=>String(n).padStart(2,'0')).join(' - ')}\n` +
                `Số đặc biệt: ${String(f.special).padStart(2,'0')}\n` +
                `Điểm tin cậy: ${f.conf.total}/100 · ${TOTAL_DRAWS} kỳ mẫu\n` +
@@ -2054,7 +2054,7 @@ function generateWheel() {
     }
     
     // EV approximation (very rough)
-    const ticketCost = 10000; // VND per ticket (Vietlott)
+    const ticketCost = 10000; // VND per ticket (VT)
     const totalCost = blocks.length * ticketCost;
     
     // Render
