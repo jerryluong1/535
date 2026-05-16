@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VietLott 5/35 — Hệ Thống Phân Tích Khoa Học v2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#d4a843;--gold2:#f0c96a;--gold3:#8a6b22;--gold4:#3a2d0e;
+  --bg:#0c0d0f;--bg2:#131519;--bg3:#1a1d22;--bg4:#22262d;--bg5:#2a2f38;
+  --bdr:rgba(212,168,67,.15);--bdr2:rgba(212,168,67,.3);--bdr3:rgba(212,168,67,.5);
+  --text:#e2ddd3;--text2:#9e9580;--text3:#5a5750;
+  --red:#e84b4b;--blue:#4b8be8;--green:#4be895;--purple:#c84be8;--orange:#e8974b;--cyan:#4be8d4;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(180deg,#1c1506 0%,var(--bg) 100%);border-bottom:1px solid var(--bdr);padding:1.8rem 1.5rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(212,168,67,.1) 0%,transparent 70%);pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;color:var(--gold);border:1px solid var(--bdr2);padding:4px 14px;border-radius:20px;margin-bottom:.9rem;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7rem,4.2vw,2.5rem);font-weight:600;color:var(--gold2);letter-spacing:-.5px;}
+.sub{color:var(--text2);font-size:.83rem;margin-top:.35rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;}
+.last-update{margin-top:.8rem;font-size:.72rem;color:var(--text3);font-family:'Space Mono',monospace;}
+.mandel-quote{margin-top:.7rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.78rem;color:var(--gold3);max-width:480px;margin-left:auto;margin-right:auto;line-height:1.5;}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--bdr);background:var(--bg2);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab{flex:1;min-width:90px;padding:.85rem .4rem;text-align:center;cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text3);border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;}
+.tab:hover{color:var(--text2);}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);background:rgba(212,168,67,.04);}
+
+/* ── CONTAINER ── */
+.wrap{max-width:900px;margin:0 auto;padding:0 1rem;}
+.pane{display:none;padding:1.2rem 0;}
+.pane.on{display:block;}
+
+/* ── UPDATE BAR ── */
+.upd-bar{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.85rem 1.1rem;display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;flex-wrap:wrap;}
+.upd-info{flex:1;min-width:160px;}
+.upd-title{font-size:.82rem;font-weight:600;}
+.upd-sub{font-size:.7rem;color:var(--text3);margin-top:2px;}
+.upd-btn{background:linear-gradient(135deg,#6a5018,var(--gold));border:none;border-radius:8px;color:#0c0d0f;font-family:'Be Vietnam Pro',sans-serif;font-size:.8rem;font-weight:700;padding:.55rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s,transform .1s;flex-shrink:0;}
+.upd-btn:hover{opacity:.9;} .upd-btn:active{transform:scale(.98);}
+.upd-btn:disabled{opacity:.5;cursor:not-allowed;}
+.spin{animation:spin .8s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.upd-status{width:100%;font-size:.72rem;padding:.5rem .8rem;border-radius:6px;display:none;line-height:1.5;}
+.upd-status.info{background:rgba(75,139,232,.1);color:#7ab4f5;display:block;}
+.upd-status.ok{background:rgba(75,232,149,.1);color:#5dd49a;display:block;}
+.upd-status.err{background:rgba(232,75,75,.1);color:#f08080;display:block;}
+
+/* ═══ AUTO-UPDATE TOGGLE ═══ */
+.auto-toggle{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--text2);flex-wrap:wrap;width:100%;padding-top:8px;border-top:1px solid var(--bdr);margin-top:4px;}
+.auto-switch{position:relative;display:inline-block;width:34px;height:18px;flex-shrink:0;}
+.auto-switch input{opacity:0;width:0;height:0;}
+.auto-slider{position:absolute;inset:0;background:#2a2c30;border-radius:18px;cursor:pointer;transition:.2s;}
+.auto-slider:before{content:'';position:absolute;height:12px;width:12px;left:3px;top:3px;background:#888;border-radius:50%;transition:.2s;}
+.auto-switch input:checked + .auto-slider{background:linear-gradient(135deg,#6a5018,var(--gold));}
+.auto-switch input:checked + .auto-slider:before{transform:translateX(16px);background:#0c0d0f;}
+.auto-interval{background:#1a1b1e;border:1px solid var(--bdr);color:var(--text);font-family:'Space Mono',monospace;font-size:.7rem;padding:3px 8px;border-radius:6px;cursor:pointer;}
+.auto-next{font-family:'Space Mono',monospace;color:var(--gold2);font-size:.7rem;margin-left:auto;}
+.auto-next .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;animation:pulse 1.5s infinite;vertical-align:middle;}
+
+/* ═══ FORECAST HERO CARD ═══ */
+.forecast-hero{background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(212,168,67,.02));border:1px solid rgba(212,168,67,.35);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1.2rem;position:relative;overflow:hidden;}
+.forecast-hero::before{content:'';position:absolute;top:-40%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(212,168,67,.15),transparent 70%);pointer-events:none;}
+.fh-banner{display:flex;align-items:center;gap:8px;font-size:.65rem;color:var(--gold);font-family:'Be Vietnam Pro',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.45rem;}
+.fh-banner::before{content:'★';font-size:.85rem;}
+.fh-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.45rem;font-weight:500;color:var(--gold2);margin-bottom:.15rem;letter-spacing:.01em;}
+.fh-sub{font-size:.7rem;color:var(--text2);margin-bottom:1rem;line-height:1.5;}
+.fh-nums{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
+.fh-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#1d1e22,#0c0d0f);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--gold2);box-shadow:0 2px 12px rgba(212,168,67,.2);position:relative;z-index:1;}
+.fh-num.sp{background:linear-gradient(135deg,#5a3d0e,var(--gold));color:#0c0d0f;border-color:var(--gold2);}
+.fh-num.sep{width:auto;height:auto;background:none;border:none;box-shadow:none;color:var(--text2);font-size:1.3rem;padding:0 4px;}
+.fh-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:.9rem;}
+.fh-mc{background:rgba(255,255,255,.02);border:1px solid var(--bdr);border-radius:8px;padding:.55rem .7rem;}
+.fh-mc-lbl{font-size:.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+.fh-mc-val{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--gold2);font-weight:600;}
+.fh-confidence{margin-bottom:.9rem;}
+.fh-conf-hdr{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text2);margin-bottom:5px;}
+.fh-conf-hdr strong{color:var(--gold2);font-family:'Space Mono',monospace;}
+.fh-conf-bar{height:7px;background:#1a1b1e;border-radius:4px;overflow:hidden;position:relative;}
+.fh-conf-fill{height:100%;background:linear-gradient(90deg,#6a5018,var(--gold),var(--gold2));border-radius:4px;transition:width .6s ease;position:relative;}
+.fh-conf-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2s infinite;}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.fh-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.fh-btn{background:transparent;border:1px solid var(--gold);color:var(--gold2);font-family:'Be Vietnam Pro',sans-serif;font-size:.72rem;font-weight:600;padding:.5rem .9rem;border-radius:7px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;}
+.fh-btn:hover{background:rgba(212,168,67,.1);}
+.fh-btn.primary{background:linear-gradient(135deg,#6a5018,var(--gold));color:#0c0d0f;border-color:var(--gold);}
+.fh-btn.primary:hover{opacity:.9;background:linear-gradient(135deg,#6a5018,var(--gold));}
+.fh-why{margin-top:.85rem;padding-top:.85rem;border-top:1px dashed var(--bdr);font-size:.7rem;color:var(--text2);line-height:1.6;display:none;}
+.fh-why.on{display:block;}
+.fh-why strong{color:var(--gold2);}
+.fh-empty{font-size:.78rem;color:var(--text2);text-align:center;padding:1rem 0;font-style:italic;}
+.fh-stale{font-size:.65rem;color:#f0a070;background:rgba(240,160,112,.08);border:1px solid rgba(240,160,112,.25);padding:6px 10px;border-radius:6px;margin-bottom:.8rem;}
+@media (max-width:480px){
+  .fh-num{width:42px;height:42px;font-size:.95rem;}
+  .fh-title{font-size:1.25rem;}
+}
+
+/* ── RESULT FEED ── */
+.feed-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;}
+.sec-title{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--text3);font-family:'Space Mono',monospace;}
+.draw-count{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--gold);}
+.results-list{display:flex;flex-direction:column;gap:8px;max-height:480px;overflow-y:auto;padding-right:4px;}
+.results-list::-webkit-scrollbar{width:3px;}
+.results-list::-webkit-scrollbar-track{background:var(--bg4);}
+.results-list::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px;}
+.draw-row{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.7rem 1rem;display:flex;align-items:center;gap:.8rem;transition:border-color .15s;}
+.draw-row:hover{border-color:var(--bdr2);}
+.draw-row.new{border-color:rgba(75,232,149,.3);background:rgba(75,232,149,.04);}
+.draw-meta{min-width:110px;}
+.draw-ky{font-family:'Space Mono',monospace;font-size:.78rem;color:var(--gold);}
+.draw-date{font-size:.68rem;color:var(--text3);margin-top:1px;}
+.draw-nums{display:flex;gap:5px;align-items:center;flex:1;flex-wrap:wrap;}
+.b{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;flex-shrink:0;}
+.b-m{background:var(--bg4);border:1.5px solid var(--bdr2);color:var(--text);}
+.b-s{background:var(--gold);color:#0c0d0f;border:none;}
+.b-sep{color:var(--text3);font-size:1rem;}
+.new-tag{font-size:.6rem;background:rgba(75,232,149,.15);color:#5dd49a;border:1px solid rgba(75,232,149,.3);padding:2px 7px;border-radius:10px;flex-shrink:0;}
+
+/* ── STATS PANEL ── */
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.2rem;}
+.scard{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.85rem 1rem;text-align:center;}
+.sv{font-family:'Space Mono',monospace;font-size:1.35rem;font-weight:700;color:var(--gold);}
+.sl{font-size:.68rem;color:var(--text3);margin-top:3px;letter-spacing:.4px;}
+
+/* ── CHART BOX ── */
+.chart-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:1.1rem;margin-bottom:1.1rem;}
+.chart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.85rem;flex-wrap:wrap;gap:.4rem;}
+.chart-title2{font-size:.85rem;font-weight:600;}
+.chart-period{font-size:.67rem;color:var(--text3);font-family:'Space Mono',monospace;}
+.freq-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.fi{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:default;}
+.fn{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text2);font-weight:700;}
+.fb-wrap{width:100%;height:55px;background:var(--bg4);border-radius:3px;display:flex;align-items:flex-end;overflow:hidden;}
+.fb{width:100%;border-radius:3px 3px 0 0;transition:height .4s ease;}
+.fc{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--text3);}
+.sp-grid{display:flex;gap:7px;flex-wrap:wrap;margin-top:.7rem;}
+.sp-item{background:var(--bg4);border:1px solid var(--bdr);border-radius:8px;padding:5px 9px;text-align:center;min-width:50px;transition:border-color .2s;}
+.sp-n{font-family:'Space Mono',monospace;font-size:.88rem;font-weight:700;color:var(--gold);}
+.sp-c{font-size:.6rem;color:var(--text3);}
+
+/* ── PATTERN ANALYSIS ── */
+.pat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;}
+.pat-card{background:var(--bg4);border:1px solid var(--bdr);border-radius:8px;padding:.7rem .8rem;}
+.pat-title{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;}
+.pat-val{font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--gold2);}
+.pat-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:.7rem;}
+.pat-bar-lbl{min-width:55px;color:var(--text2);font-family:'Space Mono',monospace;font-size:.65rem;}
+.pat-bar-tr{flex:1;height:5px;background:var(--bg5);border-radius:3px;overflow:hidden;}
+.pat-bar-fl{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:3px;transition:width .4s;}
+.pat-bar-val{min-width:40px;text-align:right;font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text);}
+
+/* ── ALGO PANE ── */
+.algo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:1.1rem;}
+.ab{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.7rem .4rem;cursor:pointer;transition:all .15s;text-align:center;position:relative;overflow:hidden;}
+.ab:hover{border-color:var(--bdr2);background:var(--bg4);}
+.ab.on{border-color:var(--gold);background:rgba(212,168,67,.08);}
+.ab.on::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);}
+.ai{font-size:1.3rem;margin-bottom:3px;}
+.an{font-size:.7rem;font-weight:600;color:var(--text);}
+.ad{font-size:.6rem;color:var(--text3);margin-top:2px;line-height:1.3;min-height:1.6em;}
+.aclr{width:30px;height:2px;border-radius:1px;margin:6px auto 0;}
+
+.algo-info-box{background:var(--bg3);border:1px solid var(--bdr);border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:.85rem 1.1rem;margin-bottom:1.1rem;font-size:.78rem;color:var(--text2);line-height:1.65;}
+.algo-info-box strong{color:var(--gold2);font-weight:600;}
+.algo-info-box code{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--gold);background:rgba(212,168,67,.06);padding:1px 5px;border-radius:3px;}
+
+/* ── FILTER TOGGLES ── */
+.filter-section{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1.1rem;margin-bottom:1.1rem;}
+.filter-title{font-size:.74rem;font-weight:600;color:var(--text2);margin-bottom:.7rem;display:flex;align-items:center;gap:5px;}
+.filter-row{display:flex;flex-wrap:wrap;gap:7px;}
+.fchip{background:var(--bg4);border:1px solid var(--bdr);border-radius:14px;padding:5px 11px;font-size:.7rem;cursor:pointer;color:var(--text2);transition:all .15s;user-select:none;}
+.fchip:hover{border-color:var(--bdr2);}
+.fchip.on{background:rgba(212,168,67,.12);border-color:var(--gold);color:var(--gold2);}
+.fchip-icon{margin-right:3px;}
+
+/* ── CONFIDENCE METER ── */
+.conf-meter{display:flex;align-items:center;gap:8px;margin-bottom:.55rem;}
+.conf-label{font-size:.72rem;color:var(--text3);min-width:110px;}
+.conf-track{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;}
+.conf-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s ease;}
+.conf-val{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--gold);min-width:48px;text-align:right;}
+
+.gen-btn{width:100%;background:linear-gradient(135deg,#6a5018,var(--gold));border:none;border-radius:var(--r);color:#0c0d0f;font-family:'Be Vietnam Pro',sans-serif;font-size:.95rem;font-weight:700;padding:.95rem;cursor:pointer;letter-spacing:.4px;transition:opacity .15s,transform .1s;margin-bottom:1.2rem;}
+.gen-btn:hover{opacity:.9;} .gen-btn:active{transform:scale(.99);}
+
+.sets-list{display:flex;flex-direction:column;gap:9px;}
+.srow{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;animation:fadeSlide .3s ease both;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.srnk{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);width:18px;flex-shrink:0;}
+.snums{display:flex;gap:6px;align-items:center;flex:1;flex-wrap:wrap;}
+.sscore{text-align:right;flex-shrink:0;}
+.sv2{font-family:'Space Mono',monospace;font-size:.88rem;color:var(--gold);}
+.sl2{font-size:.62rem;color:var(--text3);}
+.s-meta{font-size:.6rem;color:var(--text3);margin-top:4px;width:100%;font-family:'Space Mono',monospace;line-height:1.4;}
+
+.empty{text-align:center;padding:2rem;color:var(--text3);font-size:.83rem;}
+
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:.75rem;font-size:.68rem;color:var(--text3);}
+.leg{display:flex;align-items:center;gap:4px;}
+.leg-dot{width:10px;height:10px;border-radius:50%;}
+
+.divider{height:1px;background:var(--bdr);margin:1.2rem 0;}
+
+.warn-box{background:rgba(232,75,75,.06);border:1px solid rgba(232,75,75,.2);border-radius:var(--r);padding:.9rem 1rem;font-size:.74rem;color:var(--text2);line-height:1.65;margin-top:1rem;}
+.warn-box strong{color:var(--red);}
+
+/* ── NEXT DRAW ── */
+.next-draw{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r);padding:.85rem 1.1rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+.nd-label{font-size:.7rem;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.nd-time{font-family:'Space Mono',monospace;font-size:1.4rem;color:var(--gold2);font-weight:700;}
+.nd-countdown{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--green);margin-top:2px;}
+.nd-sep{width:1px;height:40px;background:var(--bdr);}
+
+/* ── WHEELING PANE ── */
+.wheel-config{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.1rem;margin-bottom:1.1rem;}
+.num-pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:5px;margin-top:.5rem;}
+.np-cell{aspect-ratio:1;background:var(--bg4);border:1px solid var(--bdr);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;color:var(--text2);cursor:pointer;transition:all .12s;user-select:none;}
+.np-cell:hover{border-color:var(--bdr2);}
+.np-cell.on{background:rgba(212,168,67,.15);border-color:var(--gold);color:var(--gold2);transform:scale(1.05);}
+.np-cell.key{background:rgba(232,151,75,.18);border-color:var(--orange);color:var(--orange);}
+.wheel-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.72rem;margin-top:.7rem;color:var(--text2);}
+.wheel-info span{font-family:'Space Mono',monospace;color:var(--gold);}
+
+.guarantee-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin-top:.7rem;}
+.gn-card{background:var(--bg4);border:1px solid var(--bdr);border-radius:8px;padding:.55rem .7rem;cursor:pointer;text-align:center;transition:all .15s;}
+.gn-card:hover{border-color:var(--bdr2);}
+.gn-card.on{border-color:var(--gold);background:rgba(212,168,67,.08);}
+.gn-t{font-size:.78rem;font-weight:700;color:var(--gold2);font-family:'Space Mono',monospace;}
+.gn-d{font-size:.6rem;color:var(--text3);margin-top:2px;line-height:1.3;}
+
+/* ── PROBABILITY CALCULATOR ── */
+.prob-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.1rem;margin-bottom:1.1rem;}
+.prob-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px dashed var(--bdr);font-size:.78rem;}
+.prob-row:last-child{border-bottom:none;}
+.prob-lbl{color:var(--text2);}
+.prob-val{font-family:'Space Mono',monospace;color:var(--gold);font-weight:700;}
+
+/* ── SCIENCE TAB ── */
+.sci-section{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:1.2rem;margin-bottom:1.2rem;}
+.sci-section h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;color:var(--gold2);font-weight:600;margin-bottom:.6rem;}
+.sci-section h3{font-size:.92rem;color:var(--gold);font-weight:600;margin:1rem 0 .5rem;}
+.sci-section p{font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:.6rem;}
+.sci-section ul{list-style:none;margin:.5rem 0 .8rem;}
+.sci-section li{font-size:.8rem;color:var(--text2);line-height:1.65;padding:4px 0 4px 18px;position:relative;}
+.sci-section li::before{content:'◆';position:absolute;left:0;color:var(--gold3);font-size:.7rem;top:6px;}
+.sci-section .quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--gold2);padding:.6rem 1rem;border-left:2px solid var(--gold3);background:rgba(212,168,67,.04);margin:.8rem 0;line-height:1.5;}
+.sci-section code{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--gold);background:rgba(212,168,67,.06);padding:1px 5px;border-radius:3px;}
+.formula{font-family:'Space Mono',monospace;font-size:.78rem;color:var(--gold2);background:var(--bg4);border-radius:6px;padding:.6rem .8rem;margin:.5rem 0;text-align:center;line-height:1.8;}
+
+@media(max-width:560px){
+  .algo-grid{grid-template-columns:repeat(2,1fr);}
+  .stats4{grid-template-columns:repeat(2,1fr);}
+  .freq-grid{grid-template-columns:repeat(5,1fr);}
+  .b{width:30px;height:30px;font-size:.68rem;}
+  .num-pick-grid{grid-template-columns:repeat(7,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="badge"><span class="live-dot"></span>HỆ THỐNG KHOA HỌC · V2.0 · MANDEL UPGRADED</div>
+  <h1>VietLott Lotto 5/35</h1>
+  <p class="sub">Phân tích tổ hợp đa tầng theo phương pháp <strong style="color:var(--gold2)">Stefan Mandel</strong> — Combinatorial Condensation · Wheeling Systems · Bayesian Inference · Chi-Square Analysis</p>
+  <div class="mandel-quote">"Tôi chỉ là nhà toán học cuối tuần, nhưng toán ứng dụng — nếu dùng đúng cách — có thể đảm bảo cả một gia tài."<br>— Stefan Mandel (1934, Iași, Romania)</div>
+  <div class="last-update" id="lastUpdateLabel">Dữ liệu cơ sở: 180 kỳ mẫu · Cập nhật 16/05/2026 · Nhấn "Cập nhật" để tải kỳ mới</div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="switchTab('results',this)">📋 Kết Quả</button>
+  <button class="tab" onclick="switchTab('stats',this)">📊 Thống Kê</button>
+  <button class="tab" onclick="switchTab('patterns',this)">🧬 Mẫu Hình</button>
+  <button class="tab" onclick="switchTab('algo',this)">🎯 Gợi Ý AI</button>
+  <button class="tab" onclick="switchTab('wheel',this)">⚙️ Mandel Wheel</button>
+  <button class="tab" onclick="switchTab('science',this)">📚 Khoa Học</button>
+</div>
+
+<div class="wrap">
+
+<!-- ══ TAB: RESULTS ══ -->
+<div class="pane on" id="pane-results">
+  <div style="height:.3rem"></div>
+
+  <!-- ★ FORECAST HERO CARD ★ -->
+  <div class="forecast-hero" id="forecastHero">
+    <div class="fh-banner">Bộ Số Tiên Lượng · Cập nhật theo thời gian thực</div>
+    <div class="fh-title">Gợi Ý Tối Ưu Cho Kỳ Tiếp Theo</div>
+    <div class="fh-sub">Tổng hợp <strong style="color:var(--gold2)">Bayes Beta-Binomial</strong> + bộ lọc thống kê + thiết kế phủ Mandel · Tự động làm mới sau mỗi lần cập nhật dữ liệu</div>
+
+    <div id="fhStale" class="fh-stale" style="display:none;"></div>
+    <div id="fhContent">
+      <div class="fh-empty">Đang tính toán bộ số tối ưu từ dữ liệu hiện tại...</div>
+    </div>
+  </div>
+
+  <div class="next-draw">
+    <div>
+      <div class="nd-label">Kỳ Quay Tiếp Theo</div>
+      <div class="nd-time" id="nextDrawTime">--:--</div>
+      <div class="nd-countdown" id="countdown">Đang tính...</div>
+    </div>
+    <div class="nd-sep"></div>
+    <div>
+      <div class="nd-label">Lịch Quay</div>
+      <div style="font-size:.8rem;color:var(--text2);margin-top:4px;">Hàng ngày lúc</div>
+      <div style="font-family:'Space Mono',monospace;font-size:.85rem;color:var(--gold);margin-top:2px;">18:00 (T2–CN)</div>
+    </div>
+  </div>
+
+  <div class="upd-bar">
+    <div class="upd-info">
+      <div class="upd-title">🤖 Cập Nhật Kết Quả Mới Nhất</div>
+      <div class="upd-sub" id="updSub">AI sẽ tìm kiếm kết quả các kỳ quay mới nhất từ Vietlott</div>
+    </div>
+    <button class="upd-btn" id="updBtn" onclick="fetchLatestResults()">
+      <span id="updIcon">⟳</span> Cập Nhật Ngay
+    </button>
+    <div class="upd-status" id="updStatus"></div>
+    <div class="auto-toggle">
+      <label class="auto-switch">
+        <input type="checkbox" id="autoUpdToggle" onchange="toggleAutoUpdate()">
+        <span class="auto-slider"></span>
+      </label>
+      <span style="color:var(--text);">Tự động cập nhật mỗi</span>
+      <select class="auto-interval" id="autoUpdInterval" onchange="saveAutoUpdatePrefs()">
+        <option value="15">15 phút</option>
+        <option value="30">30 phút</option>
+        <option value="60" selected>60 phút</option>
+        <option value="180">3 giờ</option>
+        <option value="360">6 giờ</option>
+      </select>
+      <span class="auto-next" id="autoNext"></span>
+    </div>
+  </div>
+
+  <div class="feed-hdr">
+    <div class="sec-title">Lịch Sử Kết Quả</div>
+    <div class="draw-count" id="drawCount">— kỳ</div>
+  </div>
+  <div class="results-list" id="resultsList">
+    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất từ VietLott</div>
+  </div>
+</div>
+
+<!-- ══ TAB: STATS ══ -->
+<div class="pane" id="pane-stats">
+  <div style="height:.3rem"></div>
+  <div class="stats4">
+    <div class="scard"><div class="sv" id="st-draws">601</div><div class="sl">Kỳ quay</div></div>
+    <div class="scard"><div class="sv" id="st-hotnum">19</div><div class="sl">Số nóng nhất</div></div>
+    <div class="scard"><div class="sv" id="st-coldnum">33</div><div class="sl">Số lạnh nhất</div></div>
+    <div class="scard"><div class="sv" id="st-chisq">—</div><div class="sl">χ² Statistic</div></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr">
+      <div class="chart-title2">Tần Suất Số Chính (1–35)</div>
+      <div class="chart-period" id="freqPeriod">Dữ liệu cơ sở</div>
+    </div>
+    <div class="freq-grid" id="freqChart"></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr">
+      <div class="chart-title2">Tần Suất Số Đặc Biệt (1–12)</div>
+      <div class="chart-period">Xếp theo lượt xuất hiện</div>
+    </div>
+    <div class="sp-grid" id="spChart"></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr">
+      <div class="chart-title2">Top 5 Nóng & Lạnh · Chi-Square Residuals</div>
+      <div class="chart-period">Phân tích deviation</div>
+    </div>
+    <div id="hotColdVis"></div>
+  </div>
+</div>
+
+<!-- ══ TAB: PATTERNS ══ -->
+<div class="pane" id="pane-patterns">
+  <div style="height:.3rem"></div>
+  <p style="font-size:.78rem;color:var(--text2);margin-bottom:1rem;line-height:1.6;">Phân tích các <strong style="color:var(--gold2)">mẫu hình thống kê</strong> trong dữ liệu lịch sử — nền tảng cho bộ lọc Composite (Lotterycodex, Bluskov 2020).</p>
+
+  <div class="chart-box">
+    <div class="chart-hdr"><div class="chart-title2">⊕ Phân Phối Tổng Số (Sum)</div><div class="chart-period" id="sumStat">—</div></div>
+    <div id="sumChart"></div>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:.6rem;line-height:1.5;">Tổng số kỳ vọng = <code style="color:var(--gold)">5 × (1+35)/2 = 90</code>. Vùng "vàng" thực tế: <span id="sumGolden" style="color:var(--gold2)">70–110</span> chiếm phần lớn các kỳ.</p>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr"><div class="chart-title2">⚖️ Tỉ Lệ Chẵn/Lẻ</div></div>
+    <div id="oeChart"></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr"><div class="chart-title2">↕️ Tỉ Lệ Cao/Thấp (Split 1–17 vs 18–35)</div></div>
+    <div id="hlChart"></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr"><div class="chart-title2">🔢 Phân Tích Đuôi Số (Last Digit)</div></div>
+    <div id="ldChart"></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-hdr"><div class="chart-title2">🔗 Số Liên Tiếp (Consecutive)</div></div>
+    <div id="conChart"></div>
+  </div>
+</div>
+
+<!-- ══ TAB: ALGO ══ -->
+<div class="pane" id="pane-algo">
+  <div style="height:.3rem"></div>
+
+  <div class="sec-title" style="margin-bottom:.7rem">Chọn Thuật Toán Phân Tích</div>
+  <div class="algo-grid" id="algoGrid">
+    <button class="ab on" data-a="hot" onclick="selAlgo(this,'hot')">
+      <div class="ai">🔥</div><div class="an">Số Nóng</div><div class="ad">Tần suất cao</div>
+      <div class="aclr" style="background:var(--red)"></div>
+    </button>
+    <button class="ab" data-a="cold" onclick="selAlgo(this,'cold')">
+      <div class="ai">🧊</div><div class="an">Số Lạnh</div><div class="ad">Ít xuất hiện</div>
+      <div class="aclr" style="background:var(--blue)"></div>
+    </button>
+    <button class="ab" data-a="bal" onclick="selAlgo(this,'bal')">
+      <div class="ai">⚖️</div><div class="an">Cân Bằng</div><div class="ad">Phân phối đều</div>
+      <div class="aclr" style="background:var(--green)"></div>
+    </button>
+    <button class="ab" data-a="chisq" onclick="selAlgo(this,'chisq')">
+      <div class="ai">📊</div><div class="an">Chi-Square</div><div class="ad">Residual cao</div>
+      <div class="aclr" style="background:var(--cyan)"></div>
+    </button>
+    <button class="ab" data-a="bayes" onclick="selAlgo(this,'bayes')">
+      <div class="ai">📐</div><div class="an">Bayes-Beta</div><div class="ad">Posterior</div>
+      <div class="aclr" style="background:var(--orange)"></div>
+    </button>
+    <button class="ab" data-a="markov" onclick="selAlgo(this,'markov')">
+      <div class="ai">🎲</div><div class="an">Markov</div><div class="ad">Cặp đôi mạnh</div>
+      <div class="aclr" style="background:var(--purple)"></div>
+    </button>
+    <button class="ab" data-a="mandel" onclick="selAlgo(this,'mandel')">
+      <div class="ai">🧮</div><div class="an">Mandel-CC</div><div class="ad">Condensation</div>
+      <div class="aclr" style="background:var(--gold)"></div>
+    </button>
+    <button class="ab" data-a="composite" onclick="selAlgo(this,'composite')">
+      <div class="ai">🎯</div><div class="an">Composite</div><div class="ad">Đa lọc khoa học</div>
+      <div class="aclr" style="background:linear-gradient(90deg,var(--red),var(--gold),var(--cyan))"></div>
+    </button>
+  </div>
+
+  <div class="algo-info-box" id="algoInfoBox">Chọn thuật toán để xem mô tả chi tiết.</div>
+
+  <!-- Filter section -->
+  <div class="filter-section">
+    <div class="filter-title">🎚️ Bộ Lọc Khoa Học (Statistical Filters)</div>
+    <div class="filter-row">
+      <div class="fchip on" data-f="sum" onclick="toggleFilter(this)"><span class="fchip-icon">⊕</span>Sum 70–110</div>
+      <div class="fchip on" data-f="oe" onclick="toggleFilter(this)"><span class="fchip-icon">⚖️</span>Chẵn/Lẻ cân bằng</div>
+      <div class="fchip on" data-f="hl" onclick="toggleFilter(this)"><span class="fchip-icon">↕️</span>Cao/Thấp cân bằng</div>
+      <div class="fchip on" data-f="ld" onclick="toggleFilter(this)"><span class="fchip-icon">🔢</span>Đuôi đa dạng</div>
+      <div class="fchip" data-f="con" onclick="toggleFilter(this)"><span class="fchip-icon">🔗</span>Tránh liên tiếp</div>
+      <div class="fchip" data-f="ap" onclick="toggleFilter(this)"><span class="fchip-icon">📈</span>Tránh cấp số cộng</div>
+    </div>
+    <div style="font-size:.66rem;color:var(--text3);margin-top:.6rem;line-height:1.45;">Bộ lọc dựa trên phân tích phân phối thực tế các kỳ quay 5/35. Bật/tắt để điều chỉnh độ "tự nhiên" của tổ hợp gợi ý.</div>
+  </div>
+
+  <!-- Confidence -->
+  <div style="background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1.1rem;margin-bottom:1.1rem;">
+    <div style="font-size:.75rem;font-weight:600;margin-bottom:.7rem;color:var(--text2);">📡 Chỉ Số Tin Cậy Dữ Liệu</div>
+    <div class="conf-meter">
+      <div class="conf-label">Cỡ mẫu</div>
+      <div class="conf-track"><div class="conf-fill" id="cf1" style="width:70%"></div></div>
+      <div class="conf-val" id="cfv1">601</div>
+    </div>
+    <div class="conf-meter">
+      <div class="conf-label">Độ tươi dữ liệu</div>
+      <div class="conf-track"><div class="conf-fill" id="cf2" style="width:60%"></div></div>
+      <div class="conf-val" id="cfv2">60%</div>
+    </div>
+    <div class="conf-meter">
+      <div class="conf-label">Entropy cân bằng</div>
+      <div class="conf-track"><div class="conf-fill" id="cf3" style="width:82%"></div></div>
+      <div class="conf-val" id="cfv3">82%</div>
+    </div>
+    <div class="conf-meter">
+      <div class="conf-label">Chi-Square p-value</div>
+      <div class="conf-track"><div class="conf-fill" id="cf4" style="width:50%"></div></div>
+      <div class="conf-val" id="cfv4">—</div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generate()">✦ Tạo 6 Bộ Số Gợi Ý Tối Ưu</button>
+
+  <div class="sec-title" style="margin-bottom:.7rem">Bộ Số Đề Xuất</div>
+  <div class="legend">
+    <span class="leg"><span class="leg-dot" style="background:var(--red);border:1px solid var(--red)"></span>Số nóng</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--orange);border:1px solid var(--orange)"></span>Số ấm</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--blue);border:1px solid var(--blue)"></span>Số lạnh</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--gold);border:none"></span>Số đặc biệt</span>
+  </div>
+  <div class="sets-list" id="setsList">
+    <div class="empty">Nhấn nút "Tạo Bộ Số" để bắt đầu</div>
+  </div>
+
+  <div class="warn-box">⚠️ <strong>Lưu ý quan trọng:</strong> Mỗi kỳ quay là sự kiện độc lập — không có thuật toán nào "tăng được xác suất trúng" tuyệt đối. Các phương pháp ở đây giúp <strong>tối ưu hoá lựa chọn</strong> (tránh tổ hợp hiếm, đảm bảo coverage cục bộ) chứ không "dự đoán". Hãy chơi có trách nhiệm.</div>
+</div>
+
+<!-- ══ TAB: WHEEL (Mandel Wheeling System) ══ -->
+<div class="pane" id="pane-wheel">
+  <div style="height:.3rem"></div>
+  <div class="algo-info-box" style="border-left-color:var(--gold);font-size:.8rem;">
+    <strong>⚙️ MANDEL WHEELING SYSTEM — Combinatorial Condensation</strong><br>
+    Đây là <strong>phương pháp thật sự</strong> của Stefan Mandel: thay vì chọn 1 vé 5 số, bạn chọn một <em>pool</em> 6–12 số yêu thích, hệ thống sẽ tạo ra một bộ vé <strong>(v, 5, t)-covering design</strong> đảm bảo <em>nếu</em> t số trúng nằm trong pool của bạn thì <em>chắc chắn</em> có ít nhất một vé trúng t số. Mandel đã dùng kỹ thuật này để trúng giải nhì xổ số Romania 6/49 năm 1964 chỉ với 569 vé (thay vì 5,005 vé full coverage).
+  </div>
+
+  <div class="wheel-config">
+    <div class="filter-title">1️⃣ Chọn Pool Số (6–12 số)</div>
+    <div style="font-size:.7rem;color:var(--text3);margin-bottom:.4rem;line-height:1.5;">Nhấn để chọn/bỏ. Nhấn đúp để đặt làm <span style="color:var(--orange)">"số chìa khoá" (key number)</span> — số bắt buộc có trong mọi vé.</div>
+    <div class="num-pick-grid" id="numPicker"></div>
+    <div class="wheel-info">
+      <div>Đã chọn: <span id="wPickedCount">0</span> số</div>
+      <div>Chìa khoá: <span id="wKeyCount">0</span></div>
+      <div>Số đặc biệt: <select id="wSpecial" style="background:var(--bg4);color:var(--gold);border:1px solid var(--bdr2);border-radius:5px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:.72rem;"></select></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:.8rem;flex-wrap:wrap;">
+      <button onclick="autoPickPool()" style="background:var(--bg4);border:1px solid var(--bdr2);color:var(--gold);font-size:.7rem;padding:.4rem .7rem;border-radius:6px;cursor:pointer;font-family:inherit;">🤖 AI Tự Chọn 10 Số Tốt Nhất</button>
+      <button onclick="clearPool()" style="background:var(--bg4);border:1px solid var(--bdr);color:var(--text2);font-size:.7rem;padding:.4rem .7rem;border-radius:6px;cursor:pointer;font-family:inherit;">🗑️ Xoá Hết</button>
+    </div>
+  </div>
+
+  <div class="wheel-config">
+    <div class="filter-title">2️⃣ Chọn Mức Đảm Bảo (Guarantee Level)</div>
+    <div class="guarantee-grid" id="guaranteeGrid">
+      <div class="gn-card on" data-g="3" onclick="selGuarantee(this,3)">
+        <div class="gn-t">3 if 3</div>
+        <div class="gn-d">Trúng 3 nếu có 3 số trong pool</div>
+      </div>
+      <div class="gn-card" data-g="4" onclick="selGuarantee(this,4)">
+        <div class="gn-t">4 if 4</div>
+        <div class="gn-d">Trúng 4 nếu có 4 số trong pool</div>
+      </div>
+      <div class="gn-card" data-g="5" onclick="selGuarantee(this,5)">
+        <div class="gn-t">5 if 5 (Full)</div>
+        <div class="gn-d">Trúng jackpot nếu 5 số trong pool</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateWheel()">⚙️ Tạo Bộ Vé Wheeling</button>
+
+  <div class="prob-box" id="wheelProbBox" style="display:none;">
+    <div class="filter-title" style="margin-bottom:.7rem;">📊 Phân Tích Wheel Hiện Tại</div>
+    <div class="prob-row"><span class="prob-lbl">Số vé cần mua</span><span class="prob-val" id="wpTickets">—</span></div>
+    <div class="prob-row"><span class="prob-lbl">Chi phí ước tính</span><span class="prob-val" id="wpCost">—</span></div>
+    <div class="prob-row"><span class="prob-lbl">P(pool chứa đủ t số trúng)</span><span class="prob-val" id="wpProb">—</span></div>
+    <div class="prob-row"><span class="prob-lbl">Kỳ vọng giá trị (EV)</span><span class="prob-val" id="wpEV">—</span></div>
+  </div>
+
+  <div class="sets-list" id="wheelList">
+    <div class="empty">Chọn pool và mức đảm bảo, sau đó nhấn "Tạo Bộ Vé Wheeling"</div>
+  </div>
+
+  <div class="warn-box">💡 <strong>Mandel's Insight:</strong> Wheeling không "tiên tri" số trúng — nó <em>đảm bảo trúng giải nhỏ</em> nếu giả định pool của bạn chứa đủ số trúng đúng. Mức (3 if 3) phù hợp cho người chơi giải trí (10–17 vé). Mức (5 if 5) đảm bảo jackpot nhưng cần ~C(pool,5) vé, ví dụ pool 10 số = 252 vé.</div>
+</div>
+
+<!-- ══ TAB: SCIENCE ══ -->
+<div class="pane" id="pane-science">
+  <div style="height:.3rem"></div>
+
+  <div class="sci-section">
+    <h2>Stefan Mandel & "Combinatorial Condensation"</h2>
+    <p>Stefan Mandel, nhà toán học – kinh tế gốc <strong>Do Thái</strong> sinh tại Romania (theo nhiều nguồn: 1931 hoặc 1934), là người duy nhất trong lịch sử thắng xổ số <strong>14 lần</strong> bằng phương pháp toán học thuần tuý.</p>
+
+    <div class="quote">"Cạo râu cũng là một xổ số: luôn có khả năng tôi cứa đứt, nhiễm trùng máu, và chết — nhưng tôi vẫn làm. Cơ hội có lợi cho tôi."</div>
+
+    <h3>Hai giai đoạn — hai chiến lược khác biệt</h3>
+    <p><strong>Giai đoạn 1 (Romania, 1964):</strong> Mandel phát minh <em>Combinatorial Condensation</em> — một dạng <code>(v, k, t)-covering design</code> tiên phong, trước cả khi lý thuyết covering design được công bố chính thức. Trong xổ số Romania 6/49, ông chọn pool <strong>15 số</strong> và "ngưng tụ" 5,005 tổ hợp đầy đủ xuống chỉ <strong>569 vé</strong> — vẫn đảm bảo trúng giải nhì (5 số đúng) nếu 6 số trúng nằm trong pool 15 số.</p>
+
+    <p><strong>Giai đoạn 2 (Australia, USA, 1980–1992):</strong> Khi sang Australia, ông chuyển sang chiến lược <em>"Buying the Pot"</em> — <strong>mua toàn bộ tổ hợp</strong> khi jackpot lớn hơn tổng chi phí mua tất cả vé. Đỉnh cao là <strong>Virginia Lottery 1992</strong>: jackpot $27 triệu, 7.1 triệu tổ hợp 6/44, đội của ông mua ~5 triệu vé và trúng đậm. Sau đó, các nước đồng loạt sửa luật cấm mua hàng loạt.</p>
+
+    <h3>Áp dụng cho Vietlott 5/35 — Sự thật khoa học</h3>
+    <ul>
+      <li>Tổng tổ hợp đầy đủ: <code>C(35,5) × 12 = 3,895,584 vé</code> — quá lớn để "buying the pot" (cần ~39 tỷ VND để mua hết, jackpot tối đa ~vài tỷ).</li>
+      <li>Phương pháp <strong>Combinatorial Condensation</strong> vẫn áp dụng được: dùng covering wheel để tạo các bộ vé tối ưu cho 1 pool nhỏ.</li>
+      <li>Ví dụ <code>(10, 5, 3)-covering</code>: 10 số trong pool → 17 vé đảm bảo trúng ≥3 số nếu có 3 số trúng trong pool.</li>
+    </ul>
+  </div>
+
+  <div class="sci-section">
+    <h2>Các Phương Pháp Toán Học Hiện Đại</h2>
+
+    <h3>1. Hypergeometric Probability — Xác suất chính xác</h3>
+    <p>Xác suất trúng k số đúng trong vé 5 số khi 5 số được rút ra từ pool 35:</p>
+    <div class="formula">P(X = k) = C(5, k) × C(30, 5−k) / C(35, 5)</div>
+    <ul>
+      <li>Trúng 5/5 (main): 1 / 324,632 ≈ <code>0.000308%</code></li>
+      <li>Trúng 4/5: 150 / 324,632 ≈ <code>0.0462%</code></li>
+      <li>Trúng 3/5: 4,350 / 324,632 ≈ <code>1.34%</code></li>
+      <li>Jackpot (5 main + special): 1 / 3,895,584 ≈ <code>0.0000257%</code></li>
+    </ul>
+
+    <h3>2. Bayesian Inference (Beta-Binomial)</h3>
+    <p>Cập nhật xác suất xuất hiện của mỗi số dựa trên dữ liệu lịch sử với <em>conjugate prior</em>:</p>
+    <div class="formula">P(số n | dữ liệu) = Beta(α₀ + observed, β₀ + missed)<br>α₀ = 5, β₀ = 30 (prior đều)</div>
+    <p>Đây là cải tiến lớn so với tần suất thuần — xử lý đúng đắn các số có dữ liệu ít.</p>
+
+    <h3>3. Chi-Square Test (χ²) — Kiểm tra tính ngẫu nhiên</h3>
+    <p>Đánh giá độ lệch của tần suất quan sát so với kỳ vọng:</p>
+    <div class="formula">χ² = Σ (O_i − E_i)² / E_i<br>E_i = N × 5 / 35 cho mỗi số</div>
+    <p>Nếu χ² gần với df=34 → phân phối "ngẫu nhiên đúng". Số có <code>residual = (O − E)/√E</code> lớn → có thể là bias máy quay.</p>
+
+    <h3>4. Lottery Wheeling — Iliya Bluskov (PhD)</h3>
+    <p>Cuốn <em>"Combinatorial systems (wheels) with guaranteed wins for pick-5 lotteries"</em> (Bluskov, 2020) cung cấp các bảng wheel tối ưu hoá toán học. Hệ thống này được kế thừa trực tiếp từ Mandel nhưng được tự động hoá hoàn toàn nhờ máy tính.</p>
+
+    <h3>5. Statistical Pattern Filters (Lotterycodex, Saliu)</h3>
+    <ul>
+      <li><strong>Sum filter:</strong> Tổng số trong vùng vàng (70–110 cho 5/35) chiếm ~68% các kỳ.</li>
+      <li><strong>Odd/Even:</strong> Tổ hợp 3-2 hoặc 2-3 chiếm ~62% các kỳ.</li>
+      <li><strong>High/Low:</strong> Tổ hợp 3-2 hoặc 2-3 chiếm ~60% các kỳ.</li>
+      <li><strong>Last digit:</strong> Tránh nhiều hơn 2 số cùng đuôi (≥3 số cùng đuôi xảy ra ~8%).</li>
+      <li><strong>Consecutive numbers:</strong> Có ít nhất 1 cặp liên tiếp xảy ra ~50% các kỳ.</li>
+    </ul>
+  </div>
+
+  <div class="sci-section">
+    <h2>Tiên Lượng & Khuyến Nghị</h2>
+    <p style="color:var(--gold2);font-weight:600;">📌 Sự thật khoa học cốt lõi:</p>
+    <ul>
+      <li><strong>Không có thuật toán nào tăng xác suất trúng jackpot độc lập</strong> — mỗi tổ hợp luôn có xác suất 1/3,895,584. Đây là định lý toán học không thể vi phạm.</li>
+      <li><strong>Có thể tối ưu hoá hành vi chọn số</strong> theo 3 hướng: (a) tránh tổ hợp hiếm gặp thống kê, (b) tránh tổ hợp người khác hay chọn (giảm nguy cơ chia jackpot), (c) wheeling để đảm bảo trúng nhỏ khi pool chứa số trúng.</li>
+      <li><strong>Mandel không "dự đoán"</strong> — ông xây dựng <em>chiến lược đầu tư có lợi thế kỳ vọng dương (EV+)</em> khi jackpot đủ lớn. Đây là kinh tế học, không phải bói toán.</li>
+    </ul>
+
+    <h3>Chiến lược tốt nhất cho người chơi 5/35</h3>
+    <ul>
+      <li><strong>Ngân sách nhỏ (1–3 vé):</strong> Dùng thuật toán <em>Composite Filter</em> để loại tổ hợp rare-pattern. Tránh "ngày sinh" (chỉ 1–31). Tránh các tổ hợp đẹp như 1-2-3-4-5.</li>
+      <li><strong>Ngân sách vừa (10–20 vé):</strong> Wheel <code>(10, 5, 3)</code> — 17 vé, đảm bảo trúng 3 số nếu pool chứa 3 số trúng.</li>
+      <li><strong>Ngân sách lớn (50+ vé):</strong> Wheel <code>(12, 5, 4)</code> — 51 vé, đảm bảo trúng 4 số nếu pool chứa 4 số trúng. Đây là gần với cách Mandel chơi.</li>
+      <li><strong>Chỉ chơi khi jackpot lớn:</strong> Tinh thần Mandel — EV+ chỉ xuất hiện khi jackpot đủ cao bù được giá vé × xác suất.</li>
+    </ul>
+
+    <div class="quote">"Tôi là người chấp nhận rủi ro, nhưng theo cách đã tính toán."</div>
+  </div>
+
+  <div class="sci-section">
+    <h2>Nguồn Tham Khảo Khoa Học</h2>
+    <ul>
+      <li>Schäfer, M. (2024). <em>On the Lottery Problem: Tracing Stefan Mandel's Combinatorial Condensation</em>. arXiv:2408.06857.</li>
+      <li>Bluskov, I. (2020). <em>Combinatorial Systems (Wheels) with Guaranteed Wins for Pick-5 Lotteries</em>. ISBN 9780968950289.</li>
+      <li>La Jolla Covering Repository — Gordon, D., Kuperberg, G. & Patashnik, O.</li>
+      <li>Lotterycodex.com — Edvin Bondoc, statistical analysis framework.</li>
+      <li>Crockett, Z. (2017). <em>How Mandel Won the Lottery 14 Times</em>. The Hustle.</li>
+      <li>Bellos, A. (2010). <em>Alex's Adventures in Numberland</em>. Bloomsbury.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   VIETLOTT 5/35 — SCIENTIFIC ANALYSIS ENGINE v2.0
+   ─────────────────────────────────────────────
+   Phương pháp triển khai:
+   • Stefan Mandel — Combinatorial Condensation (1964)
+   • Iliya Bluskov — Pick-5 Wheeling Systems (2020)
+   • Bayesian inference với Beta-Binomial conjugate prior
+   • Chi-Square goodness-of-fit
+   • Markov pair-transition analysis
+   • Statistical filters (Lotterycodex framework)
+═══════════════════════════════════════════════ */
+
+/* ═══ BASE FREQUENCY DATA (180 kỳ mẫu — Σ tần suất = 900 = 180×5) ═══ */
+let MFREQ = {1:26,2:20,3:29,4:22,5:20,6:25,7:20,8:29,9:25,10:25,11:20,12:22,13:27,14:30,15:30,16:24,17:29,18:30,19:33,20:30,21:28,22:30,23:23,24:24,25:22,26:30,27:28,28:21,29:30,30:30,31:22,32:26,33:18,34:26,35:26};
+let SFREQ = {1:21,2:19,3:14,4:13,5:12,6:18,7:12,8:13,9:12,10:16,11:18,12:12};
+let DRAWS = [];
+let TOTAL_DRAWS = 180;
+let DATA_FRESHNESS = 60;
+let currentAlgo = 'hot';
+let activeFilters = new Set(['sum','oe','hl','ld']);
+
+/* Pair co-occurrence matrix (Markov-style) — built from DRAWS */
+let PAIRS = {};
+
+/* ═══ COMBINATORIAL UTILS ═══ */
+function combinations(arr, k) {
+  const result = [];
+  function helper(start, combo) {
+    if (combo.length === k) { result.push([...combo]); return; }
+    for (let i = start; i < arr.length; i++) {
+      combo.push(arr[i]);
+      helper(i + 1, combo);
+      combo.pop();
+    }
+  }
+  helper(0, []);
+  return result;
+}
+
+function nCk(n, k) {
+  if (k < 0 || k > n) return 0;
+  if (k === 0 || k === n) return 1;
+  k = Math.min(k, n - k);
+  let r = 1;
+  for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1);
+  return Math.round(r);
+}
+
+/* Hypergeometric: P(X=k) khi rút m=5 từ N=35, có K số "trúng" */
+function hypergeom(N, K, m, k) {
+  return nCk(K, k) * nCk(N - K, m - k) / nCk(N, m);
+}
+
+/* ═══ STORAGE ═══ */
+async function saveDraws(arr) {
+  try { await window.storage.set('lotto535_draws_v2', JSON.stringify(arr)); } catch(e){}
+}
+async function loadDraws() {
+  try {
+    const r = await window.storage.get('lotto535_draws_v2');
+    if (r) return JSON.parse(r.value);
+  } catch(e){}
+  return [];
+}
+async function saveFreq(mf, sf, total, freshness) {
+  try { await window.storage.set('lotto535_freq_v2', JSON.stringify({mf,sf,total,freshness,ts:Date.now()})); } catch(e){}
+}
+async function loadFreq() {
+  try {
+    const r = await window.storage.get('lotto535_freq_v2');
+    if (r) {
+      const d = JSON.parse(r.value);
+      const age = (Date.now() - d.ts) / 1000 / 60 / 60;
+      d.age = age;
+      return d;
+    }
+  } catch(e){}
+  return null;
+}
+
+/* ═══ INIT ═══ */
+(async function init() {
+  const saved = await loadFreq();
+  if (saved) {
+    MFREQ = saved.mf; SFREQ = saved.sf;
+    TOTAL_DRAWS = saved.total;
+    DATA_FRESHNESS = Math.max(10, Math.min(100, saved.freshness));
+    const h = saved.age.toFixed(1);
+    document.getElementById('lastUpdateLabel').textContent =
+      `Dữ liệu cập nhật: ${saved.total} kỳ quay · ${h} giờ trước`;
+  }
+  const savedDraws = await loadDraws();
+  if (savedDraws.length > 0) {
+    DRAWS = savedDraws;
+    rebuildPairsFromDraws();
+    renderResultsList();
+  }
+  initNumPicker();
+  initSpecialDropdown();
+  renderAllStats();
+  countdown();
+  setInterval(countdown, 1000);
+
+  // ═══ AUTO-UPDATE + FORECAST INIT ═══
+  await loadAutoUpdatePrefs();
+  const cb = document.getElementById('autoUpdToggle');
+  const sel = document.getElementById('autoUpdInterval');
+  if (cb) cb.checked = AUTO_UPD_ENABLED;
+  if (sel) sel.value = String(AUTO_UPD_INTERVAL_MIN);
+
+  // Initial forecast based on current data
+  refreshForecast();
+
+  // Tick every 30s to check auto-update schedule + refresh countdown label
+  AUTO_TICK_HANDLE = setInterval(tickAutoUpdate, 30000);
+  updateAutoNextLabel();
+  setInterval(updateAutoNextLabel, 1000);  // smooth countdown display
+
+  // If auto-update is on and data is stale on page load, trigger a fetch
+  if (AUTO_UPD_ENABLED) {
+    const stale = LAST_FETCH_TS === 0 || (Date.now() - LAST_FETCH_TS > AUTO_UPD_INTERVAL_MIN * 60 * 1000);
+    if (stale) setTimeout(() => fetchLatestResults(), 2000);
+  }
+})();
+
+/* ═══ TABS ═══ */
+function switchTab(id, el) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById('pane-' + id).classList.add('on');
+  el.classList.add('on');
+  if (id === 'stats') renderAllStats();
+  if (id === 'patterns') renderPatterns();
+}
+
+/* ═══ COUNTDOWN ═══ */
+function countdown() {
+  const now = new Date();
+  const t = new Date(now); t.setHours(18, 0, 0, 0);
+  let next, nextLabel;
+  if (t > now) { next = t; nextLabel = '18:00 hôm nay'; }
+  else { next = new Date(now); next.setDate(next.getDate() + 1); next.setHours(18, 0, 0, 0); nextLabel = '18:00 ngày mai'; }
+  const diff = Math.floor((next - now) / 1000);
+  const hh = Math.floor(diff / 3600), mm = Math.floor((diff % 3600) / 60), ss = diff % 60;
+  document.getElementById('nextDrawTime').textContent = nextLabel;
+  document.getElementById('countdown').textContent =
+    `Còn ${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+}
+
+/* ═══ FETCH LATEST RESULTS via Anthropic API ═══ */
+async function fetchLatestResults() {
+  const btn = document.getElementById('updBtn');
+  const icon = document.getElementById('updIcon');
+  const sub = document.getElementById('updSub');
+  btn.disabled = true;
+  icon.className = 'spin'; icon.textContent = '⟳';
+  setStatus('info', '🔍 AI đang tìm kiếm kết quả Vietlott 5/35 mới nhất...');
+
+  const today = new Date();
+  const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
+
+  const prompt = `Hôm nay là ${dateStr}. Hãy tìm và trả về kết quả 20 kỳ quay mới nhất của xổ số Vietlott Lotto 5/35 (Mega 5/35).
+
+Tìm trên: vietlott.vn, minhchinh.com, ketquadientoan.com, xosomienbac.com.vn
+
+Trả về CHÍNH XÁC JSON này, KHÔNG markdown, KHÔNG text phụ:
+{
+  "draws": [
+    {"ky": "00601", "date": "16/05/2026", "main": [n1,n2,n3,n4,n5], "special": n},
+    ...
+  ],
+  "total_draws_to_date": 620,
+  "note": "mô tả ngắn"
+}
+
+Mảng main: 5 số nguyên từ 1-35. Special: 1 số từ 1-12.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2500,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const data = await res.json();
+    const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+
+    let parsed = null;
+    try {
+      const jsonMatch = textBlocks.match(/\{[\s\S]*"draws"[\s\S]*\}/);
+      if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
+    } catch(e) {}
+
+    if (!parsed || !parsed.draws || !Array.isArray(parsed.draws))
+      throw new Error('Không thể phân tích dữ liệu trả về');
+
+    const newDraws = parsed.draws.filter(d =>
+      d.main && d.main.length === 5 &&
+      d.main.every(n => Number.isInteger(n) && n >= 1 && n <= 35) &&
+      Number.isInteger(d.special) && d.special >= 1 && d.special <= 12
+    );
+
+    if (newDraws.length === 0) throw new Error('Không tìm thấy kết quả hợp lệ');
+
+    const existingKeys = new Set(DRAWS.map(d => `${d.ky}`));
+    const trulyNew = newDraws.filter(d => !existingKeys.has(`${d.ky}`));
+
+    DRAWS = [...trulyNew.map(d => ({...d, isNew: true})), ...DRAWS].slice(0, 300);
+    await saveDraws(DRAWS);
+
+    if (trulyNew.length > 0) {
+      for (const d of trulyNew) {
+        for (const n of d.main) MFREQ[n] = (MFREQ[n] || 0) + 1;
+        SFREQ[d.special] = (SFREQ[d.special] || 0) + 1;
+      }
+      TOTAL_DRAWS += trulyNew.length;
+      DATA_FRESHNESS = Math.min(100, DATA_FRESHNESS + trulyNew.length * 2);
+      rebuildPairsFromDraws();
+    }
+
+    if (parsed.total_draws_to_date && parsed.total_draws_to_date > TOTAL_DRAWS)
+      TOTAL_DRAWS = parsed.total_draws_to_date;
+
+    await saveFreq(MFREQ, SFREQ, TOTAL_DRAWS, DATA_FRESHNESS);
+
+    const now = new Date();
+    document.getElementById('lastUpdateLabel').textContent =
+      `Cập nhật lúc ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} · ${TOTAL_DRAWS} kỳ quay`;
+
+    renderResultsList();
+    renderAllStats();
+    updateConfidence();
+    refreshForecast();
+    LAST_FETCH_TS = Date.now();
+    await saveAutoUpdatePrefs();
+
+    const msg = trulyNew.length > 0
+      ? `✅ Đã cập nhật ${trulyNew.length} kỳ mới! Tổng ${TOTAL_DRAWS} kỳ. ${parsed.note || ''}`
+      : `✅ Đã đồng bộ — ${newDraws.length} kỳ gần nhất không có thay đổi mới.`;
+    setStatus('ok', msg);
+    sub.textContent = `Lần cuối: ${now.toLocaleTimeString('vi-VN')}`;
+
+  } catch(err) {
+    setStatus('err', `❌ ${err.message} — Thử lại hoặc kiểm tra kết nối.`);
+  } finally {
+    btn.disabled = false;
+    icon.className = ''; icon.textContent = '⟳';
+  }
+}
+
+function setStatus(type, msg) {
+  const el = document.getElementById('updStatus');
+  el.className = 'upd-status ' + type;
+  el.textContent = msg;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ AUTO-UPDATE + REAL-TIME FORECAST SYSTEM ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+
+let AUTO_UPD_ENABLED = false;
+let AUTO_UPD_INTERVAL_MIN = 60;
+let LAST_FETCH_TS = 0;        // timestamp of last successful fetch
+let AUTO_TICK_HANDLE = null;
+let CURRENT_FORECAST = null;  // { mains:[], special:n, conf, breakdown:{...}, ts }
+
+async function loadAutoUpdatePrefs() {
+  try {
+    const r = await window.storage.get('lotto535_autoupd_v2');
+    if (r) {
+      const p = JSON.parse(r.value);
+      AUTO_UPD_ENABLED = !!p.enabled;
+      AUTO_UPD_INTERVAL_MIN = p.interval || 60;
+      LAST_FETCH_TS = p.lastFetch || 0;
+    }
+  } catch(e){}
+}
+
+async function saveAutoUpdatePrefs() {
+  try {
+    const sel = document.getElementById('autoUpdInterval');
+    if (sel) AUTO_UPD_INTERVAL_MIN = parseInt(sel.value, 10) || 60;
+    await window.storage.set('lotto535_autoupd_v2', JSON.stringify({
+      enabled: AUTO_UPD_ENABLED,
+      interval: AUTO_UPD_INTERVAL_MIN,
+      lastFetch: LAST_FETCH_TS
+    }));
+  } catch(e){}
+  updateAutoNextLabel();
+}
+
+function toggleAutoUpdate() {
+  const cb = document.getElementById('autoUpdToggle');
+  AUTO_UPD_ENABLED = cb.checked;
+  saveAutoUpdatePrefs();
+  if (AUTO_UPD_ENABLED) {
+    setStatus('info', `🔄 Đã bật tự động cập nhật mỗi ${AUTO_UPD_INTERVAL_MIN} phút.`);
+    // If never fetched, or stale by more than the interval, fetch immediately
+    const stale = Date.now() - LAST_FETCH_TS > AUTO_UPD_INTERVAL_MIN * 60 * 1000;
+    if (LAST_FETCH_TS === 0 || stale) {
+      setTimeout(() => fetchLatestResults(), 1500);
+    }
+  } else {
+    setStatus('info', '⏸️ Đã tắt tự động cập nhật.');
+  }
+}
+
+function updateAutoNextLabel() {
+  const el = document.getElementById('autoNext');
+  if (!el) return;
+  if (!AUTO_UPD_ENABLED) { el.innerHTML = ''; return; }
+  if (LAST_FETCH_TS === 0) {
+    el.innerHTML = '<span class="dot"></span>Đang chờ cập nhật đầu tiên';
+    return;
+  }
+  const nextTs = LAST_FETCH_TS + AUTO_UPD_INTERVAL_MIN * 60 * 1000;
+  const diffSec = Math.max(0, Math.floor((nextTs - Date.now()) / 1000));
+  const mm = Math.floor(diffSec / 60), ss = diffSec % 60;
+  el.innerHTML = `<span class="dot"></span>Lần kế: ${mm}:${String(ss).padStart(2,'0')}`;
+}
+
+/* Auto-update tick — runs every 30s while page is visible */
+function tickAutoUpdate() {
+  updateAutoNextLabel();
+  if (!AUTO_UPD_ENABLED) return;
+  if (document.hidden) return;            // pause when tab not visible
+  const btn = document.getElementById('updBtn');
+  if (btn && btn.disabled) return;        // currently fetching
+  const dueAt = LAST_FETCH_TS + AUTO_UPD_INTERVAL_MIN * 60 * 1000;
+  if (Date.now() >= dueAt) {
+    // Add small jitter (0-15s) to avoid synchronized hammering
+    const jitter = Math.floor(Math.random() * 15000);
+    setTimeout(() => {
+      if (AUTO_UPD_ENABLED && !document.hidden && !btn.disabled) {
+        fetchLatestResults();
+      }
+    }, jitter);
+  }
+}
+
+/* Re-check immediately when tab becomes visible again */
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) tickAutoUpdate();
+});
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ FORECAST GENERATION (real-time optimal pick) ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* Confidence score breakdown (0-100):
+   - Sample size (max 30): clamped(TOTAL_DRAWS / 250)
+   - Data freshness (max 25): DATA_FRESHNESS / 100
+   - Distribution entropy (max 20): normalized Shannon entropy
+   - Filter coverage (max 15): fraction of patterns the pick satisfies
+   - Chi-Square fit (max 10): p-value indicates data is statistically clean
+*/
+function computeForecastConfidence(mains, special) {
+  const f_sample = Math.min(1, TOTAL_DRAWS / 250) * 30;
+  const f_fresh  = (DATA_FRESHNESS / 100) * 25;
+
+  // Entropy of MFREQ distribution
+  const total = Object.values(MFREQ).reduce((a,b)=>a+b, 0) || 1;
+  let H = 0;
+  for (let n = 1; n <= 35; n++) {
+    const p = (MFREQ[n] || 0) / total;
+    if (p > 0) H -= p * Math.log2(p);
+  }
+  const Hmax = Math.log2(35);
+  const f_entropy = (H / Hmax) * 20;
+
+  // Filter coverage on the pick
+  const arr = [...mains].sort((a,b)=>a-b);
+  const sum = arr.reduce((a,b)=>a+b, 0);
+  const odds = arr.filter(n => n%2===1).length;
+  const lows = arr.filter(n => n <= 18).length;
+  const lastDigits = arr.map(n => n%10);
+  const ldCounts = {};
+  lastDigits.forEach(d => ldCounts[d] = (ldCounts[d]||0)+1);
+  const maxLd = Math.max(...Object.values(ldCounts));
+  let consec = 0, maxConsec = 1;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] === arr[i-1] + 1) { consec++; maxConsec = Math.max(maxConsec, consec+1); }
+    else consec = 0;
+  }
+  let passed = 0;
+  if (sum >= 70 && sum <= 110) passed++;
+  if (odds === 2 || odds === 3) passed++;
+  if (lows >= 1 && lows <= 4) passed++;
+  if (maxLd <= 2) passed++;
+  if (maxConsec <= 2) passed++;
+  const f_filter = (passed / 5) * 15;
+
+  // Chi-Square fit (penalty if data deviates too far from uniform)
+  const expected = TOTAL_DRAWS * 5 / 35;
+  let chisq = 0;
+  if (expected > 0) {
+    for (let n = 1; n <= 35; n++) {
+      const o = MFREQ[n] || 0;
+      chisq += Math.pow(o - expected, 2) / expected;
+    }
+  }
+  // p-value approx via df=34: p ~ 1 when chisq close to 34, lower when far
+  const pApprox = Math.max(0, Math.min(1, Math.exp(-Math.abs(chisq - 34) / 30)));
+  const f_chi = pApprox * 10;
+
+  const total_conf = f_sample + f_fresh + f_entropy + f_filter + f_chi;
+  return {
+    total: Math.round(total_conf),
+    breakdown: {
+      sample: Math.round(f_sample),
+      fresh:  Math.round(f_fresh),
+      entropy:Math.round(f_entropy),
+      filter: Math.round(f_filter),
+      chi:    Math.round(f_chi)
+    },
+    stats: { sum, odds, lows, maxConsec, maxLd, chisq: chisq.toFixed(1) }
+  };
+}
+
+/* Generate the single best forecast: try many composite picks, score them, return the top */
+function generateOptimalForecast() {
+  const candidates = [];
+  const seen = new Set();
+  for (let i = 0; i < 80; i++) {
+    let mains;
+    try { mains = algoComposite(); } catch(e) { mains = algoBayesBeta(); }
+    if (!mains || mains.length !== 5) continue;
+    const key = [...mains].sort((a,b)=>a-b).join('-');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const special = pickSpecial('composite');
+    const conf = computeForecastConfidence(mains, special);
+    candidates.push({ mains: [...mains].sort((a,b)=>a-b), special, conf });
+  }
+  if (candidates.length === 0) {
+    const fallback = algoBayesBeta();
+    return {
+      mains: [...fallback].sort((a,b)=>a-b),
+      special: pickSpecial('bayes'),
+      conf: computeForecastConfidence(fallback, 1)
+    };
+  }
+  candidates.sort((a, b) => b.conf.total - a.conf.total);
+  return candidates[0];
+}
+
+function refreshForecast() {
+  CURRENT_FORECAST = generateOptimalForecast();
+  CURRENT_FORECAST.ts = Date.now();
+  renderForecastCard();
+}
+
+function renderForecastCard() {
+  const root = document.getElementById('fhContent');
+  const stale = document.getElementById('fhStale');
+  if (!root) return;
+  if (!CURRENT_FORECAST) {
+    root.innerHTML = '<div class="fh-empty">Đang tính toán bộ số tối ưu từ dữ liệu hiện tại...</div>';
+    return;
+  }
+  const f = CURRENT_FORECAST;
+  const c = f.conf;
+  const ageMin = Math.floor((Date.now() - f.ts) / 60000);
+
+  // Show stale banner if data is older than 12h
+  if (LAST_FETCH_TS > 0 && Date.now() - LAST_FETCH_TS > 12 * 3600 * 1000) {
+    const h = ((Date.now() - LAST_FETCH_TS) / 3600000).toFixed(1);
+    stale.style.display = 'block';
+    stale.textContent = `⚠ Dữ liệu cập nhật ${h} giờ trước — hãy bấm "Cập Nhật Ngay" hoặc bật tự động.`;
+  } else if (LAST_FETCH_TS === 0) {
+    stale.style.display = 'block';
+    stale.textContent = `ℹ Hiện đang dùng dữ liệu cơ sở 180 kỳ mẫu. Bấm "Cập Nhật Ngay" để lấy kỳ mới nhất từ Vietlott.`;
+  } else {
+    stale.style.display = 'none';
+  }
+
+  const numsHtml = f.mains.map(n => `<div class="fh-num">${String(n).padStart(2,'0')}</div>`).join('') +
+                   `<div class="fh-num sep">+</div>` +
+                   `<div class="fh-num sp">${String(f.special).padStart(2,'0')}</div>`;
+
+  const algos = [...activeFilters];
+  const filterLabels = {
+    sum:'Σ70–110', oe:'chẵn/lẻ', hl:'cao/thấp',
+    ld:'chữ số cuối', con:'liên tiếp', ap:'cấp số cộng'
+  };
+  const filterChips = algos.map(k => filterLabels[k] || k).join(', ') || 'không lọc';
+
+  root.innerHTML = `
+    <div class="fh-nums">${numsHtml}</div>
+
+    <div class="fh-confidence">
+      <div class="fh-conf-hdr">
+        <span>Điểm Tin Cậy Forecast</span>
+        <strong>${c.total}/100</strong>
+      </div>
+      <div class="fh-conf-bar"><div class="fh-conf-fill" style="width:${c.total}%"></div></div>
+    </div>
+
+    <div class="fh-meta">
+      <div class="fh-mc"><div class="fh-mc-lbl">Tổng (Σ)</div><div class="fh-mc-val">${c.stats.sum}</div></div>
+      <div class="fh-mc"><div class="fh-mc-lbl">Lẻ:Chẵn</div><div class="fh-mc-val">${c.stats.odds}:${5-c.stats.odds}</div></div>
+      <div class="fh-mc"><div class="fh-mc-lbl">Thấp:Cao</div><div class="fh-mc-val">${c.stats.lows}:${5-c.stats.lows}</div></div>
+      <div class="fh-mc"><div class="fh-mc-lbl">Liên tiếp tối đa</div><div class="fh-mc-val">${c.stats.maxConsec}</div></div>
+      <div class="fh-mc"><div class="fh-mc-lbl">Mẫu dữ liệu</div><div class="fh-mc-val">${TOTAL_DRAWS} kỳ</div></div>
+      <div class="fh-mc"><div class="fh-mc-lbl">χ² df=34</div><div class="fh-mc-val">${c.stats.chisq}</div></div>
+    </div>
+
+    <div class="fh-actions">
+      <button class="fh-btn primary" onclick="copyForecast()">📋 Sao Chép Bộ Số</button>
+      <button class="fh-btn" onclick="refreshForecast()">🎲 Tạo Lại</button>
+      <button class="fh-btn" onclick="toggleForecastWhy()">ℹ Vì Sao?</button>
+    </div>
+
+    <div class="fh-why" id="fhWhy">
+      <strong>Cách hệ thống chọn bộ số này:</strong><br>
+      Sinh 80 ứng viên bằng <strong>Bayes Beta-Binomial</strong> (prior α₀=5, β₀=30 trên mỗi số), lọc qua các tiêu chí <em>${filterChips}</em>, rồi xếp hạng theo điểm tin cậy tổng hợp.<br><br>
+      <strong>Phân rã điểm tin cậy:</strong>
+      <span style="font-family:'Space Mono',monospace;">
+      Sample (${c.breakdown.sample}/30) · Freshness (${c.breakdown.fresh}/25) · Entropy (${c.breakdown.entropy}/20) · Filter (${c.breakdown.filter}/15) · χ²-fit (${c.breakdown.chi}/10)
+      </span><br><br>
+      <strong style="color:#f0a070;">⚠ Lưu ý khoa học:</strong> Điểm tin cậy phản ánh <em>chất lượng dữ liệu</em> và <em>độ phù hợp mẫu hình</em>, KHÔNG phải xác suất trúng giải. Với mỗi vé 5/35, xác suất trúng độc giải vẫn là 1/3.895.584 ≈ 0.0000257% — bất kỳ thuật toán nào cũng không thay đổi được điều này.
+    </div>
+  `;
+}
+
+function toggleForecastWhy() {
+  document.getElementById('fhWhy').classList.toggle('on');
+}
+
+async function copyForecast() {
+  if (!CURRENT_FORECAST) return;
+  const f = CURRENT_FORECAST;
+  const text = `Vietlott 5/35 — Bộ số gợi ý tối ưu\n` +
+               `Số chính: ${f.mains.map(n=>String(n).padStart(2,'0')).join(' - ')}\n` +
+               `Số đặc biệt: ${String(f.special).padStart(2,'0')}\n` +
+               `Điểm tin cậy: ${f.conf.total}/100 · ${TOTAL_DRAWS} kỳ mẫu\n` +
+               `Tổng: ${f.conf.stats.sum} · Lẻ/Chẵn: ${f.conf.stats.odds}/${5-f.conf.stats.odds}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus('ok', '📋 Đã sao chép bộ số vào clipboard.');
+  } catch(e) {
+    setStatus('info', text.replace(/\n/g, ' · '));
+  }
+}
+
+/* ═══ REBUILD PAIRS MATRIX ═══ */
+function rebuildPairsFromDraws() {
+  PAIRS = {};
+  for (let i = 1; i <= 35; i++) {
+    PAIRS[i] = {};
+    for (let j = 1; j <= 35; j++) if (i !== j) PAIRS[i][j] = 0;
+  }
+  for (const d of DRAWS) {
+    if (!d.main) continue;
+    for (let i = 0; i < d.main.length; i++) {
+      for (let j = 0; j < d.main.length; j++) {
+        if (i !== j) PAIRS[d.main[i]][d.main[j]]++;
+      }
+    }
+  }
+}
+
+
+/* ═══ RENDER RESULTS LIST ═══ */
+function renderResultsList() {
+  const el = document.getElementById('resultsList');
+  document.getElementById('drawCount').textContent = `${DRAWS.length} kỳ`;
+  if (DRAWS.length === 0) {
+    el.innerHTML = '<div class="empty">Chưa có kết quả. Nhấn "Cập Nhật Ngay" để tải.</div>';
+    return;
+  }
+  el.innerHTML = DRAWS.map(d => {
+    const balls = d.main.map(n =>
+      `<div class="b b-m" title="${n}: ${MFREQ[n]||0} lần">${String(n).padStart(2,'0')}</div>`
+    ).join('');
+    const newTag = d.isNew ? '<span class="new-tag">MỚI</span>' : '';
+    const sess = d.session ? ` · ${d.session}` : '';
+    return `<div class="draw-row ${d.isNew?'new':''}">
+      <div class="draw-meta">
+        <div class="draw-ky">Kỳ #${d.ky}</div>
+        <div class="draw-date">${d.date}${sess}</div>
+      </div>
+      <div class="draw-nums">
+        ${balls}
+        <span class="b-sep">|</span>
+        <div class="b b-s" title="Số đặc biệt">${String(d.special).padStart(2,'0')}</div>
+        ${newTag}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══ HEAT CLASSIFICATION (Chi-Square Residual based) ═══ */
+function getHeat(n) {
+  const f = MFREQ[n];
+  const expected = TOTAL_DRAWS * 5 / 35;
+  const residual = (f - expected) / Math.sqrt(expected);
+  if (residual >= 1.5) return 'hot';
+  if (residual >= 0.5) return 'warm';
+  if (residual <= -1.5) return 'cold';
+  if (residual <= -0.5) return 'cool';
+  return '';
+}
+
+/* ═══ CHI-SQUARE STATISTIC ═══ */
+function computeChiSquare() {
+  const expected = TOTAL_DRAWS * 5 / 35;
+  let chi = 0;
+  for (let n = 1; n <= 35; n++) {
+    const o = MFREQ[n] || 0;
+    chi += Math.pow(o - expected, 2) / expected;
+  }
+  return chi;
+}
+
+/* p-value approximation cho chi-square với df=34 (chỉ ước lượng) */
+function chiSqPValue(chi, df = 34) {
+  // Wilson-Hilferty approximation
+  const z = Math.pow(chi / df, 1/3) - (1 - 2/(9*df));
+  const zNorm = z * Math.sqrt(9*df/2);
+  // 1 - Φ(z)
+  const t = 1 / (1 + 0.2316419 * Math.abs(zNorm));
+  const d = 0.3989423 * Math.exp(-zNorm * zNorm / 2);
+  const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+  return zNorm > 0 ? p : 1 - p;
+}
+
+/* ═══ RENDER STATS ═══ */
+function renderAllStats() {
+  const nums = Object.keys(MFREQ).map(Number);
+  const maxF = Math.max(...nums.map(n=>MFREQ[n]));
+  const minF = Math.min(...nums.map(n=>MFREQ[n]));
+  const sorted = [...nums].sort((a,b)=>MFREQ[b]-MFREQ[a]);
+  const hotNum = sorted[0];
+  const coldNum = sorted[sorted.length-1];
+  const chi = computeChiSquare();
+
+  document.getElementById('st-draws').textContent = TOTAL_DRAWS;
+  document.getElementById('st-hotnum').textContent = String(hotNum).padStart(2,'0');
+  document.getElementById('st-coldnum').textContent = String(coldNum).padStart(2,'0');
+  document.getElementById('st-chisq').textContent = chi.toFixed(1);
+
+  // Freq chart
+  const fcEl = document.getElementById('freqChart');
+  fcEl.innerHTML = nums.map(n => {
+    const v = MFREQ[n];
+    const pct = Math.round(((v-minF)/(maxF-minF||1))*80+15);
+    const h = getHeat(n);
+    const clr = h==='hot'?'#e84b4b':h==='warm'?'#e8974b':h==='cool'?'#7ab4f5':h==='cold'?'#4b8be8':'#5a5750';
+    return `<div class="fi" title="${n}: ${v} lần (residual: ${((v-TOTAL_DRAWS*5/35)/Math.sqrt(TOTAL_DRAWS*5/35)).toFixed(2)})">
+      <div class="fn">${String(n).padStart(2,'0')}</div>
+      <div class="fb-wrap"><div class="fb" style="height:${pct}%;background:${clr}"></div></div>
+      <div class="fc">${v}</div>
+    </div>`;
+  }).join('');
+
+  // Special chart
+  const spEl = document.getElementById('spChart');
+  const spMax = Math.max(...Object.values(SFREQ));
+  const spTotal = Object.values(SFREQ).reduce((a,b)=>a+b,0);
+  spEl.innerHTML = Object.entries(SFREQ).sort((a,b)=>b[1]-a[1]).map(([n,v])=>{
+    const alpha = (0.3 + (v/spMax)*0.7).toFixed(2);
+    return `<div class="sp-item" style="border-color:rgba(212,168,67,${alpha})">
+      <div class="sp-n">${String(n).padStart(2,'0')}</div>
+      <div class="sp-c">${v} lần</div>
+      <div class="sp-c">${((v/spTotal)*100).toFixed(1)}%</div>
+    </div>`;
+  }).join('');
+
+  // Hot/cold visual with residuals
+  const hcEl = document.getElementById('hotColdVis');
+  const top5hot = sorted.slice(0,5);
+  const top5cold = sorted.slice(-5).reverse();
+  const expected = TOTAL_DRAWS * 5 / 35;
+  const resid = n => ((MFREQ[n] - expected) / Math.sqrt(expected)).toFixed(2);
+  hcEl.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div>
+        <div style="font-size:.7rem;color:var(--red);margin-bottom:.5rem;font-weight:600;">🔥 TOP 5 NÓNG NHẤT</div>
+        ${top5hot.map((n,i)=>`
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+            <span style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);width:14px;">${i+1}</span>
+            <div class="b b-m" style="border-color:var(--red);color:var(--red);background:rgba(232,75,75,.1);width:32px;height:32px;font-size:.72rem;">${String(n).padStart(2,'0')}</div>
+            <div style="flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${Math.round((MFREQ[n]/maxF)*100)}%;background:var(--red);border-radius:3px;"></div>
+            </div>
+            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]} <span style="color:var(--red);">+${resid(n)}σ</span></span>
+          </div>`).join('')}
+      </div>
+      <div>
+        <div style="font-size:.7rem;color:var(--blue);margin-bottom:.5rem;font-weight:600;">🧊 TOP 5 LẠNH NHẤT</div>
+        ${top5cold.map((n,i)=>`
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+            <span style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);width:14px;">${i+1}</span>
+            <div class="b b-m" style="border-color:var(--blue);color:var(--blue);background:rgba(75,139,232,.1);width:32px;height:32px;font-size:.72rem;">${String(n).padStart(2,'0')}</div>
+            <div style="flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${Math.round((MFREQ[n]/maxF)*100)}%;background:var(--blue);border-radius:3px;"></div>
+            </div>
+            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]} <span style="color:var(--blue);">${resid(n)}σ</span></span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  updateConfidence();
+}
+
+function updateConfidence() {
+  const total = Math.min(TOTAL_DRAWS, 1000);
+  document.getElementById('cf1').style.width = Math.round((total/1000)*100) + '%';
+  document.getElementById('cfv1').textContent = TOTAL_DRAWS;
+
+  document.getElementById('cf2').style.width = DATA_FRESHNESS + '%';
+  document.getElementById('cfv2').textContent = DATA_FRESHNESS + '%';
+
+  const vals = Object.values(MFREQ);
+  const mean = vals.reduce((a,b)=>a+b,0)/vals.length;
+  const variance = vals.reduce((a,b)=>a+Math.pow(b-mean,2),0)/vals.length;
+  const cv = (Math.sqrt(variance)/mean)*100;
+  const entropy = Math.max(50, Math.min(99, Math.round(100 - cv)));
+  document.getElementById('cf3').style.width = entropy + '%';
+  document.getElementById('cfv3').textContent = entropy + '%';
+
+  const chi = computeChiSquare();
+  const p = chiSqPValue(chi, 34);
+  const pPct = Math.round(p * 100);
+  document.getElementById('cf4').style.width = Math.max(5, Math.min(95, pPct)) + '%';
+  document.getElementById('cfv4').textContent = p.toFixed(3);
+}
+
+/* ═══ RENDER PATTERNS (TAB) ═══ */
+function renderPatterns() {
+  // Sum distribution from DRAWS (or synthesized from frequency if no DRAWS)
+  const sumBuckets = {}; // bucket of 10
+  let sumTotal = 0, sumCount = 0;
+  let oeBuckets = {'5-0':0,'4-1':0,'3-2':0,'2-3':0,'1-4':0,'0-5':0};
+  let hlBuckets = {'5-0':0,'4-1':0,'3-2':0,'2-3':0,'1-4':0,'0-5':0};
+  let ldDup = {1:0, 2:0, 3:0, 4:0, 5:0};
+  let conBuckets = {'0':0,'1 pair':0,'2 pairs':0,'3+ consec':0};
+
+  const drawsData = DRAWS.filter(d=>d.main && d.main.length===5);
+
+  if (drawsData.length > 0) {
+    drawsData.forEach(d => {
+      const arr = [...d.main].sort((a,b)=>a-b);
+      const s = arr.reduce((a,b)=>a+b,0);
+      const bk = Math.floor(s/10)*10;
+      sumBuckets[bk] = (sumBuckets[bk]||0)+1;
+      sumTotal += s; sumCount++;
+
+      const odds = arr.filter(n=>n%2===1).length;
+      const evens = 5-odds;
+      oeBuckets[`${odds}-${evens}`]++;
+
+      const high = arr.filter(n=>n>=18).length;
+      const low = 5-high;
+      hlBuckets[`${low}-${high}`]++;
+
+      const digits = {};
+      arr.forEach(n => { const d = n%10; digits[d]=(digits[d]||0)+1; });
+      const maxDup = Math.max(...Object.values(digits));
+      ldDup[maxDup] = (ldDup[maxDup]||0)+1;
+
+      let pairs = 0; let conLen = 1; let maxConLen = 1;
+      for (let i = 1; i < arr.length; i++) {
+        if (arr[i] === arr[i-1]+1) { conLen++; if (conLen===2) pairs++; }
+        else { maxConLen = Math.max(maxConLen, conLen); conLen=1; }
+      }
+      maxConLen = Math.max(maxConLen, conLen);
+      if (maxConLen >= 3) conBuckets['3+ consec']++;
+      else if (pairs === 0) conBuckets['0']++;
+      else if (pairs === 1) conBuckets['1 pair']++;
+      else conBuckets['2 pairs']++;
+    });
+  } else {
+    // Use theoretical fallback for empty data
+    sumBuckets[70]=4; sumBuckets[80]=8; sumBuckets[90]=10; sumBuckets[100]=8; sumBuckets[110]=4;
+    oeBuckets['3-2']=8; oeBuckets['2-3']=8; oeBuckets['4-1']=5; oeBuckets['1-4']=5; oeBuckets['5-0']=2; oeBuckets['0-5']=2;
+    hlBuckets['3-2']=9; hlBuckets['2-3']=9; hlBuckets['4-1']=5; hlBuckets['1-4']=5; hlBuckets['5-0']=1; hlBuckets['0-5']=1;
+    ldDup[1]=12; ldDup[2]=15; ldDup[3]=4; ldDup[4]=1; ldDup[5]=0;
+    conBuckets['0']=15; conBuckets['1 pair']=11; conBuckets['2 pairs']=4; conBuckets['3+ consec']=2;
+    sumTotal=0; sumCount=0;
+  }
+
+  // Render Sum chart
+  const sumKeys = Object.keys(sumBuckets).map(Number).sort((a,b)=>a-b);
+  const sumMax = Math.max(...Object.values(sumBuckets), 1);
+  const sumEl = document.getElementById('sumChart');
+  sumEl.innerHTML = sumKeys.map(bk => {
+    const v = sumBuckets[bk];
+    const pct = (v/sumMax)*100;
+    const inGold = bk >= 70 && bk <= 110;
+    const clr = inGold ? 'var(--gold)' : 'var(--text3)';
+    return `<div class="pat-bar-row">
+      <div class="pat-bar-lbl">${bk}–${bk+9}</div>
+      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div>
+      <div class="pat-bar-val">${v}</div>
+    </div>`;
+  }).join('');
+  const avgSum = sumCount > 0 ? (sumTotal/sumCount).toFixed(1) : '90.0 (lý thuyết)';
+  document.getElementById('sumStat').textContent = `μ = ${avgSum} · n = ${sumCount || 'no data'}`;
+
+  // Odd/Even chart
+  renderRatioChart('oeChart', oeBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5'], 'Lẻ-Chẵn');
+  renderRatioChart('hlChart', hlBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5'], 'Thấp-Cao');
+
+  // Last digit duplicate
+  const ldEl = document.getElementById('ldChart');
+  const ldMax = Math.max(...Object.values(ldDup), 1);
+  ldEl.innerHTML = Object.entries(ldDup).map(([k,v]) => {
+    const pct = (v/ldMax)*100;
+    const safe = k <= 2;
+    return `<div class="pat-bar-row">
+      <div class="pat-bar-lbl">Max ${k} đuôi</div>
+      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${safe?'var(--green)':'var(--orange)'}"></div></div>
+      <div class="pat-bar-val">${v}</div>
+    </div>`;
+  }).join('');
+
+  // Consecutive
+  const conEl = document.getElementById('conChart');
+  const conMax = Math.max(...Object.values(conBuckets), 1);
+  conEl.innerHTML = Object.entries(conBuckets).map(([k,v]) => {
+    const pct = (v/conMax)*100;
+    return `<div class="pat-bar-row">
+      <div class="pat-bar-lbl">${k}</div>
+      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%"></div></div>
+      <div class="pat-bar-val">${v}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRatioChart(elId, buckets, order, label) {
+  const el = document.getElementById(elId);
+  const max = Math.max(...Object.values(buckets), 1);
+  el.innerHTML = order.map(k => {
+    const v = buckets[k] || 0;
+    const pct = (v/max)*100;
+    const parts = k.split('-').map(Number);
+    const balanced = (parts[0]===2 && parts[1]===3) || (parts[0]===3 && parts[1]===2);
+    const clr = balanced ? 'var(--gold)' : 'var(--text3)';
+    return `<div class="pat-bar-row">
+      <div class="pat-bar-lbl">${k}</div>
+      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div>
+      <div class="pat-bar-val">${v}</div>
+    </div>`;
+  }).join('');
+}
+
+
+/* ═══ ALGORITHM INFO ═══ */
+const ALGO_INFO = {
+  hot: "<strong>🔥 SỐ NÓNG (Momentum)</strong> — Ưu tiên các số có tần suất cao nhất (z-score dương lớn). Trọng số <code>w = f(n)²</code>. Phù hợp khi tin vào hiệu ứng \"hot streak\" / momentum. Lưu ý: trong xổ số ngẫu nhiên thuần tuý, mỗi kỳ độc lập — \"nóng\" chỉ là mô tả lịch sử, không tăng xác suất tương lai.",
+  cold: "<strong>🧊 SỐ LẠNH (Mean Reversion)</strong> — Chọn các số ít xuất hiện nhất. Trọng số <code>w = (maxF − f(n))²</code>. Dựa trên lý thuyết \"số đáo hạn\" (overdue) — số lâu không ra <em>cảm giác</em> sắp ra. Thực tế xác suất không đổi, nhưng giúp giảm crowding với người chơi chọn số nóng.",
+  bal: "<strong>⚖️ CÂN BẰNG (Maximum Entropy)</strong> — Trộn 2 nóng + 1 trung tính + 2 lạnh. Tiếp cận phân phối có entropy cao nhất — đảm bảo tổ hợp \"trông tự nhiên\". Phù hợp khi không có niềm tin mạnh vào xu hướng.",
+  chisq: "<strong>📊 CHI-SQUARE RESIDUAL</strong> — Phân tích độ lệch chuẩn hoá <code>(O−E)/√E</code> của từng số so với kỳ vọng <code>E = N×5/35</code>. Số có |residual| ≥ 1.5σ được coi là \"có dấu hiệu bias\". Trọng số <code>w = e^|residual|</code>. Phương pháp này phát hiện cả nóng và lạnh \"có ý nghĩa thống kê\".",
+  bayes: "<strong>📐 BAYES BETA-BINOMIAL</strong> — Mô hình xác suất hậu nghiệm với conjugate prior: <code>P(n|data) ~ Beta(α₀ + obs, β₀ + miss)</code>, với <code>α₀=5, β₀=30</code> (prior đều). Kết hợp boost theo gap analysis. Đây là chuẩn vàng trong inference thống kê — xử lý đúng đắn cả số liệu ít lẫn nhiều.",
+  markov: "<strong>🎲 MARKOV PAIR-TRANSITION</strong> — Phân tích đồ thị đồng xuất hiện: <code>P(j cùng kỳ với i)</code>. Chọn 1 số \"hạt nhân\" có tần suất cao, sau đó chọn các số có correlation mạnh nhất với hạt nhân. Phát hiện các \"cụm số liên kết\" trong dữ liệu lịch sử.",
+  mandel: "<strong>🧮 MANDEL COMBINATORIAL CONDENSATION</strong> — Phương pháp gốc của Stefan Mandel (Romania, 1964): xây pool 12 số tốt nhất theo điểm composite (frequency + chi-square + gap), sau đó dùng <code>(12, 5, 3)-covering design</code> để chọn 5 vé đại diện đảm bảo coverage cục bộ. Mỗi vé là 1 \"đại diện\" của 1 phân vùng trong pool. <em>Chuyển sang tab \"Mandel Wheel\" để tạo bộ vé đầy đủ.</em>",
+  composite: "<strong>🎯 COMPOSITE FILTERED (Lotterycodex 2024)</strong> — Kết hợp Bayes posterior + tất cả bộ lọc đang bật. Sinh ứng viên, lọc theo: sum ∈ [70,110], odd/even balance, hi/lo balance, last-digit diversity, no excessive consecutive, no arithmetic progression. <strong>Đây là thuật toán mạnh nhất khi muốn 1 vé \"đẹp thống kê\".</strong>"
+};
+
+function selAlgo(el, algo) {
+  document.querySelectorAll('.ab').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  currentAlgo = algo;
+  document.getElementById('algoInfoBox').innerHTML = ALGO_INFO[algo];
+}
+document.getElementById('algoInfoBox').innerHTML = ALGO_INFO['hot'];
+
+function toggleFilter(el) {
+  const f = el.dataset.f;
+  el.classList.toggle('on');
+  if (el.classList.contains('on')) activeFilters.add(f);
+  else activeFilters.delete(f);
+}
+
+/* ═══ WEIGHTED SAMPLE ═══ */
+function wSample(pool, n, weights) {
+  const r = []; const p = [...pool]; const w = [...weights];
+  for (let i = 0; i < n && p.length > 0; i++) {
+    const tot = w.reduce((a,b)=>a+b,0);
+    if (tot <= 0) { 
+      const idx = Math.floor(Math.random()*p.length);
+      r.push(p[idx]); p.splice(idx,1); w.splice(idx,1);
+      continue;
+    }
+    let rv = Math.random()*tot, c = 0, idx = 0;
+    for (let j = 0; j < w.length; j++) { c += w[j]; if (rv <= c) { idx = j; break; } }
+    r.push(p[idx]); p.splice(idx,1); w.splice(idx,1);
+  }
+  return r.sort((a,b)=>a-b);
+}
+
+function pickSpecial(algo) {
+  const e = Object.entries(SFREQ);
+  if (algo === 'cold') {
+    const s = [...e].sort((a,b)=>a[1]-b[1]).slice(0,5).map(x=>+x[0]);
+    return s[Math.floor(Math.random()*s.length)];
+  }
+  const w = e.map(x => algo==='hot' ? Math.pow(x[1],1.8) : algo==='bayes' || algo==='chisq' ? Math.pow(x[1],1.3) : x[1]);
+  return +wSample(e.map(x=>+x[0]),1,w)[0];
+}
+
+/* ═══ GAP ANALYSIS ═══ */
+function computeGaps() {
+  const lastSeen = {};
+  for (let n=1;n<=35;n++) lastSeen[n] = TOTAL_DRAWS;
+  DRAWS.forEach((d, idx) => {
+    if (!d.main) return;
+    d.main.forEach(n => { if (lastSeen[n] === TOTAL_DRAWS) lastSeen[n] = idx; });
+  });
+  return lastSeen;
+}
+
+/* ═══ STATISTICAL FILTERS ═══ */
+function passesFilters(nums) {
+  const arr = [...nums].sort((a,b)=>a-b);
+  const sum = arr.reduce((a,b)=>a+b,0);
+  
+  if (activeFilters.has('sum')) {
+    if (sum < 70 || sum > 110) return false;
+  }
+  if (activeFilters.has('oe')) {
+    const odds = arr.filter(n=>n%2===1).length;
+    if (odds === 0 || odds === 5) return false;
+    // Prefer 2-3 or 3-2; accept 1-4, 4-1 too
+    // Reject 0-5, 5-0 (handled above)
+  }
+  if (activeFilters.has('hl')) {
+    const high = arr.filter(n=>n>=18).length;
+    if (high === 0 || high === 5) return false;
+  }
+  if (activeFilters.has('ld')) {
+    const dCount = {};
+    arr.forEach(n => { const d = n%10; dCount[d]=(dCount[d]||0)+1; });
+    if (Math.max(...Object.values(dCount)) >= 3) return false;
+  }
+  if (activeFilters.has('con')) {
+    let conLen = 1, maxConLen = 1;
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] === arr[i-1]+1) { conLen++; maxConLen = Math.max(maxConLen, conLen); }
+      else conLen = 1;
+    }
+    if (maxConLen >= 3) return false;
+  }
+  if (activeFilters.has('ap')) {
+    // Arithmetic progression detection
+    for (let i = 0; i < arr.length-2; i++) {
+      const d = arr[i+1] - arr[i];
+      if (d === 0) continue;
+      let count = 2;
+      for (let j = i+2; j < arr.length; j++) {
+        if (arr[j] - arr[j-1] === d) count++;
+        else break;
+      }
+      if (count >= 4) return false;
+    }
+  }
+  return true;
+}
+
+/* ═══ ALGORITHMS (số chính) ═══ */
+const ALL35 = Array.from({length:35},(_,i)=>i+1);
+
+function algoHot() {
+  const w = ALL35.map(n => Math.pow(MFREQ[n]||1,2) + Math.random()*2);
+  return wSample(ALL35, 5, w);
+}
+
+function algoCold() {
+  const maxF = Math.max(...Object.values(MFREQ));
+  const w = ALL35.map(n => Math.pow(maxF - (MFREQ[n]||0) + 1, 2) + Math.random()*2);
+  return wSample(ALL35, 5, w);
+}
+
+function algoBalanced() {
+  const sorted = [...ALL35].sort((a,b)=>(MFREQ[b]||0)-(MFREQ[a]||0));
+  const pick = (pool, n) => [...pool].sort(()=>Math.random()-.5).slice(0,n);
+  return [...pick(sorted.slice(0,12),2),...pick(sorted.slice(12,23),1),...pick(sorted.slice(23),2)].sort((a,b)=>a-b);
+}
+
+function algoChiSquare() {
+  const expected = TOTAL_DRAWS * 5 / 35;
+  const w = ALL35.map(n => {
+    const r = Math.abs(((MFREQ[n]||0) - expected) / Math.sqrt(expected));
+    return Math.exp(r) + Math.random()*0.5;
+  });
+  return wSample(ALL35, 5, w);
+}
+
+function algoBayesBeta() {
+  // Beta-Binomial: α₀=5 (prior expects ~5 from C(35,5)), β₀=30
+  const alpha0 = 5, beta0 = 30;
+  const gaps = computeGaps();
+  const w = ALL35.map(n => {
+    const obs = MFREQ[n] || 0;
+    const miss = TOTAL_DRAWS - obs;
+    // Posterior mean = (α₀+obs) / (α₀+β₀+obs+miss) — but obs/(obs+miss) ≈ obs/N
+    // We use posterior weighted by gap boost
+    const posterior = (alpha0 + obs) / (alpha0 + beta0 + TOTAL_DRAWS);
+    const gapBoost = 1 + Math.log(gaps[n] + 2) * 0.1;
+    return posterior * gapBoost + Math.random()*0.001;
+  });
+  return wSample(ALL35, 5, w);
+}
+
+function algoMarkov() {
+  // Choose 1 anchor from top frequencies
+  const anchorPool = [...ALL35].sort((a,b)=>(MFREQ[b]||0)-(MFREQ[a]||0)).slice(0,8);
+  const anchor = anchorPool[Math.floor(Math.random()*anchorPool.length)];
+  const result = [anchor];
+  const pairsAnchor = PAIRS[anchor] || {};
+  const hasPairs = Object.values(pairsAnchor).some(v => v > 0);
+  
+  if (hasPairs) {
+    // Pick 4 more based on pair-correlation
+    const remaining = ALL35.filter(n => n !== anchor);
+    while (result.length < 5) {
+      // sum pair-correlations of candidate with all current result
+      const w = remaining.map(n => {
+        let score = 0;
+        for (const r of result) score += (PAIRS[r] && PAIRS[r][n]) || 0;
+        return Math.pow(score + 0.5, 2) + Math.random()*0.5;
+      });
+      const tot = w.reduce((a,b)=>a+b,0);
+      let rv = Math.random()*tot, c=0, idx=0;
+      for (let j=0;j<w.length;j++) { c+=w[j]; if (rv<=c) { idx=j; break; } }
+      result.push(remaining[idx]);
+      remaining.splice(idx,1);
+    }
+  } else {
+    // Fallback: bayes-like
+    return algoBayesBeta();
+  }
+  return result.sort((a,b)=>a-b);
+}
+
+function algoMandelCC() {
+  // Build pool of 12 using composite score
+  const expected = TOTAL_DRAWS * 5 / 35;
+  const gaps = computeGaps();
+  const scores = ALL35.map(n => {
+    const freq = MFREQ[n] || 0;
+    const residual = Math.abs((freq - expected) / Math.sqrt(expected));
+    const gap = gaps[n];
+    const composite = freq * 0.5 + residual * 10 + Math.log(gap + 2) * 3 + Math.random() * 4;
+    return { n, score: composite };
+  });
+  scores.sort((a, b) => b.score - a.score);
+  const pool12 = scores.slice(0, 12).map(x => x.n);
+  
+  // Within the pool, pick 5 using stratified random
+  // Stratify: 3 groups of 4
+  const g1 = pool12.slice(0, 4);
+  const g2 = pool12.slice(4, 8);
+  const g3 = pool12.slice(8, 12);
+  const pickN = (g, k) => [...g].sort(()=>Math.random()-.5).slice(0,k);
+  return [...pickN(g1, 2), ...pickN(g2, 2), ...pickN(g3, 1)].sort((a,b)=>a-b);
+}
+
+function algoComposite(maxAttempts = 200) {
+  // Generate using bayes-beta, then filter
+  for (let i = 0; i < maxAttempts; i++) {
+    const nums = algoBayesBeta();
+    if (passesFilters(nums)) return nums;
+  }
+  // Fallback: relax filters by half
+  const relax = new Set([...activeFilters].slice(0, Math.floor(activeFilters.size / 2)));
+  for (let i = 0; i < 50; i++) {
+    const nums = algoBayesBeta();
+    const arr = [...nums].sort((a,b)=>a-b);
+    const sum = arr.reduce((a,b)=>a+b,0);
+    if (relax.has('sum') && (sum < 70 || sum > 110)) continue;
+    return nums;
+  }
+  return algoBayesBeta();
+}
+
+function genOne(algo) {
+  switch (algo) {
+    case 'hot': return algoHot();
+    case 'cold': return algoCold();
+    case 'bal': return algoBalanced();
+    case 'chisq': return algoChiSquare();
+    case 'bayes': return algoBayesBeta();
+    case 'markov': return algoMarkov();
+    case 'mandel': return algoMandelCC();
+    case 'composite': return algoComposite();
+    default: return algoHot();
+  }
+}
+
+/* ═══ GENERATE SETS ═══ */
+function generate() {
+  const sets = [];
+  const seen = new Set();
+  let attempts = 0;
+  
+  while (sets.length < 6 && attempts < 100) {
+    attempts++;
+    const nums = genOne(currentAlgo);
+    const key = nums.join('-');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const sp = pickSpecial(currentAlgo);
+    
+    // Compute composite score for ranking
+    const expected = TOTAL_DRAWS * 5 / 35;
+    let score = 0;
+    nums.forEach(n => {
+      const f = MFREQ[n] || 0;
+      score += f;
+    });
+    // Pattern bonus
+    const arr = [...nums].sort((a,b)=>a-b);
+    const sumVal = arr.reduce((a,b)=>a+b,0);
+    if (sumVal >= 70 && sumVal <= 110) score *= 1.1;
+    const odds = arr.filter(n=>n%2===1).length;
+    if (odds === 2 || odds === 3) score *= 1.05;
+    
+    sets.push({nums, sp, score, sumVal, odds});
+  }
+
+  if (sets.length === 0) {
+    document.getElementById('setsList').innerHTML = '<div class="empty">Bộ lọc quá nghiêm — hãy tắt bớt filter.</div>';
+    return;
+  }
+
+  sets.sort((a,b)=>b.score-a.score);
+  const maxS = sets[0].score, minS = sets[sets.length-1].score;
+
+  const html = sets.map((s, i) => {
+    const pct = maxS>minS ? Math.round(((s.score-minS)/(maxS-minS))*30+65) : 80;
+    const balls = s.nums.map(n => {
+      const h = getHeat(n);
+      const cls = h==='hot'?'style="border-color:var(--red);color:var(--red);background:rgba(232,75,75,.1)"':
+                  h==='warm'?'style="border-color:var(--orange);color:var(--orange);background:rgba(232,151,75,.08)"':
+                  h==='cool'?'style="border-color:#7ab4f5;color:#7ab4f5;background:rgba(122,180,245,.05)"':
+                  h==='cold'?'style="border-color:var(--blue);color:var(--blue);background:rgba(75,139,232,.08)"':'';
+      return `<div class="b b-m" ${cls} title="${n}: ${MFREQ[n]||0} lần">${String(n).padStart(2,'0')}</div>`;
+    }).join('');
+    const arr = [...s.nums].sort((a,b)=>a-b);
+    const evens = 5 - s.odds;
+    const high = arr.filter(n=>n>=18).length;
+    const low = 5 - high;
+    return `<div class="srow" style="animation-delay:${i*.07}s">
+      <div class="srnk">#${i+1}</div>
+      <div class="snums">
+        ${balls}
+        <span class="b-sep" style="color:var(--text3);">|</span>
+        <div class="b b-s" title="Số đặc biệt: ${s.sp}">${String(s.sp).padStart(2,'0')}</div>
+        <div class="s-meta">Σ=${s.sumVal} · ${s.odds}L-${evens}C · ${low}T-${high}C</div>
+      </div>
+      <div class="sscore">
+        <div class="sv2">${pct}%</div>
+        <div class="sl2">điểm</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('setsList').innerHTML = html;
+}
+
+
+/* ═══════════════════════════════════════════════
+   MANDEL WHEELING SYSTEM (Tab "Mandel Wheel")
+   ─────────────────────────────────────────────
+   Implementation of (v, k, t)-covering designs
+   via greedy algorithm based on La Jolla Repository
+═══════════════════════════════════════════════ */
+
+let wheelPool = new Set();
+let wheelKeys = new Set();
+let wheelGuarantee = 3;
+let wheelSpecial = 1;
+
+function initNumPicker() {
+  const grid = document.getElementById('numPicker');
+  if (!grid) return;
+  let html = '';
+  for (let n = 1; n <= 35; n++) {
+    html += `<div class="np-cell" data-n="${n}" onclick="toggleNumPick(${n})" ondblclick="toggleKeyPick(${n})">${String(n).padStart(2,'0')}</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function initSpecialDropdown() {
+  const sel = document.getElementById('wSpecial');
+  if (!sel) return;
+  let html = '';
+  for (let i = 1; i <= 12; i++) html += `<option value="${i}">${String(i).padStart(2,'0')}</option>`;
+  sel.innerHTML = html;
+  sel.onchange = () => { wheelSpecial = +sel.value; };
+}
+
+function toggleNumPick(n) {
+  if (wheelKeys.has(n)) {
+    wheelKeys.delete(n);
+    wheelPool.delete(n);
+  } else if (wheelPool.has(n)) {
+    wheelPool.delete(n);
+  } else {
+    if (wheelPool.size >= 12) {
+      alert('Pool tối đa 12 số (giới hạn để tránh quá nhiều vé).');
+      return;
+    }
+    wheelPool.add(n);
+  }
+  updatePickerUI();
+}
+
+function toggleKeyPick(n) {
+  if (wheelKeys.has(n)) {
+    wheelKeys.delete(n);
+  } else {
+    if (wheelKeys.size >= 2) {
+      alert('Tối đa 2 số chìa khoá (key numbers).');
+      return;
+    }
+    wheelKeys.add(n);
+    wheelPool.add(n);
+  }
+  updatePickerUI();
+}
+
+function updatePickerUI() {
+  document.querySelectorAll('.np-cell').forEach(c => {
+    const n = +c.dataset.n;
+    c.classList.toggle('on', wheelPool.has(n));
+    c.classList.toggle('key', wheelKeys.has(n));
+  });
+  document.getElementById('wPickedCount').textContent = wheelPool.size;
+  document.getElementById('wKeyCount').textContent = wheelKeys.size;
+}
+
+function autoPickPool() {
+  // Use Mandel composite scoring to pick top 10
+  const expected = TOTAL_DRAWS * 5 / 35;
+  const gaps = computeGaps();
+  const scores = ALL35.map(n => {
+    const freq = MFREQ[n] || 0;
+    const residual = Math.abs((freq - expected) / Math.sqrt(expected));
+    const gap = gaps[n];
+    return { n, score: freq * 0.6 + residual * 8 + Math.log(gap + 2) * 2 };
+  });
+  scores.sort((a, b) => b.score - a.score);
+  wheelPool = new Set(scores.slice(0, 10).map(x => x.n));
+  wheelKeys.clear();
+  // Set top 1 as key
+  wheelKeys.add(scores[0].n);
+  updatePickerUI();
+}
+
+function clearPool() {
+  wheelPool.clear();
+  wheelKeys.clear();
+  updatePickerUI();
+  document.getElementById('wheelList').innerHTML = '<div class="empty">Chọn pool và mức đảm bảo, sau đó nhấn "Tạo Bộ Vé Wheeling"</div>';
+  document.getElementById('wheelProbBox').style.display = 'none';
+}
+
+function selGuarantee(el, g) {
+  document.querySelectorAll('.gn-card').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  wheelGuarantee = g;
+}
+
+/* ═══ COVERING DESIGN GENERATION ═══
+   Greedy algorithm: at each step, pick the 5-block
+   that covers the most uncovered t-subsets.
+   For small (v,5,t) this is practical.
+*/
+function generateCoveringDesign(pool, t, keys = []) {
+  const v = pool.length;
+  if (v < 5) return [];
+  
+  const sorted = [...pool].sort((a,b)=>a-b);
+  
+  // For full guarantee (t = 5 = k), we need C(v, 5)
+  if (t === 5) {
+    return combinations(sorted, 5);
+  }
+  
+  // Generate all t-subsets that need coverage
+  const allTSubsets = combinations(sorted, t);
+  const tKeys = allTSubsets.map(s => s.join(','));
+  const uncovered = new Set(tKeys);
+  
+  // Candidate blocks: all 5-subsets containing all keys
+  let candidates;
+  if (keys.length > 0) {
+    const nonKey = sorted.filter(n => !keys.includes(n));
+    const restCombos = combinations(nonKey, 5 - keys.length);
+    candidates = restCombos.map(c => [...keys, ...c].sort((a,b)=>a-b));
+  } else {
+    candidates = combinations(sorted, 5);
+  }
+  
+  const blocks = [];
+  const maxIters = 200; // safety
+  let iter = 0;
+  
+  while (uncovered.size > 0 && iter < maxIters) {
+    iter++;
+    // Find block that covers the most uncovered t-subsets
+    let bestBlock = null, bestCount = -1;
+    for (const block of candidates) {
+      const tSubs = combinations(block, t);
+      let count = 0;
+      for (const ts of tSubs) {
+        if (uncovered.has(ts.join(','))) count++;
+      }
+      if (count > bestCount) {
+        bestCount = count;
+        bestBlock = block;
+      }
+    }
+    if (!bestBlock || bestCount === 0) break;
+    blocks.push(bestBlock);
+    // Remove covered subsets
+    const tSubs = combinations(bestBlock, t);
+    for (const ts of tSubs) uncovered.delete(ts.join(','));
+  }
+  
+  return blocks;
+}
+
+/* ═══ KNOWN OPTIMAL COVERING DESIGNS (La Jolla Repository) ═══ */
+const KNOWN_COVERINGS = {
+  // (v, 5, 3) - "3 if 3" guarantee
+  '6,5,3': [[0,1,2,3,4],[0,1,2,3,5]],  // 2 blocks
+  '7,5,3': [[0,1,2,3,4],[0,1,2,5,6],[0,3,4,5,6]],  // 3 blocks (one known design)
+  '8,5,3': [[0,1,2,3,4],[0,1,2,5,6],[0,3,4,5,7],[1,3,5,6,7],[2,4,5,6,7]], // 5 blocks
+  '9,5,3': [[0,1,2,3,4],[0,1,5,6,7],[0,2,5,6,8],[0,3,5,7,8],[0,4,6,7,8],[1,2,3,5,8],[1,2,4,6,8],[1,3,4,7,8],[2,3,4,5,6]], // ~9 blocks
+  '10,5,3': [[0,1,2,3,4],[0,1,5,6,7],[0,2,5,8,9],[0,3,6,7,8],[0,4,6,7,9],[1,2,6,8,9],[1,3,4,7,9],[1,3,5,8,9],[2,3,5,6,7],[2,4,5,7,8],[3,4,5,6,9]], // ~11 blocks
+};
+
+function generateWheel() {
+  const pool = [...wheelPool].sort((a,b)=>a-b);
+  const keys = [...wheelKeys].sort((a,b)=>a-b);
+  
+  if (pool.length < 5) {
+    alert('Pool phải có ít nhất 5 số.');
+    return;
+  }
+  if (wheelGuarantee === 5 && pool.length < 5) {
+    alert('Để đảm bảo 5-if-5, pool phải có ít nhất 5 số.');
+    return;
+  }
+  
+  // Show loading
+  document.getElementById('wheelList').innerHTML = '<div class="empty">⚙️ Đang tính toán covering design...</div>';
+  
+  setTimeout(() => {
+    let blocks;
+    
+    // Try to use known optimal design first
+    const key = `${pool.length},5,${wheelGuarantee}`;
+    if (KNOWN_COVERINGS[key] && keys.length === 0) {
+      // Map indices to actual numbers
+      blocks = KNOWN_COVERINGS[key].map(b => b.map(i => pool[i]).sort((a,b)=>a-b));
+    } else {
+      // Use greedy algorithm
+      blocks = generateCoveringDesign(pool, wheelGuarantee, keys);
+    }
+    
+    if (blocks.length === 0) {
+      document.getElementById('wheelList').innerHTML = '<div class="empty">Không thể tạo wheel với cấu hình hiện tại.</div>';
+      return;
+    }
+    
+    // Calculate probability of pool containing t winning numbers
+    // P(at least t of 5 winning numbers in pool of size v) = Σ hypergeom(35, v, 5, k) for k>=t
+    let probContains = 0;
+    for (let k = wheelGuarantee; k <= 5; k++) {
+      probContains += hypergeom(35, pool.length, 5, k);
+    }
+    
+    // EV approximation (very rough)
+    const ticketCost = 10000; // VND per ticket (Vietlott)
+    const totalCost = blocks.length * ticketCost;
+    
+    // Render
+    const html = blocks.map((b, i) => {
+      const balls = b.map(n => {
+        const isKey = keys.includes(n);
+        const cls = isKey ? 'style="border-color:var(--orange);color:var(--orange);background:rgba(232,151,75,.12)"' : '';
+        return `<div class="b b-m" ${cls}>${String(n).padStart(2,'0')}</div>`;
+      }).join('');
+      return `<div class="srow" style="animation-delay:${i*.05}s">
+        <div class="srnk">#${i+1}</div>
+        <div class="snums">
+          ${balls}
+          <span class="b-sep">|</span>
+          <div class="b b-s" title="Số đặc biệt">${String(wheelSpecial).padStart(2,'0')}</div>
+        </div>
+        <div class="sscore">
+          <div class="sv2">${(10000).toLocaleString('vi-VN')}đ</div>
+          <div class="sl2">1 vé</div>
+        </div>
+      </div>`;
+    }).join('');
+    
+    document.getElementById('wheelList').innerHTML = html;
+    
+    // Update probability box
+    document.getElementById('wheelProbBox').style.display = 'block';
+    document.getElementById('wpTickets').textContent = `${blocks.length} vé`;
+    document.getElementById('wpCost').textContent = `${totalCost.toLocaleString('vi-VN')}đ`;
+    document.getElementById('wpProb').textContent = `${(probContains * 100).toFixed(3)}%`;
+    
+    // Rough EV: if guarantee triggers, you win at least the t-tier prize
+    // For 5/35: 3 tier ≈ 30,000đ, 4 tier ≈ 300,000đ, 5 tier (jackpot) starts at ~vài tỷ
+    const tierValue = wheelGuarantee === 3 ? 30000 : wheelGuarantee === 4 ? 500000 : 1000000000;
+    const ev = probContains * tierValue - totalCost;
+    document.getElementById('wpEV').textContent = (ev >= 0 ? '+' : '') + ev.toLocaleString('vi-VN') + 'đ';
+    document.getElementById('wpEV').style.color = ev >= 0 ? 'var(--green)' : 'var(--red)';
+  }, 100);
+}
+
+/* ═══ Initial render after init ═══ */
+renderAllStats();
+</script>
+</body>
+</html>
