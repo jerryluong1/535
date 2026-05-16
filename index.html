@@ -724,21 +724,21 @@ function hypergeom(N, K, m, k) {
 
 /* ═══ STORAGE ═══ */
 async function saveDraws(arr) {
-  try { await window.storage.set('lotto535_draws_v2', JSON.stringify(arr)); } catch(e){}
+  try { await window.storage.set('draws_v2', JSON.stringify(arr)); } catch(e){}
 }
 async function loadDraws() {
   try {
-    const r = await window.storage.get('lotto535_draws_v2');
+    const r = await window.storage.get('draws_v2');
     if (r) return JSON.parse(r.value);
   } catch(e){}
   return [];
 }
 async function saveFreq(mf, sf, total, freshness) {
-  try { await window.storage.set('lotto535_freq_v2', JSON.stringify({mf,sf,total,freshness,ts:Date.now()})); } catch(e){}
+  try { await window.storage.set('freq_v2', JSON.stringify({mf,sf,total,freshness,ts:Date.now()})); } catch(e){}
 }
 async function loadFreq() {
   try {
-    const r = await window.storage.get('lotto535_freq_v2');
+    const r = await window.storage.get('freq_v2');
     if (r) {
       const d = JSON.parse(r.value);
       const age = (Date.now() - d.ts) / 1000 / 60 / 60;
@@ -943,7 +943,7 @@ let CURRENT_FORECAST = null;  // { mains:[], special:n, conf, breakdown:{...}, t
 
 async function loadAutoUpdatePrefs() {
   try {
-    const r = await window.storage.get('lotto535_autoupd_v2');
+    const r = await window.storage.get('autoupd_v2');
     if (r) {
       const p = JSON.parse(r.value);
       AUTO_UPD_ENABLED = !!p.enabled;
@@ -957,7 +957,7 @@ async function saveAutoUpdatePrefs() {
   try {
     const sel = document.getElementById('autoUpdInterval');
     if (sel) AUTO_UPD_INTERVAL_MIN = parseInt(sel.value, 10) || 60;
-    await window.storage.set('lotto535_autoupd_v2', JSON.stringify({
+    await window.storage.set('autoupd_v2', JSON.stringify({
       enabled: AUTO_UPD_ENABLED,
       interval: AUTO_UPD_INTERVAL_MIN,
       lastFetch: LAST_FETCH_TS
