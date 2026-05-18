@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hệ Thống Phân Tích Khoa Học v2.0</title>
+<title>535 5/35 — Hệ Thống Phân Tích Khoa Học v2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
@@ -66,6 +66,70 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 .auto-interval{background:#1a1b1e;border:1px solid var(--bdr);color:var(--text);font-family:'Space Mono',monospace;font-size:.7rem;padding:3px 8px;border-radius:6px;cursor:pointer;}
 .auto-next{font-family:'Space Mono',monospace;color:var(--gold2);font-size:.7rem;margin-left:auto;}
 .auto-next .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;animation:pulse 1.5s infinite;vertical-align:middle;}
+
+/* ═══ DEBUG PANEL ═══ */
+.dbg-bar{display:flex;gap:6px;width:100%;padding-top:8px;border-top:1px solid var(--bdr);margin-top:4px;flex-wrap:wrap;align-items:center;}
+.dbg-btn{background:transparent;border:1px solid #3a3d42;color:var(--text2);font-family:'Space Mono',monospace;font-size:.65rem;padding:4px 10px;border-radius:5px;cursor:pointer;transition:.15s;}
+.dbg-btn:hover{border-color:var(--gold);color:var(--gold2);}
+.dbg-btn.warn{border-color:#7a5418;color:#f0a070;}
+.dbg-panel{width:100%;background:#0a0b0d;border:1px solid #3a3d42;border-radius:6px;padding:.7rem .85rem;margin-top:6px;font-family:'Space Mono',monospace;font-size:.65rem;color:#a0a4ab;line-height:1.55;max-height:380px;overflow-y:auto;display:none;}
+.dbg-panel.on{display:block;}
+.dbg-panel h4{font-family:'Be Vietnam Pro',sans-serif;font-size:.7rem;color:var(--gold2);margin:.5rem 0 .25rem;font-weight:600;}
+.dbg-panel h4:first-child{margin-top:0;}
+.dbg-panel pre{background:#000;border:1px solid #2a2d32;border-radius:4px;padding:6px 8px;margin:0 0 6px;white-space:pre-wrap;word-break:break-all;color:#7ab4f5;font-size:.62rem;max-height:160px;overflow-y:auto;}
+.dbg-row{display:flex;gap:8px;margin:2px 0;}
+.dbg-row .k{color:#888;min-width:90px;}
+.dbg-row .v{color:#e5e7eb;flex:1;word-break:break-word;}
+.dbg-row .v.ok{color:#5dd49a;}
+.dbg-row .v.err{color:#f08080;}
+.dbg-row .v.warn{color:#f0a070;}
+.dbg-env-banner{font-size:.7rem;padding:.6rem .85rem;border-radius:6px;margin-bottom:.8rem;line-height:1.5;display:none;}
+.dbg-env-banner.show{display:block;}
+.dbg-env-banner.err{background:rgba(232,75,75,.1);border:1px solid rgba(232,75,75,.3);color:#f08080;}
+.dbg-env-banner.warn{background:rgba(240,160,112,.08);border:1px solid rgba(240,160,112,.25);color:#f0a070;}
+
+/* ═══ MANUAL INPUT ═══ */
+.man-input{background:linear-gradient(135deg,rgba(75,139,232,.04),rgba(75,139,232,.01));border:1px solid #2d3a4a;border-radius:10px;padding:0;margin-bottom:1.2rem;overflow:hidden;transition:all .25s;}
+.man-input.on .man-body{display:block;}
+.man-input.flash{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,168,67,.15);}
+.man-hdr{padding:.85rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;}
+.man-hdr:hover{background:rgba(255,255,255,.02);}
+.man-hdr-ic{font-size:1.1rem;}
+.man-hdr-title{flex:1;font-family:'Be Vietnam Pro',sans-serif;font-size:.85rem;color:var(--text);font-weight:600;}
+.man-hdr-sub{font-size:.65rem;color:var(--text2);}
+.man-hdr-arrow{color:var(--text2);font-size:.7rem;transition:transform .2s;}
+.man-input.on .man-hdr-arrow{transform:rotate(180deg);}
+.man-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--bdr);}
+.man-tabs{display:flex;gap:4px;margin:.85rem 0 .5rem;}
+.man-tab{background:transparent;border:1px solid var(--bdr);color:var(--text2);font-size:.7rem;padding:5px 12px;border-radius:5px;cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;}
+.man-tab.on{background:rgba(212,168,67,.1);border-color:var(--gold);color:var(--gold2);}
+.man-pane{display:none;}
+.man-pane.on{display:block;}
+.man-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px;margin-bottom:.6rem;}
+.man-form-cell{display:flex;flex-direction:column;gap:3px;}
+.man-form-cell label{font-size:.62rem;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;}
+.man-form-cell input{background:#0c0d0f;border:1px solid var(--bdr);color:var(--text);font-family:'Space Mono',monospace;font-size:.85rem;padding:6px 8px;border-radius:5px;text-align:center;}
+.man-form-cell input:focus{outline:none;border-color:var(--gold);}
+.man-form-cell input.sp{border-color:var(--gold);color:var(--gold2);background:rgba(212,168,67,.05);}
+.man-textarea{width:100%;background:#0a0b0d;border:1px solid var(--bdr);color:var(--text);font-family:'Space Mono',monospace;font-size:.72rem;padding:8px 10px;border-radius:6px;line-height:1.55;resize:vertical;min-height:90px;box-sizing:border-box;}
+.man-textarea:focus{outline:none;border-color:var(--gold);}
+.man-actions{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap;}
+.man-btn{background:linear-gradient(135deg,#6a5018,var(--gold));color:#0c0d0f;border:none;font-family:'Be Vietnam Pro',sans-serif;font-size:.72rem;font-weight:600;padding:.5rem .9rem;border-radius:6px;cursor:pointer;}
+.man-btn:hover{opacity:.9;}
+.man-btn.ghost{background:transparent;border:1px solid var(--bdr);color:var(--text2);}
+.man-btn:disabled{opacity:.4;cursor:not-allowed;}
+.man-preview{background:#0a0b0d;border:1px solid var(--bdr);border-radius:6px;padding:.6rem .75rem;margin-top:.65rem;font-size:.7rem;line-height:1.55;display:none;}
+.man-preview.on{display:block;}
+.man-preview h5{font-family:'Be Vietnam Pro',sans-serif;font-size:.7rem;color:var(--gold2);margin:0 0 6px;font-weight:600;}
+.man-pv-row{display:flex;align-items:center;gap:7px;padding:3px 0;font-family:'Space Mono',monospace;font-size:.7rem;border-bottom:1px solid rgba(255,255,255,.03);}
+.man-pv-row:last-child{border-bottom:none;}
+.man-pv-row.bad{color:#f08080;}
+.man-pv-row.ok{color:#5dd49a;}
+.man-pv-row .ky{color:#888;min-width:60px;}
+.man-pv-row .nums{flex:1;}
+.man-pv-row .sp{color:var(--gold2);}
+.man-hints{font-size:.65rem;color:var(--text2);line-height:1.55;margin-top:.55rem;padding:.5rem .7rem;background:rgba(255,255,255,.02);border-radius:5px;border-left:2px solid var(--gold);}
+.man-hints code{background:#1a1b1e;padding:1px 4px;border-radius:3px;color:var(--gold2);font-size:.92em;}
 
 /* ═══ FORECAST HERO CARD ═══ */
 .forecast-hero{background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(212,168,67,.02));border:1px solid rgba(212,168,67,.35);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1.2rem;position:relative;overflow:hidden;}
@@ -269,7 +333,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
 <div class="hdr">
   <div class="badge"><span class="live-dot"></span>HỆ THỐNG KHOA HỌC · V2.0 · MANDEL UPGRADED</div>
-  <h1>HTKH</h1>
+  <h1>535 Lotto 5/35</h1>
   <p class="sub">Phân tích tổ hợp đa tầng theo phương pháp <strong style="color:var(--gold2)">Stefan Mandel</strong> — Combinatorial Condensation · Wheeling Systems · Bayesian Inference · Chi-Square Analysis</p>
   <div class="mandel-quote">"Tôi chỉ là nhà toán học cuối tuần, nhưng toán ứng dụng — nếu dùng đúng cách — có thể đảm bảo cả một gia tài."<br>— Stefan Mandel (1934, Iași, Romania)</div>
   <div class="last-update" id="lastUpdateLabel">Dữ liệu cơ sở: 180 kỳ mẫu · Cập nhật 16/05/2026 · Nhấn "Cập nhật" để tải kỳ mới</div>
@@ -311,15 +375,15 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
     <div class="nd-sep"></div>
     <div>
       <div class="nd-label">Lịch Quay</div>
-      <div style="font-size:.8rem;color:var(--text2);margin-top:4px;">Hàng ngày lúc</div>
-      <div style="font-family:'Space Mono',monospace;font-size:.85rem;color:var(--gold);margin-top:2px;">18:00 (T2–CN)</div>
+      <div style="font-size:.8rem;color:var(--text2);margin-top:4px;">2 kỳ/ngày · T2–CN</div>
+      <div style="font-family:'Space Mono',monospace;font-size:.85rem;color:var(--gold);margin-top:2px;">13:00 &amp; 21:00</div>
     </div>
   </div>
 
   <div class="upd-bar">
     <div class="upd-info">
       <div class="upd-title">🤖 Cập Nhật Kết Quả Mới Nhất</div>
-      <div class="upd-sub" id="updSub">AI sẽ tìm kiếm kết quả các kỳ quay mới nhất từ VT</div>
+      <div class="upd-sub" id="updSub">AI sẽ tìm kiếm kết quả các kỳ quay mới nhất từ 535</div>
     </div>
     <button class="upd-btn" id="updBtn" onclick="fetchLatestResults()">
       <span id="updIcon">⟳</span> Cập Nhật Ngay
@@ -340,6 +404,68 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
       </select>
       <span class="auto-next" id="autoNext"></span>
     </div>
+    <div class="dbg-bar">
+      <button class="dbg-btn" onclick="toggleDebug()" id="dbgToggleBtn">🔧 Debug Panel</button>
+      <button class="dbg-btn" onclick="testApiConnection()" id="dbgTestBtn">⚡ Test API (không web_search)</button>
+      <button class="dbg-btn warn" onclick="testApiWithSearch()">🔍 Test API + web_search</button>
+      <button class="dbg-btn" onclick="copyDebugInfo()">📋 Sao Chép Debug</button>
+    </div>
+    <div class="dbg-panel" id="dbgPanel">
+      <div id="dbgContent">Chưa có lượt gọi nào. Bấm "Cập Nhật Ngay" hoặc "Test API" để xem chi tiết.</div>
+    </div>
+  </div>
+
+  <div id="envBanner" class="dbg-env-banner"></div>
+
+  <!-- ★ MANUAL INPUT ★ -->
+  <div class="man-input" id="manInput">
+    <div class="man-hdr" onclick="toggleManualInput()">
+      <span class="man-hdr-ic">✍️</span>
+      <div style="flex:1;">
+        <div class="man-hdr-title">Nhập Kết Quả Thủ Công</div>
+        <div class="man-hdr-sub">Dùng khi web search không tìm được dữ liệu</div>
+      </div>
+      <span class="man-hdr-arrow">▼</span>
+    </div>
+    <div class="man-body">
+      <div class="man-tabs">
+        <button class="man-tab on" onclick="switchManTab('single', this)">Nhập 1 kỳ</button>
+        <button class="man-tab" onclick="switchManTab('bulk', this)">Dán hàng loạt</button>
+      </div>
+
+      <div class="man-pane on" id="manPane-single">
+        <div class="man-form">
+          <div class="man-form-cell"><label>Kỳ</label><input type="text" id="mi-ky" placeholder="00605" maxlength="6"></div>
+          <div class="man-form-cell"><label>Ngày</label><input type="text" id="mi-date" placeholder="17/05/2026"></div>
+          <div class="man-form-cell"><label>Số 1</label><input type="number" id="mi-m1" min="1" max="35"></div>
+          <div class="man-form-cell"><label>Số 2</label><input type="number" id="mi-m2" min="1" max="35"></div>
+          <div class="man-form-cell"><label>Số 3</label><input type="number" id="mi-m3" min="1" max="35"></div>
+          <div class="man-form-cell"><label>Số 4</label><input type="number" id="mi-m4" min="1" max="35"></div>
+          <div class="man-form-cell"><label>Số 5</label><input type="number" id="mi-m5" min="1" max="35"></div>
+          <div class="man-form-cell"><label>Đặc biệt</label><input type="number" id="mi-sp" class="sp" min="1" max="12"></div>
+        </div>
+        <div class="man-actions">
+          <button class="man-btn" onclick="addManualSingle()">+ Thêm Kỳ Này</button>
+          <button class="man-btn ghost" onclick="clearManualSingle()">Xóa</button>
+        </div>
+      </div>
+
+      <div class="man-pane" id="manPane-bulk">
+        <textarea class="man-textarea" id="mi-bulk" placeholder="Dán kết quả vào đây. Mỗi kỳ một dòng. Bot tự nhận diện nhiều định dạng:
+00605, 17/05/2026, 3, 12, 19, 24, 31, 7
+00604 17/05/2026 5 11 18 22 29 4
+Kỳ 603 ngày 16/05/2026: 02-08-15-23-30 ĐB 09"></textarea>
+        <div class="man-hints">
+          💡 <strong>Định dạng tự do</strong> — chỉ cần dòng nào có: số kỳ (3-6 chữ số), ngày <code>DD/MM/YYYY</code>, 5 số chính (1-35, không trùng), và 1 số đặc biệt (1-12). Cách nhau bằng dấu phẩy, dấu cách, dấu gạch ngang đều được. Bấm <strong>Xem trước</strong> để kiểm tra parser nhận đúng chưa.
+        </div>
+        <div class="man-actions">
+          <button class="man-btn ghost" onclick="previewBulk()">👁 Xem Trước</button>
+          <button class="man-btn" id="manAddBulkBtn" onclick="addManualBulk()" disabled>+ Thêm Vào Dữ Liệu</button>
+          <button class="man-btn ghost" onclick="document.getElementById('mi-bulk').value=''; document.getElementById('manPreview').classList.remove('on'); document.getElementById('manAddBulkBtn').disabled=true;">Xóa</button>
+        </div>
+        <div class="man-preview" id="manPreview"></div>
+      </div>
+    </div>
   </div>
 
   <div class="feed-hdr">
@@ -347,7 +473,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
     <div class="draw-count" id="drawCount">— kỳ</div>
   </div>
   <div class="results-list" id="resultsList">
-    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất</div>
+    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất từ 535</div>
   </div>
 </div>
 
@@ -588,7 +714,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
     <p><strong>Giai đoạn 2 (Australia, USA, 1980–1992):</strong> Khi sang Australia, ông chuyển sang chiến lược <em>"Buying the Pot"</em> — <strong>mua toàn bộ tổ hợp</strong> khi jackpot lớn hơn tổng chi phí mua tất cả vé. Đỉnh cao là <strong>Virginia Lottery 1992</strong>: jackpot $27 triệu, 7.1 triệu tổ hợp 6/44, đội của ông mua ~5 triệu vé và trúng đậm. Sau đó, các nước đồng loạt sửa luật cấm mua hàng loạt.</p>
 
-    <h3>Áp dụng cho 535 — Sự thật khoa học</h3>
+    <h3>Áp dụng cho 535 5/35 — Sự thật khoa học</h3>
     <ul>
       <li>Tổng tổ hợp đầy đủ: <code>C(35,5) × 12 = 3,895,584 vé</code> — quá lớn để "buying the pot" (cần ~39 tỷ VND để mua hết, jackpot tối đa ~vài tỷ).</li>
       <li>Phương pháp <strong>Combinatorial Condensation</strong> vẫn áp dụng được: dùng covering wheel để tạo các bộ vé tối ưu cho 1 pool nhỏ.</li>
@@ -670,7 +796,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
 <script>
 /* ═══════════════════════════════════════════════
- 535 — SCIENTIFIC ANALYSIS ENGINE v2.0
+   535 5/35 — SCIENTIFIC ANALYSIS ENGINE v2.0
    ─────────────────────────────────────────────
    Phương pháp triển khai:
    • Stefan Mandel — Combinatorial Condensation (1964)
@@ -724,21 +850,21 @@ function hypergeom(N, K, m, k) {
 
 /* ═══ STORAGE ═══ */
 async function saveDraws(arr) {
-  try { await window.storage.set('draws_v2', JSON.stringify(arr)); } catch(e){}
+  try { await window.storage.set('lotto535_draws_v2', JSON.stringify(arr)); } catch(e){}
 }
 async function loadDraws() {
   try {
-    const r = await window.storage.get('draws_v2');
+    const r = await window.storage.get('lotto535_draws_v2');
     if (r) return JSON.parse(r.value);
   } catch(e){}
   return [];
 }
 async function saveFreq(mf, sf, total, freshness) {
-  try { await window.storage.set('freq_v2', JSON.stringify({mf,sf,total,freshness,ts:Date.now()})); } catch(e){}
+  try { await window.storage.set('lotto535_freq_v2', JSON.stringify({mf,sf,total,freshness,ts:Date.now()})); } catch(e){}
 }
 async function loadFreq() {
   try {
-    const r = await window.storage.get('freq_v2');
+    const r = await window.storage.get('lotto535_freq_v2');
     if (r) {
       const d = JSON.parse(r.value);
       const age = (Date.now() - d.ts) / 1000 / 60 / 60;
@@ -772,6 +898,9 @@ async function loadFreq() {
   countdown();
   setInterval(countdown, 1000);
 
+  // ═══ ENVIRONMENT DETECTION ═══
+  detectEnvironment();
+
   // ═══ AUTO-UPDATE + FORECAST INIT ═══
   await loadAutoUpdatePrefs();
   const cb = document.getElementById('autoUpdToggle');
@@ -804,83 +933,170 @@ function switchTab(id, el) {
   if (id === 'patterns') renderPatterns();
 }
 
-/* ═══ COUNTDOWN ═══ */
+/* ═══ COUNTDOWN — Lotto 5/35: 2 kỳ/ngày lúc 13:00 và 21:00 ═══ */
 function countdown() {
   const now = new Date();
-  const t = new Date(now); t.setHours(18, 0, 0, 0);
+  const hh = now.getHours(), mm = now.getMinutes();
   let next, nextLabel;
-  if (t > now) { next = t; nextLabel = '18:00 hôm nay'; }
-  else { next = new Date(now); next.setDate(next.getDate() + 1); next.setHours(18, 0, 0, 0); nextLabel = '18:00 ngày mai'; }
+
+  if (hh < 13 || (hh === 13 && mm === 0 && now.getSeconds() === 0)) {
+    next = new Date(now); next.setHours(13, 0, 0, 0);
+    nextLabel = '13:00 hôm nay';
+  } else if (hh < 21 || (hh === 21 && mm === 0 && now.getSeconds() === 0)) {
+    next = new Date(now); next.setHours(21, 0, 0, 0);
+    nextLabel = '21:00 hôm nay';
+  } else {
+    next = new Date(now); next.setDate(next.getDate() + 1); next.setHours(13, 0, 0, 0);
+    nextLabel = '13:00 ngày mai';
+  }
+
   const diff = Math.floor((next - now) / 1000);
-  const hh = Math.floor(diff / 3600), mm = Math.floor((diff % 3600) / 60), ss = diff % 60;
+  const dh = Math.floor(diff / 3600), dm = Math.floor((diff % 3600) / 60), ds = diff % 60;
   document.getElementById('nextDrawTime').textContent = nextLabel;
   document.getElementById('countdown').textContent =
-    `Còn ${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+    `Còn ${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}:${String(ds).padStart(2,'0')}`;
 }
 
-/* ═══ FETCH LATEST RESULTS via Anthropic API ═══ */
+/* ═══ ROBUST JSON EXTRACTION ═══ */
+function extractJSON(text) {
+  if (!text || typeof text !== 'string') return null;
+
+  // Strategy 1: try parsing the whole text directly
+  try {
+    const p = JSON.parse(text.trim());
+    if (p && typeof p === 'object') return p;
+  } catch(e) {}
+
+  // Strategy 2: strip markdown code fence ```json ... ``` or ``` ... ```
+  const fence = text.match(/```(?:json|JSON)?\s*([\s\S]*?)```/);
+  if (fence) {
+    try {
+      const p = JSON.parse(fence[1].trim());
+      if (p && typeof p === 'object') return p;
+    } catch(e) {}
+  }
+
+  // Strategy 3: brace-counting scan to find first balanced { ... } that contains "draws"
+  let candidates = [];
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== '{') continue;
+    let depth = 0, inStr = false, esc = false;
+    for (let j = i; j < text.length; j++) {
+      const ch = text[j];
+      if (esc) { esc = false; continue; }
+      if (ch === '\\') { esc = true; continue; }
+      if (ch === '"') { inStr = !inStr; continue; }
+      if (inStr) continue;
+      if (ch === '{') depth++;
+      else if (ch === '}') {
+        depth--;
+        if (depth === 0) {
+          const cand = text.slice(i, j + 1);
+          if (cand.includes('"draws"') || cand.includes('"main"')) candidates.push(cand);
+          break;
+        }
+      }
+    }
+  }
+  // Try the longest candidate first (most likely to be the complete object)
+  candidates.sort((a, b) => b.length - a.length);
+  for (const c of candidates) {
+    try {
+      const p = JSON.parse(c);
+      if (p && p.draws) return p;
+    } catch(e) {}
+  }
+
+  return null;
+}
+
+/* ═══ FETCH LATEST RESULTS — uses centralized callAnthropic ═══ */
 async function fetchLatestResults() {
   const btn = document.getElementById('updBtn');
   const icon = document.getElementById('updIcon');
   const sub = document.getElementById('updSub');
   btn.disabled = true;
   icon.className = 'spin'; icon.textContent = '⟳';
-  setStatus('info', '🔍 AI đang tìm kiếm kết quả 535 mới nhất...');
+  setStatus('info', '🔍 AI đang tìm kết quả 535 Lotto 5/35 mới nhất...');
 
   const today = new Date();
   const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
+  const lastKnown = DRAWS.length > 0 ? DRAWS[0].ky : '(chưa có)';
 
-  const prompt = `Hôm nay là ${dateStr}. Hãy tìm và trả về kết quả 20 kỳ quay mới nhất của 535 (5/35).
+  const prompt = `Hôm nay là ${dateStr}. Tìm kết quả xổ số 535 LOTTO 5/35 (Mega 5/35) — 20 kỳ quay gần nhất.
 
-Tìm trên: vietlott.vn, minhchinh.com, ketquadientoan.com, xosomienbac.com.vn
+Lotto 5/35 quay 2 kỳ/ngày lúc 13:00 và 21:00. Kỳ gần nhất tôi đã có: ${lastKnown}.
 
-Trả về CHÍNH XÁC JSON này, KHÔNG markdown, KHÔNG text phụ:
-{
-  "draws": [
-    {"ky": "00601", "date": "16/05/2026", "main": [n1,n2,n3,n4,n5], "special": n},
-    ...
-  ],
-  "total_draws_to_date": 620,
-  "note": "mô tả ngắn"
-}
+CHIẾN LƯỢC TÌM KIẾM (làm theo thứ tự, không bỏ qua bước nào):
+1. web_search với các query KHÁC NHAU. Mỗi query nên CHỨA SẴN ngày cụ thể vì search engine thường index số trong tiêu đề/snippet khi có ngày:
+   - "kết quả lotto 5/35 ngày ${dateStr}"
+   - "535 5 35 ${today.getDate()}/${today.getMonth()+1}"
+   - "lotto 5 35 kỳ #00605 OR #00604 OR #00603 kết quả"
+   - "xskt lotto 5/35 chiều tối nay"
+2. NẾU search snippets không có bộ số cụ thể, thử web_search trên các trang aggregator:
+   - "site:minhchinh.com lotto 5/35"
+   - "site:xskt.com.vn lotto 5-35"
+   - "site:xosothantai.com lotto 5-35"
+   - "facebook.com 535 lotto 5/35 ${today.getDate()}/${today.getMonth()+1}"
+3. Tìm bài tin tức, blog, forum (webtretho, voz, tinhte) đăng kết quả gần đây.
+4. CHẤP NHẬN kết quả CŨ HƠN nếu kỳ mới không có (vẫn hữu ích vì sẽ bổ sung dữ liệu lịch sử).
 
-Mảng main: 5 số nguyên từ 1-35. Special: 1 số từ 1-12.`;
+QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
+- LUÔN trả về CHỈ một object JSON hợp lệ, KHÔNG markdown, KHÔNG code fence, KHÔNG giải thích ngoài JSON.
+- Nếu KHÔNG tìm được kỳ nào với số cụ thể: trả về {"draws":[], "total_draws_to_date":0, "note":"<giải thích ngắn vì sao>"}.
+- Nếu tìm được kỳ cũ hơn ${lastKnown} hoặc đã có: vẫn cứ trả về, code sẽ tự lọc trùng.
+- TUYỆT ĐỐI KHÔNG bịa số. Thà trả mảng rỗng còn hơn.
+
+Định dạng (ví dụ):
+{"draws":[{"ky":"00605","date":"17/05/2026 21:00","main":[3,12,19,24,31],"special":7}],"total_draws_to_date":605,"note":""}
+- "ky": chuỗi 5 chữ số (có 0 đứng đầu).
+- "main": mảng 5 số nguyên 1-35, không trùng.
+- "special": số nguyên 1-12.`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2500,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
+    await callAnthropic({
+      prompt,
+      useWebSearch: true,
+      mode: 'FETCH_RESULTS',
+      maxTokens: 4096
     });
 
-    if (!res.ok) throw new Error(`API error ${res.status}`);
-    const data = await res.json();
-    const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+    const rawText = DBG_LAST.rawText || '';
+    if (!rawText) {
+      throw new Error(`Không có text trả về (stop_reason: ${DBG_LAST.stopReason || 'unknown'}). Mở Debug Panel để xem chi tiết.`);
+    }
 
-    let parsed = null;
-    try {
-      const jsonMatch = textBlocks.match(/\{[\s\S]*"draws"[\s\S]*\}/);
-      if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
-    } catch(e) {}
+    const parsed = extractJSON(rawText);
+    DBG_LAST.parsedOk = !!(parsed && Array.isArray(parsed.draws));
 
-    if (!parsed || !parsed.draws || !Array.isArray(parsed.draws))
-      throw new Error('Không thể phân tích dữ liệu trả về');
+    if (!parsed || !Array.isArray(parsed.draws)) {
+      // Model returned explanation instead of JSON — treat as "no data found"
+      const preview = rawText.substring(0, 200).replace(/\s+/g, ' ');
+      setStatus('err', `⚠ AI không tìm được dữ liệu qua web search. Các trang 535 render bằng JavaScript nên không xuất hiện trong snippets. Vui lòng nhập kết quả thủ công bên dưới ↓`);
+      DBG_LAST.error = `Mô hình trả text (không phải JSON): ${preview}`;
+      DBG_LAST.drawsFound = 0;
+      openManualInput();
+      return;
+    }
 
     const newDraws = parsed.draws.filter(d =>
-      d.main && d.main.length === 5 &&
+      d && d.main && Array.isArray(d.main) && d.main.length === 5 &&
       d.main.every(n => Number.isInteger(n) && n >= 1 && n <= 35) &&
-      Number.isInteger(d.special) && d.special >= 1 && d.special <= 12
+      Number.isInteger(d.special) && d.special >= 1 && d.special <= 12 &&
+      new Set(d.main).size === 5
     );
+    DBG_LAST.drawsFound = newDraws.length;
 
-    if (newDraws.length === 0) throw new Error('Không tìm thấy kết quả hợp lệ');
+    if (newDraws.length === 0) {
+      // Model returned valid JSON but with empty draws (or invalid entries)
+      const note = parsed.note || 'không có giải thích';
+      setStatus('err', `⚠ AI không tìm được kỳ quay nào trên web (${note}). 535 render kết quả bằng JS nên không index được. Vui lòng nhập thủ công ↓`);
+      openManualInput();
+      return;
+    }
 
-    const existingKeys = new Set(DRAWS.map(d => `${d.ky}`));
-    const trulyNew = newDraws.filter(d => !existingKeys.has(`${d.ky}`));
+    const existingKeys = new Set(DRAWS.map(d => String(d.ky)));
+    const trulyNew = newDraws.filter(d => !existingKeys.has(String(d.ky)));
 
     DRAWS = [...trulyNew.map(d => ({...d, isNew: true})), ...DRAWS].slice(0, 300);
     await saveDraws(DRAWS);
@@ -916,9 +1132,13 @@ Mảng main: 5 số nguyên từ 1-35. Special: 1 số từ 1-12.`;
       : `✅ Đã đồng bộ — ${newDraws.length} kỳ gần nhất không có thay đổi mới.`;
     setStatus('ok', msg);
     sub.textContent = `Lần cuối: ${now.toLocaleTimeString('vi-VN')}`;
+    renderDebug();
 
   } catch(err) {
-    setStatus('err', `❌ ${err.message} — Thử lại hoặc kiểm tra kết nối.`);
+    const errMsg = err.message || String(err);
+    setStatus('err', `❌ ${errMsg}`);
+    console.error('[535 Update]', err);
+    renderDebug();
   } finally {
     btn.disabled = false;
     icon.className = ''; icon.textContent = '⟳';
@@ -929,6 +1149,515 @@ function setStatus(type, msg) {
   const el = document.getElementById('updStatus');
   el.className = 'upd-status ' + type;
   el.textContent = msg;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ DEBUG SUITE ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+
+let DBG_LAST = null;  // { request, response, error, timestamp, mode }
+
+function detectEnvironment() {
+  const banner = document.getElementById('envBanner');
+  const proto = location.protocol;
+  const host = location.hostname || '(empty)';
+  const inClaude = host.includes('claude.ai') || host.includes('anthropic.com');
+
+  if (proto === 'file:') {
+    banner.className = 'dbg-env-banner show err';
+    banner.innerHTML = `⛔ <strong>Đang chạy ở chế độ file://</strong> — Tính năng tự động cập nhật chỉ hoạt động khi file được mở bên trong claude.ai (artifact viewer). Khi mở local, fetch đến api.anthropic.com bị chặn bởi CORS và không có token xác thực. Toàn bộ phân tích thống kê, thuật toán Bayes, χ², và Mandel Wheel vẫn dùng được bình thường trên dữ liệu hiện có.`;
+  } else if (!inClaude && proto === 'https:') {
+    banner.className = 'dbg-env-banner show warn';
+    banner.innerHTML = `⚠ Đang chạy ở domain <code>${host}</code> — không phải claude.ai. Anthropic API không exposed ra domain ngoài; tính năng tự động cập nhật có thể fail. Mở file này TRONG cuộc trò chuyện claude.ai để có đủ chức năng.`;
+  }
+}
+
+function toggleDebug() {
+  const p = document.getElementById('dbgPanel');
+  p.classList.toggle('on');
+  if (p.classList.contains('on')) renderDebug();
+}
+
+function renderDebug() {
+  const el = document.getElementById('dbgContent');
+  if (!DBG_LAST) {
+    el.innerHTML = '<em style="color:#888;">Chưa có lượt gọi nào. Bấm "Cập Nhật Ngay" hoặc "Test API" để xem chi tiết.</em>';
+    return;
+  }
+  const d = DBG_LAST;
+  const env = `${location.protocol}//${location.hostname || '(local)'}${location.pathname}`;
+  let html = '';
+
+  html += `<h4>Môi trường</h4>`;
+  html += `<div class="dbg-row"><span class="k">Location:</span><span class="v">${env}</span></div>`;
+  html += `<div class="dbg-row"><span class="k">User-Agent:</span><span class="v">${(navigator.userAgent || '').substring(0,120)}</span></div>`;
+  html += `<div class="dbg-row"><span class="k">Online:</span><span class="v ${navigator.onLine?'ok':'err'}">${navigator.onLine}</span></div>`;
+
+  html += `<h4>Lượt gọi cuối · ${d.mode}</h4>`;
+  html += `<div class="dbg-row"><span class="k">Thời điểm:</span><span class="v">${new Date(d.timestamp).toLocaleTimeString('vi-VN')}</span></div>`;
+  html += `<div class="dbg-row"><span class="k">Endpoint:</span><span class="v">${d.endpoint || '—'}</span></div>`;
+  html += `<div class="dbg-row"><span class="k">Model:</span><span class="v">${d.model || '—'}</span></div>`;
+
+  if (d.request) {
+    html += `<h4>Request body</h4>`;
+    html += `<pre>${escapeHtml(JSON.stringify(d.request, null, 2)).substring(0, 1500)}</pre>`;
+  }
+
+  if (d.httpStatus !== undefined) {
+    const cls = d.httpStatus >= 200 && d.httpStatus < 300 ? 'ok' : 'err';
+    html += `<div class="dbg-row"><span class="k">HTTP status:</span><span class="v ${cls}">${d.httpStatus} ${d.httpStatusText || ''}</span></div>`;
+  }
+
+  if (d.responseHeaders && Object.keys(d.responseHeaders).length > 0) {
+    html += `<h4>Response headers</h4>`;
+    html += `<pre>` + Object.entries(d.responseHeaders).map(([k,v]) => `${k}: ${v}`).join('\n') + `</pre>`;
+  }
+
+  if (d.bodyLength !== undefined) {
+    html += `<div class="dbg-row"><span class="k">Body length:</span><span class="v">${d.bodyLength} bytes</span></div>`;
+  }
+
+  if (d.rawBodyText) {
+    html += `<h4>★ Raw body (200 ký tự đầu) ★</h4>`;
+    html += `<pre style="color:#f0a070;border-color:#5a4018;">${escapeHtml(d.rawBodyText.substring(0, 200))}</pre>`;
+    if (d.rawBodyText.length > 200) {
+      html += `<h4>Raw body (đầy đủ, ${d.rawBodyText.length} ký tự)</h4>`;
+      html += `<pre>${escapeHtml(d.rawBodyText)}${d.rawBodyText.length >= 5000 ? '\n... [truncated tại 5000]' : ''}</pre>`;
+    }
+  }
+
+  if (d.stopReason) {
+    const cls = d.stopReason === 'end_turn' ? 'ok' : 'warn';
+    html += `<div class="dbg-row"><span class="k">stop_reason:</span><span class="v ${cls}">${d.stopReason}</span></div>`;
+  }
+
+  if (d.contentBlocks) {
+    html += `<div class="dbg-row"><span class="k">Content blocks:</span><span class="v">${d.contentBlocks.length}</span></div>`;
+    d.contentBlocks.forEach((b, i) => {
+      html += `<div class="dbg-row"><span class="k">  [${i}] type:</span><span class="v">${b.type}${b.length!==undefined?' · '+b.length+' chars':''}</span></div>`;
+    });
+  }
+
+  if (d.rawText) {
+    html += `<h4>Text trả về (${d.rawText.length} ký tự)</h4>`;
+    html += `<pre>${escapeHtml(d.rawText.substring(0, 2000))}${d.rawText.length > 2000 ? '\n... [truncated]' : ''}</pre>`;
+  }
+
+  if (d.parsedOk !== undefined) {
+    html += `<div class="dbg-row"><span class="k">JSON parsed:</span><span class="v ${d.parsedOk?'ok':'err'}">${d.parsedOk}</span></div>`;
+  }
+  if (d.drawsFound !== undefined) {
+    html += `<div class="dbg-row"><span class="k">Draws hợp lệ:</span><span class="v ${d.drawsFound>0?'ok':'err'}">${d.drawsFound}</span></div>`;
+  }
+  if (d.error) {
+    html += `<h4 style="color:#f08080;">Lỗi</h4>`;
+    html += `<pre style="color:#f08080;border-color:#5a2828;">${escapeHtml(d.error)}</pre>`;
+  }
+  if (d.rawApiResponse) {
+    html += `<h4>Full API response (rút gọn)</h4>`;
+    html += `<pre>${escapeHtml(JSON.stringify(d.rawApiResponse, null, 2)).substring(0, 1500)}</pre>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function copyDebugInfo() {
+  if (!DBG_LAST) { setStatus('info', 'Chưa có data debug.'); return; }
+  const env = `${location.protocol}//${location.hostname || '(local)'}${location.pathname}`;
+  const ua = navigator.userAgent || '';
+  const headers = DBG_LAST.responseHeaders ? Object.entries(DBG_LAST.responseHeaders).map(([k,v])=>`  ${k}: ${v}`).join('\n') : '(none)';
+  const txt = `=== 535 5/35 v2 Debug ===
+Location: ${env}
+UA: ${ua}
+Online: ${navigator.onLine}
+Time: ${new Date().toISOString()}
+
+Mode: ${DBG_LAST.mode}
+Endpoint: ${DBG_LAST.endpoint}
+Model: ${DBG_LAST.model}
+HTTP: ${DBG_LAST.httpStatus} ${DBG_LAST.httpStatusText || ''}
+Body length: ${DBG_LAST.bodyLength}
+stop_reason: ${DBG_LAST.stopReason || '(none)'}
+contentBlocks: ${(DBG_LAST.contentBlocks || []).map(b => b.type).join(', ')}
+parsedOk: ${DBG_LAST.parsedOk}
+drawsFound: ${DBG_LAST.drawsFound}
+error: ${DBG_LAST.error || '(none)'}
+
+--- Response Headers ---
+${headers}
+
+--- Raw body (first 3000 chars) ---
+${(DBG_LAST.rawBodyText || '').substring(0, 3000)}
+--- end ---
+
+--- Parsed text (first 2000 chars) ---
+${(DBG_LAST.rawText || '').substring(0, 2000)}
+--- end ---`;
+  try {
+    await navigator.clipboard.writeText(txt);
+    setStatus('ok', '📋 Debug info đã sao chép vào clipboard.');
+  } catch(e) {
+    setStatus('info', 'Không sao chép tự động được; mở Console (F12) sẽ thấy text.');
+    console.log(txt);
+  }
+}
+
+/* Common helper: makes the API call and fills DBG_LAST */
+async function callAnthropic(opts) {
+  const { prompt, useWebSearch, mode, maxTokens } = opts;
+  const endpoint = 'https://api.anthropic.com/v1/messages';
+  const model = 'claude-sonnet-4-20250514';
+  const tools = useWebSearch ? [{ type: 'web_search_20250305', name: 'web_search' }] : undefined;
+
+  const reqBody = {
+    model,
+    max_tokens: maxTokens || 4096,
+    messages: [{ role: 'user', content: prompt }]
+  };
+  if (tools) reqBody.tools = tools;
+
+  DBG_LAST = {
+    mode, endpoint, model,
+    request: reqBody,
+    timestamp: Date.now()
+  };
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqBody)
+    });
+    DBG_LAST.httpStatus = res.status;
+    DBG_LAST.httpStatusText = res.statusText;
+
+    // Capture all response headers for diagnosis
+    const headersObj = {};
+    try { res.headers.forEach((v, k) => { headersObj[k] = v; }); } catch(e) {}
+    DBG_LAST.responseHeaders = headersObj;
+
+    // ALWAYS read body as text first, regardless of Content-Type
+    let bodyText = '';
+    try {
+      bodyText = await res.text();
+    } catch(e) {
+      throw new Error(`Không đọc được body response: ${e.message}`);
+    }
+    DBG_LAST.bodyLength = bodyText.length;
+    DBG_LAST.rawBodyText = bodyText.substring(0, 5000);
+
+    if (!res.ok) {
+      const snippet = bodyText.substring(0, 250).replace(/\s+/g, ' ');
+      throw new Error(`HTTP ${res.status} ${res.statusText} · Body bắt đầu bằng: "${snippet}"`);
+    }
+
+    // Try to parse the body as JSON
+    let body;
+    try {
+      body = JSON.parse(bodyText);
+    } catch(parseErr) {
+      const ct = headersObj['content-type'] || '(không có)';
+      const head = bodyText.substring(0, 200);
+      const looksLikeHtml = /^\s*<(!DOCTYPE|html|head|body)/i.test(bodyText);
+      const looksLikeBase64 = /^[A-Za-z0-9+/=]+$/.test(bodyText.substring(0, 50));
+      let hint = '';
+      if (looksLikeHtml) hint = ' · Trông như HTML — có thể là trang lỗi/login.';
+      else if (looksLikeBase64) hint = ' · Trông như base64 hoặc token — response có thể đã bị mã hóa.';
+      else hint = ' · Có thể là token CSRF, JSONP wrapper, hay response từ proxy không hỗ trợ.';
+
+      throw new Error(`Body không phải JSON (Content-Type: ${ct}). 200 ký tự đầu: "${head}"${hint}`);
+    }
+
+    DBG_LAST.rawApiResponse = body;
+
+    if (body?.error) {
+      const t = body.error.type || '';
+      const m = body.error.message || '';
+      throw new Error(`API error · ${t}${m ? ': ' + m : ''}`);
+    }
+
+    DBG_LAST.stopReason = body.stop_reason;
+    if (Array.isArray(body.content)) {
+      DBG_LAST.contentBlocks = body.content.map(b => ({
+        type: b.type,
+        length: typeof b.text === 'string' ? b.text.length : undefined
+      }));
+      const textPieces = [];
+      for (const b of body.content) {
+        if (b.type === 'text' && typeof b.text === 'string') textPieces.push(b.text);
+      }
+      DBG_LAST.rawText = textPieces.join('\n').trim();
+    }
+
+    if (body.stop_reason === 'max_tokens') {
+      DBG_LAST.error = `Response bị cắt vì max_tokens (${reqBody.max_tokens}). JSON có thể không đầy đủ.`;
+    }
+
+    return body;
+  } catch(err) {
+    DBG_LAST.error = err.message || String(err);
+    if (err instanceof TypeError && !DBG_LAST.httpStatus) {
+      DBG_LAST.error = `Lỗi mạng/CORS: ${err.message}. Có thể do file:// origin hoặc mất kết nối.`;
+    }
+    throw err;
+  } finally {
+    renderDebug();
+  }
+}
+
+async function testApiConnection() {
+  const btn = document.getElementById('dbgTestBtn');
+  btn.disabled = true;
+  setStatus('info', '⚡ Đang test API tối thiểu (không web_search)...');
+  document.getElementById('dbgPanel').classList.add('on');
+  try {
+    const body = await callAnthropic({
+      prompt: 'Trả lời chính xác một từ: "PONG". Không gì khác.',
+      useWebSearch: false,
+      mode: 'TEST_BASIC',
+      maxTokens: 50
+    });
+    const txt = (DBG_LAST.rawText || '').trim();
+    DBG_LAST.parsedOk = txt.toUpperCase().includes('PONG');
+    if (DBG_LAST.parsedOk) {
+      setStatus('ok', `✅ API hoạt động · Model ${DBG_LAST.model} trả về: "${txt.substring(0,30)}"`);
+    } else {
+      setStatus('err', `⚠ API trả lời nhưng không như mong đợi: "${txt.substring(0,80)}"`);
+    }
+  } catch(err) {
+    setStatus('err', `❌ Test API thất bại: ${err.message}`);
+  } finally {
+    btn.disabled = false;
+    renderDebug();
+  }
+}
+
+async function testApiWithSearch() {
+  setStatus('info', '🔍 Đang test API + web_search với prompt đơn giản...');
+  document.getElementById('dbgPanel').classList.add('on');
+  try {
+    const body = await callAnthropic({
+      prompt: 'Tìm trên web kết quả 535 Lotto 5/35 kỳ quay GẦN NHẤT. Chỉ trả lời 1 dòng theo định dạng: "Kỳ XXXXX: a,b,c,d,e · special=f". Không giải thích thêm.',
+      useWebSearch: true,
+      mode: 'TEST_SEARCH',
+      maxTokens: 2048
+    });
+    const txt = (DBG_LAST.rawText || '').trim();
+    setStatus(txt ? 'ok' : 'err',
+      txt ? `✅ web_search hoạt động · Trả về: "${txt.substring(0,140)}"` : `⚠ web_search không trả text. stop_reason: ${DBG_LAST.stopReason}`);
+  } catch(err) {
+    setStatus('err', `❌ Test web_search thất bại: ${err.message}`);
+  } finally {
+    renderDebug();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ MANUAL INPUT ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+
+let MAN_PARSED_DRAWS = [];
+
+function toggleManualInput() {
+  document.getElementById('manInput').classList.toggle('on');
+}
+
+function openManualInput() {
+  const el = document.getElementById('manInput');
+  el.classList.add('on', 'flash');
+  setTimeout(() => el.classList.remove('flash'), 2000);
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function switchManTab(name, btn) {
+  document.querySelectorAll('.man-tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.man-pane').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('manPane-' + name).classList.add('on');
+}
+
+function clearManualSingle() {
+  ['mi-ky','mi-date','mi-m1','mi-m2','mi-m3','mi-m4','mi-m5','mi-sp'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
+function addManualSingle() {
+  const ky = document.getElementById('mi-ky').value.trim();
+  const date = document.getElementById('mi-date').value.trim();
+  const m = [1,2,3,4,5].map(i => parseInt(document.getElementById('mi-m'+i).value, 10));
+  const sp = parseInt(document.getElementById('mi-sp').value, 10);
+
+  if (!ky) { setStatus('err', '⚠ Thiếu số kỳ.'); return; }
+  if (m.some(n => !Number.isInteger(n) || n < 1 || n > 35)) {
+    setStatus('err', '⚠ 5 số chính phải là số nguyên 1-35.'); return;
+  }
+  if (new Set(m).size !== 5) {
+    setStatus('err', '⚠ 5 số chính không được trùng nhau.'); return;
+  }
+  if (!Number.isInteger(sp) || sp < 1 || sp > 12) {
+    setStatus('err', '⚠ Số đặc biệt phải là số nguyên 1-12.'); return;
+  }
+
+  const draw = { ky: ky.padStart(5, '0'), date: date || new Date().toLocaleDateString('vi-VN'), main: m, special: sp };
+  commitManualDraws([draw]);
+  clearManualSingle();
+}
+
+/* Robust line parser handling many free-form formats */
+function parseDrawLine(line) {
+  if (!line || !line.trim()) return null;
+  const raw = line.trim();
+
+  // Extract date pattern DD/MM/YY or DD/MM/YYYY — restrict to / separator
+  // (dashes/dots are commonly used between lottery numbers, can't disambiguate)
+  let date = '';
+  const dateRe = /\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/;
+  const dateMatch = raw.match(dateRe);
+  if (dateMatch) {
+    const d = parseInt(dateMatch[1],10), mo = parseInt(dateMatch[2],10);
+    if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12) {
+      date = `${dateMatch[1]}/${dateMatch[2]}/${dateMatch[3]}`;
+    }
+  }
+
+  // Strip date and time (HH:MM) to avoid confusing them with draw numbers
+  let s = raw.replace(dateRe, ' ').replace(/\d{1,2}:\d{2}(:\d{2})?/g, ' ');
+
+  // Try to find ky: "Kỳ NNN", "Ky NNN", "#NNN", or first 3-6 digit number
+  let ky = '';
+  const kyRe = /(?:kỳ|ky|kì|kì|#)\s*[:0]*\s*(\d{1,6})/i;
+  const kyMatch = s.match(kyRe);
+  if (kyMatch) {
+    ky = kyMatch[1];
+    s = s.replace(kyRe, ' ');
+  } else {
+    // Try first number with 3+ digits and > 35
+    const big = s.match(/\b(\d{3,6})\b/);
+    if (big && parseInt(big[1], 10) > 35) {
+      ky = big[1];
+      s = s.replace(big[0], ' ');
+    }
+  }
+  if (ky) ky = ky.padStart(5, '0');
+
+  // Now grab remaining small numbers
+  const nums = [...s.matchAll(/\b\d{1,2}\b/g)].map(m => parseInt(m[0], 10));
+
+  // Need 5 mains (1-35) + 1 special (1-12)
+  // Look for last number ≤ 12 as special (535 convention: special comes last)
+  // and the 5 numbers before it that are 1-35 and distinct as mains
+  if (nums.length < 6) return null;
+
+  // Try: take first 6 valid numbers as candidates
+  const valid = nums.filter(n => n >= 1 && n <= 35);
+  if (valid.length < 6) return null;
+
+  // Heuristic: in 5/35 results, last number is the special
+  // Take first 5 as mains, 6th as special
+  let main = valid.slice(0, 5);
+  let special = valid[5];
+
+  // Validate
+  if (new Set(main).size !== 5) {
+    // Maybe duplicates from parser noise; try first 6 unique that fit
+    const seen = new Set();
+    const uniq = valid.filter(n => { if (seen.has(n)) return false; seen.add(n); return true; });
+    if (uniq.length < 6) return null;
+    main = uniq.slice(0, 5);
+    special = uniq[5];
+  }
+  if (new Set(main).size !== 5) return null;
+  if (special < 1 || special > 12) return null;
+  if (main.some(n => n < 1 || n > 35)) return null;
+
+  return { ky: ky || '00000', date, main, special, raw };
+}
+
+function previewBulk() {
+  const text = document.getElementById('mi-bulk').value;
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  const previewEl = document.getElementById('manPreview');
+  const addBtn = document.getElementById('manAddBulkBtn');
+
+  MAN_PARSED_DRAWS = [];
+  let html = `<h5>Kết quả parse (${lines.length} dòng)</h5>`;
+  let okCount = 0;
+
+  for (const line of lines) {
+    const parsed = parseDrawLine(line);
+    if (parsed) {
+      MAN_PARSED_DRAWS.push(parsed);
+      okCount++;
+      const mainsStr = parsed.main.map(n => String(n).padStart(2,'0')).join('-');
+      html += `<div class="man-pv-row ok"><span class="ky">✓ ${parsed.ky}</span><span class="nums">${mainsStr}</span><span class="sp">+${String(parsed.special).padStart(2,'0')}</span><span style="color:#666;font-size:.65rem;">${parsed.date || '?'}</span></div>`;
+    } else {
+      const preview = line.substring(0, 50).replace(/\s+/g, ' ');
+      html += `<div class="man-pv-row bad"><span class="ky">✗</span><span class="nums">không parse được: "${preview}${line.length>50?'...':''}"</span></div>`;
+    }
+  }
+  html += `<div style="margin-top:8px;padding-top:6px;border-top:1px solid #2a2d32;font-size:.7rem;color:${okCount>0?'#5dd49a':'#f08080'};"><strong>${okCount}/${lines.length}</strong> dòng OK${okCount>0?' — sẵn sàng thêm vào dữ liệu':''}</div>`;
+
+  previewEl.innerHTML = html;
+  previewEl.classList.add('on');
+  addBtn.disabled = okCount === 0;
+}
+
+function addManualBulk() {
+  if (MAN_PARSED_DRAWS.length === 0) {
+    setStatus('err', '⚠ Bấm "Xem Trước" để parse trước khi thêm.');
+    return;
+  }
+  commitManualDraws(MAN_PARSED_DRAWS);
+  document.getElementById('mi-bulk').value = '';
+  document.getElementById('manPreview').classList.remove('on');
+  document.getElementById('manAddBulkBtn').disabled = true;
+  MAN_PARSED_DRAWS = [];
+}
+
+async function commitManualDraws(newDraws) {
+  const existingKeys = new Set(DRAWS.map(d => String(d.ky)));
+  const trulyNew = newDraws.filter(d => !existingKeys.has(String(d.ky)));
+  const dupes = newDraws.length - trulyNew.length;
+
+  if (trulyNew.length === 0) {
+    setStatus('info', `ℹ Tất cả ${newDraws.length} kỳ đã có trong dữ liệu (trùng kỳ).`);
+    return;
+  }
+
+  // Add to DRAWS
+  DRAWS = [...trulyNew.map(d => ({...d, isNew: true, manual: true})), ...DRAWS].slice(0, 300);
+  await saveDraws(DRAWS);
+
+  // Update frequency counters
+  for (const d of trulyNew) {
+    for (const n of d.main) MFREQ[n] = (MFREQ[n] || 0) + 1;
+    SFREQ[d.special] = (SFREQ[d.special] || 0) + 1;
+  }
+  TOTAL_DRAWS += trulyNew.length;
+  DATA_FRESHNESS = Math.min(100, DATA_FRESHNESS + trulyNew.length * 2);
+  rebuildPairsFromDraws();
+  await saveFreq(MFREQ, SFREQ, TOTAL_DRAWS, DATA_FRESHNESS);
+
+  const now = new Date();
+  document.getElementById('lastUpdateLabel').textContent =
+    `Cập nhật thủ công lúc ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} · ${TOTAL_DRAWS} kỳ quay`;
+
+  renderResultsList();
+  renderAllStats();
+  updateConfidence();
+  refreshForecast();
+  LAST_FETCH_TS = Date.now();
+  await saveAutoUpdatePrefs();
+
+  const msg = dupes > 0
+    ? `✅ Đã thêm ${trulyNew.length} kỳ mới (${dupes} kỳ đã trùng được bỏ qua). Tổng ${TOTAL_DRAWS} kỳ.`
+    : `✅ Đã thêm ${trulyNew.length} kỳ mới. Tổng ${TOTAL_DRAWS} kỳ. Forecast và thống kê đã cập nhật.`;
+  setStatus('ok', msg);
 }
 
 /* ═══════════════════════════════════════════════════════════ */
@@ -943,7 +1672,7 @@ let CURRENT_FORECAST = null;  // { mains:[], special:n, conf, breakdown:{...}, t
 
 async function loadAutoUpdatePrefs() {
   try {
-    const r = await window.storage.get('autoupd_v2');
+    const r = await window.storage.get('lotto535_autoupd_v2');
     if (r) {
       const p = JSON.parse(r.value);
       AUTO_UPD_ENABLED = !!p.enabled;
@@ -957,7 +1686,7 @@ async function saveAutoUpdatePrefs() {
   try {
     const sel = document.getElementById('autoUpdInterval');
     if (sel) AUTO_UPD_INTERVAL_MIN = parseInt(sel.value, 10) || 60;
-    await window.storage.set('autoupd_v2', JSON.stringify({
+    await window.storage.set('lotto535_autoupd_v2', JSON.stringify({
       enabled: AUTO_UPD_ENABLED,
       interval: AUTO_UPD_INTERVAL_MIN,
       lastFetch: LAST_FETCH_TS
@@ -1207,7 +1936,7 @@ function toggleForecastWhy() {
 async function copyForecast() {
   if (!CURRENT_FORECAST) return;
   const f = CURRENT_FORECAST;
-  const text = `5/35 — Bộ số gợi ý tối ưu\n` +
+  const text = `535 5/35 — Bộ số gợi ý tối ưu\n` +
                `Số chính: ${f.mains.map(n=>String(n).padStart(2,'0')).join(' - ')}\n` +
                `Số đặc biệt: ${String(f.special).padStart(2,'0')}\n` +
                `Điểm tin cậy: ${f.conf.total}/100 · ${TOTAL_DRAWS} kỳ mẫu\n` +
@@ -2054,7 +2783,7 @@ function generateWheel() {
     }
     
     // EV approximation (very rough)
-    const ticketCost = 10000; // VND per ticket (VT)
+    const ticketCost = 10000; // VND per ticket (535)
     const totalCost = blocks.length * ticketCost;
     
     // Render
