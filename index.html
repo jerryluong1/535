@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>535 5/35 — Hệ Thống Phân Tích Khoa Học v2.0</title>
+<title>535 — Hệ Thống Phân Tích Khoa Học v2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
   --gold:#d4a843;--gold2:#f0c96a;--gold3:#8a6b22;--gold4:#3a2d0e;
@@ -333,7 +334,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
 
 <div class="hdr">
   <div class="badge"><span class="live-dot"></span>HỆ THỐNG KHOA HỌC · V2.0 · MANDEL UPGRADED</div>
-  <h1>535 Lotto 5/35</h1>
+  <h1>LT353</h1>
   <p class="sub">Phân tích tổ hợp đa tầng theo phương pháp <strong style="color:var(--gold2)">Stefan Mandel</strong> — Combinatorial Condensation · Wheeling Systems · Bayesian Inference · Chi-Square Analysis</p>
   <div class="mandel-quote">"Tôi chỉ là nhà toán học cuối tuần, nhưng toán ứng dụng — nếu dùng đúng cách — có thể đảm bảo cả một gia tài."<br>— Stefan Mandel (1934, Iași, Romania)</div>
   <div class="last-update" id="lastUpdateLabel">Dữ liệu cơ sở: 180 kỳ mẫu · Cập nhật 16/05/2026 · Nhấn "Cập nhật" để tải kỳ mới</div>
@@ -383,7 +384,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.7r
   <div class="upd-bar">
     <div class="upd-info">
       <div class="upd-title">🤖 Cập Nhật Kết Quả Mới Nhất</div>
-      <div class="upd-sub" id="updSub">AI sẽ tìm kiếm kết quả các kỳ quay mới nhất từ 535</div>
+      <div class="upd-sub" id="updSub">AI sẽ tìm kiếm kết quả các kỳ quay mới nhất từ 353</div>
     </div>
     <button class="upd-btn" id="updBtn" onclick="fetchLatestResults()">
       <span id="updIcon">⟳</span> Cập Nhật Ngay
@@ -461,7 +462,7 @@ Kỳ 603 ngày 16/05/2026: 02-08-15-23-30 ĐB 09"></textarea>
         <div class="man-actions">
           <button class="man-btn ghost" onclick="previewBulk()">👁 Xem Trước</button>
           <button class="man-btn" id="manAddBulkBtn" onclick="addManualBulk()" disabled>+ Thêm Vào Dữ Liệu</button>
-          <button class="man-btn ghost" onclick="document.getElementById('mi-bulk').value=''; document.getElementById('manPreview').classList.remove('on'); document.getElementById('manAddBulkBtn').disabled=true;">Xóa</button>
+          <button class="man-btn ghost" onclick="clearManualBulk()">Xóa</button>
         </div>
         <div class="man-preview" id="manPreview"></div>
       </div>
@@ -473,7 +474,7 @@ Kỳ 603 ngày 16/05/2026: 02-08-15-23-30 ĐB 09"></textarea>
     <div class="draw-count" id="drawCount">— kỳ</div>
   </div>
   <div class="results-list" id="resultsList">
-    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất từ 535</div>
+    <div class="empty">Nhấn "Cập Nhật Ngay" để tải kết quả mới nhất từ 353</div>
   </div>
 </div>
 
@@ -714,7 +715,7 @@ Kỳ 603 ngày 16/05/2026: 02-08-15-23-30 ĐB 09"></textarea>
 
     <p><strong>Giai đoạn 2 (Australia, USA, 1980–1992):</strong> Khi sang Australia, ông chuyển sang chiến lược <em>"Buying the Pot"</em> — <strong>mua toàn bộ tổ hợp</strong> khi jackpot lớn hơn tổng chi phí mua tất cả vé. Đỉnh cao là <strong>Virginia Lottery 1992</strong>: jackpot $27 triệu, 7.1 triệu tổ hợp 6/44, đội của ông mua ~5 triệu vé và trúng đậm. Sau đó, các nước đồng loạt sửa luật cấm mua hàng loạt.</p>
 
-    <h3>Áp dụng cho 535 5/35 — Sự thật khoa học</h3>
+    <h3>Áp dụng cho 535 — Sự thật khoa học</h3>
     <ul>
       <li>Tổng tổ hợp đầy đủ: <code>C(35,5) × 12 = 3,895,584 vé</code> — quá lớn để "buying the pot" (cần ~39 tỷ VND để mua hết, jackpot tối đa ~vài tỷ).</li>
       <li>Phương pháp <strong>Combinatorial Condensation</strong> vẫn áp dụng được: dùng covering wheel để tạo các bộ vé tối ưu cho 1 pool nhỏ.</li>
@@ -796,7 +797,7 @@ Kỳ 603 ngày 16/05/2026: 02-08-15-23-30 ĐB 09"></textarea>
 
 <script>
 /* ═══════════════════════════════════════════════
-   535 5/35 — SCIENTIFIC ANALYSIS ENGINE v2.0
+   535 — SCIENTIFIC ANALYSIS ENGINE v2.0
    ─────────────────────────────────────────────
    Phương pháp triển khai:
    • Stefan Mandel — Combinatorial Condensation (1964)
@@ -816,21 +817,49 @@ let DATA_FRESHNESS = 60;
 let currentAlgo = 'hot';
 let activeFilters = new Set(['sum','oe','hl','ld']);
 
-/* Pair co-occurrence matrix (Markov-style) — built from DRAWS */
-let PAIRS = {};
+/* ═══ DOM REF CACHE — populated on init (avoids repeated getElementById) ═══ */
+const $ = id => document.getElementById(id);
+const DOM = {};
+function cacheDom() {
+  const ids = ['lastUpdateLabel','updBtn','updIcon','updSub','updStatus',
+    'autoUpdToggle','autoUpdInterval','autoNext','dbgPanel','dbgContent',
+    'envBanner','manInput','manAddBulkBtn','manPreview','mi-bulk',
+    'drawCount','resultsList','nextDrawTime','countdown',
+    'st-draws','st-hotnum','st-coldnum','st-chisq',
+    'freqChart','spChart','hotColdVis','freqPeriod',
+    'sumChart','sumStat','sumGolden','oeChart','hlChart','ldChart','conChart',
+    'algoInfoBox','algoGrid',
+    'cf1','cf2','cf3','cf4','cfv1','cfv2','cfv3','cfv4',
+    'setsList','fhContent','fhStale','fhWhy',
+    'numPicker','wSpecial','wPickedCount','wKeyCount','wheelList','wheelProbBox',
+    'wpTickets','wpCost','wpProb','wpEV'];
+  for (const id of ids) DOM[id] = document.getElementById(id);
+}
+
+/* Pair co-occurrence matrix (Markov-style) — flat Int32Array(36*36) indexed by [i*36+j].
+   Indices 1..35 used; row 0 / col 0 unused but kept for 1-based indexing. */
+let PAIRS = new Int32Array(36 * 36);
 
 /* ═══ COMBINATORIAL UTILS ═══ */
+/* Iterative C(n,k) generator — faster than recursion + avoids stack frame overhead.
+   For n=12, k=5: 792 combos; for n=10, k=5: 252 combos. Hot path in wheeling. */
 function combinations(arr, k) {
+  const n = arr.length;
+  if (k <= 0 || k > n) return k === 0 ? [[]] : [];
   const result = [];
-  function helper(start, combo) {
-    if (combo.length === k) { result.push([...combo]); return; }
-    for (let i = start; i < arr.length; i++) {
-      combo.push(arr[i]);
-      helper(i + 1, combo);
-      combo.pop();
-    }
+  const idx = new Array(k);
+  for (let i = 0; i < k; i++) idx[i] = i;
+  while (true) {
+    const combo = new Array(k);
+    for (let i = 0; i < k; i++) combo[i] = arr[idx[i]];
+    result.push(combo);
+    // advance: find rightmost index that can be incremented
+    let i = k - 1;
+    while (i >= 0 && idx[i] === n - k + i) i--;
+    if (i < 0) break;
+    idx[i]++;
+    for (let j = i + 1; j < k; j++) idx[j] = idx[j - 1] + 1;
   }
-  helper(0, []);
   return result;
 }
 
@@ -877,6 +906,7 @@ async function loadFreq() {
 
 /* ═══ INIT ═══ */
 (async function init() {
+  cacheDom();
   const saved = await loadFreq();
   if (saved) {
     MFREQ = saved.mf; SFREQ = saved.sf;
@@ -892,8 +922,12 @@ async function loadFreq() {
     rebuildPairsFromDraws();
     renderResultsList();
   }
+  invalidateStatCache();
   initNumPicker();
   initSpecialDropdown();
+  // Initial algorithm description (was at module top — moved here to ensure DOM cache)
+  const aib = DOM.algoInfoBox || $('algoInfoBox');
+  if (aib) aib.innerHTML = ALGO_INFO['hot'];
   renderAllStats();
   countdown();
   setInterval(countdown, 1000);
@@ -924,25 +958,30 @@ async function loadFreq() {
 })();
 
 /* ═══ TABS ═══ */
+let _paneList = null, _tabList = null;
 function switchTab(id, el) {
-  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  document.getElementById('pane-' + id).classList.add('on');
+  if (!_paneList) _paneList = document.querySelectorAll('.pane');
+  if (!_tabList)  _tabList  = document.querySelectorAll('.tabs .tab');
+  for (let i = 0; i < _paneList.length; i++) _paneList[i].classList.remove('on');
+  for (let i = 0; i < _tabList.length;  i++) _tabList[i].classList.remove('on');
+  const pane = document.getElementById('pane-' + id);
+  if (pane) pane.classList.add('on');
   el.classList.add('on');
   if (id === 'stats') renderAllStats();
   if (id === 'patterns') renderPatterns();
 }
 
 /* ═══ COUNTDOWN — Lotto 5/35: 2 kỳ/ngày lúc 13:00 và 21:00 ═══ */
+let _lastCountdownText = '', _lastNextLabel = '';
 function countdown() {
   const now = new Date();
-  const hh = now.getHours(), mm = now.getMinutes();
+  const hh = now.getHours(), mm = now.getMinutes(), ss = now.getSeconds();
   let next, nextLabel;
 
-  if (hh < 13 || (hh === 13 && mm === 0 && now.getSeconds() === 0)) {
+  if (hh < 13 || (hh === 13 && mm === 0 && ss === 0)) {
     next = new Date(now); next.setHours(13, 0, 0, 0);
     nextLabel = '13:00 hôm nay';
-  } else if (hh < 21 || (hh === 21 && mm === 0 && now.getSeconds() === 0)) {
+  } else if (hh < 21 || (hh === 21 && mm === 0 && ss === 0)) {
     next = new Date(now); next.setHours(21, 0, 0, 0);
     nextLabel = '21:00 hôm nay';
   } else {
@@ -952,9 +991,18 @@ function countdown() {
 
   const diff = Math.floor((next - now) / 1000);
   const dh = Math.floor(diff / 3600), dm = Math.floor((diff % 3600) / 60), ds = diff % 60;
-  document.getElementById('nextDrawTime').textContent = nextLabel;
-  document.getElementById('countdown').textContent =
-    `Còn ${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}:${String(ds).padStart(2,'0')}`;
+  const cdTxt = `Còn ${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}:${String(ds).padStart(2,'0')}`;
+
+  if (nextLabel !== _lastNextLabel) {
+    _lastNextLabel = nextLabel;
+    const el = DOM.nextDrawTime || document.getElementById('nextDrawTime');
+    if (el) el.textContent = nextLabel;
+  }
+  if (cdTxt !== _lastCountdownText) {
+    _lastCountdownText = cdTxt;
+    const el = DOM.countdown || document.getElementById('countdown');
+    if (el) el.textContent = cdTxt;
+  }
 }
 
 /* ═══ ROBUST JSON EXTRACTION ═══ */
@@ -1012,32 +1060,32 @@ function extractJSON(text) {
 
 /* ═══ FETCH LATEST RESULTS — uses centralized callAnthropic ═══ */
 async function fetchLatestResults() {
-  const btn = document.getElementById('updBtn');
-  const icon = document.getElementById('updIcon');
-  const sub = document.getElementById('updSub');
+  const btn = DOM.updBtn || $('updBtn');
+  const icon = DOM.updIcon || $('updIcon');
+  const sub = DOM.updSub || $('updSub');
   btn.disabled = true;
   icon.className = 'spin'; icon.textContent = '⟳';
-  setStatus('info', '🔍 AI đang tìm kết quả 535 Lotto 5/35 mới nhất...');
+  setStatus('info', '🔍 AI đang tìm kết quả LT353 mới nhất...');
 
   const today = new Date();
   const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
   const lastKnown = DRAWS.length > 0 ? DRAWS[0].ky : '(chưa có)';
 
-  const prompt = `Hôm nay là ${dateStr}. Tìm kết quả xổ số 535 LOTTO 5/35 (Mega 5/35) — 20 kỳ quay gần nhất.
+  const prompt = `Hôm nay là ${dateStr}. Tìm kết quả xổ số LT353 (Mega 5/35) — 20 kỳ quay gần nhất.
 
 Lotto 5/35 quay 2 kỳ/ngày lúc 13:00 và 21:00. Kỳ gần nhất tôi đã có: ${lastKnown}.
 
 CHIẾN LƯỢC TÌM KIẾM (làm theo thứ tự, không bỏ qua bước nào):
 1. web_search với các query KHÁC NHAU. Mỗi query nên CHỨA SẴN ngày cụ thể vì search engine thường index số trong tiêu đề/snippet khi có ngày:
    - "kết quả lotto 5/35 ngày ${dateStr}"
-   - "535 5 35 ${today.getDate()}/${today.getMonth()+1}"
+   - "353 5 35 ${today.getDate()}/${today.getMonth()+1}"
    - "lotto 5 35 kỳ #00605 OR #00604 OR #00603 kết quả"
    - "xskt lotto 5/35 chiều tối nay"
 2. NẾU search snippets không có bộ số cụ thể, thử web_search trên các trang aggregator:
    - "site:minhchinh.com lotto 5/35"
    - "site:xskt.com.vn lotto 5-35"
    - "site:xosothantai.com lotto 5-35"
-   - "facebook.com 535 lotto 5/35 ${today.getDate()}/${today.getMonth()+1}"
+   - "facebook.com LT353 ${today.getDate()}/${today.getMonth()+1}"
 3. Tìm bài tin tức, blog, forum (webtretho, voz, tinhte) đăng kết quả gần đây.
 4. CHẤP NHẬN kết quả CŨ HƠN nếu kỳ mới không có (vẫn hữu ích vì sẽ bổ sung dữ liệu lịch sử).
 
@@ -1072,7 +1120,7 @@ QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
     if (!parsed || !Array.isArray(parsed.draws)) {
       // Model returned explanation instead of JSON — treat as "no data found"
       const preview = rawText.substring(0, 200).replace(/\s+/g, ' ');
-      setStatus('err', `⚠ AI không tìm được dữ liệu qua web search. Các trang 535 render bằng JavaScript nên không xuất hiện trong snippets. Vui lòng nhập kết quả thủ công bên dưới ↓`);
+      setStatus('err', `⚠ AI không tìm được dữ liệu qua web search. Các trang 353 render bằng JavaScript nên không xuất hiện trong snippets. Vui lòng nhập kết quả thủ công bên dưới ↓`);
       DBG_LAST.error = `Mô hình trả text (không phải JSON): ${preview}`;
       DBG_LAST.drawsFound = 0;
       openManualInput();
@@ -1090,7 +1138,7 @@ QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
     if (newDraws.length === 0) {
       // Model returned valid JSON but with empty draws (or invalid entries)
       const note = parsed.note || 'không có giải thích';
-      setStatus('err', `⚠ AI không tìm được kỳ quay nào trên web (${note}). 535 render kết quả bằng JS nên không index được. Vui lòng nhập thủ công ↓`);
+      setStatus('err', `⚠ AI không tìm được kỳ quay nào trên web (${note}). 353 render kết quả bằng JS nên không index được. Vui lòng nhập thủ công ↓`);
       openManualInput();
       return;
     }
@@ -1114,10 +1162,11 @@ QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
     if (parsed.total_draws_to_date && parsed.total_draws_to_date > TOTAL_DRAWS)
       TOTAL_DRAWS = parsed.total_draws_to_date;
 
+    invalidateStatCache();
     await saveFreq(MFREQ, SFREQ, TOTAL_DRAWS, DATA_FRESHNESS);
 
     const now = new Date();
-    document.getElementById('lastUpdateLabel').textContent =
+    (DOM.lastUpdateLabel || $('lastUpdateLabel')).textContent =
       `Cập nhật lúc ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} · ${TOTAL_DRAWS} kỳ quay`;
 
     renderResultsList();
@@ -1137,7 +1186,7 @@ QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
   } catch(err) {
     const errMsg = err.message || String(err);
     setStatus('err', `❌ ${errMsg}`);
-    console.error('[535 Update]', err);
+    console.error('[353 Update]', err);
     renderDebug();
   } finally {
     btn.disabled = false;
@@ -1146,7 +1195,7 @@ QUY TẮC TRẢ VỀ — RẤT QUAN TRỌNG:
 }
 
 function setStatus(type, msg) {
-  const el = document.getElementById('updStatus');
+  const el = DOM.updStatus || $('updStatus');
   el.className = 'upd-status ' + type;
   el.textContent = msg;
 }
@@ -1173,13 +1222,17 @@ function detectEnvironment() {
 }
 
 function toggleDebug() {
-  const p = document.getElementById('dbgPanel');
+  const p = DOM.dbgPanel || $('dbgPanel');
   p.classList.toggle('on');
   if (p.classList.contains('on')) renderDebug();
 }
 
 function renderDebug() {
-  const el = document.getElementById('dbgContent');
+  const panel = DOM.dbgPanel || document.getElementById('dbgPanel');
+  // Skip heavy DOM work if panel not visible
+  if (panel && !panel.classList.contains('on')) return;
+  const el = DOM.dbgContent || document.getElementById('dbgContent');
+  if (!el) return;
   if (!DBG_LAST) {
     el.innerHTML = '<em style="color:#888;">Chưa có lượt gọi nào. Bấm "Cập Nhật Ngay" hoặc "Test API" để xem chi tiết.</em>';
     return;
@@ -1270,7 +1323,7 @@ async function copyDebugInfo() {
   const env = `${location.protocol}//${location.hostname || '(local)'}${location.pathname}`;
   const ua = navigator.userAgent || '';
   const headers = DBG_LAST.responseHeaders ? Object.entries(DBG_LAST.responseHeaders).map(([k,v])=>`  ${k}: ${v}`).join('\n') : '(none)';
-  const txt = `=== 535 5/35 v2 Debug ===
+  const txt = `=== 535 v2 Debug ===
 Location: ${env}
 UA: ${ua}
 Online: ${navigator.onLine}
@@ -1415,7 +1468,7 @@ async function testApiConnection() {
   setStatus('info', '⚡ Đang test API tối thiểu (không web_search)...');
   document.getElementById('dbgPanel').classList.add('on');
   try {
-    const body = await callAnthropic({
+    await callAnthropic({
       prompt: 'Trả lời chính xác một từ: "PONG". Không gì khác.',
       useWebSearch: false,
       mode: 'TEST_BASIC',
@@ -1440,8 +1493,8 @@ async function testApiWithSearch() {
   setStatus('info', '🔍 Đang test API + web_search với prompt đơn giản...');
   document.getElementById('dbgPanel').classList.add('on');
   try {
-    const body = await callAnthropic({
-      prompt: 'Tìm trên web kết quả 535 Lotto 5/35 kỳ quay GẦN NHẤT. Chỉ trả lời 1 dòng theo định dạng: "Kỳ XXXXX: a,b,c,d,e · special=f". Không giải thích thêm.',
+    await callAnthropic({
+      prompt: 'Tìm trên web kết quả LT353 kỳ quay GẦN NHẤT. Chỉ trả lời 1 dòng theo định dạng: "Kỳ XXXXX: a,b,c,d,e · special=f". Không giải thích thêm.',
       useWebSearch: true,
       mode: 'TEST_SEARCH',
       maxTokens: 2048
@@ -1463,34 +1516,51 @@ async function testApiWithSearch() {
 let MAN_PARSED_DRAWS = [];
 
 function toggleManualInput() {
-  document.getElementById('manInput').classList.toggle('on');
+  (DOM.manInput || $('manInput')).classList.toggle('on');
 }
 
 function openManualInput() {
-  const el = document.getElementById('manInput');
+  const el = DOM.manInput || $('manInput');
   el.classList.add('on', 'flash');
   setTimeout(() => el.classList.remove('flash'), 2000);
   el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function switchManTab(name, btn) {
-  document.querySelectorAll('.man-tab').forEach(t => t.classList.remove('on'));
-  document.querySelectorAll('.man-pane').forEach(p => p.classList.remove('on'));
+  const tabs = btn.parentNode;
+  if (tabs) {
+    for (let i = 0; i < tabs.children.length; i++) tabs.children[i].classList.remove('on');
+  }
+  // panes are siblings of the .man-tabs wrapper
+  const panesParent = tabs ? tabs.parentNode : null;
+  if (panesParent) {
+    const all = panesParent.querySelectorAll('.man-pane');
+    for (let i = 0; i < all.length; i++) all[i].classList.remove('on');
+  }
   btn.classList.add('on');
-  document.getElementById('manPane-' + name).classList.add('on');
+  const target = document.getElementById('manPane-' + name);
+  if (target) target.classList.add('on');
 }
 
 function clearManualSingle() {
-  ['mi-ky','mi-date','mi-m1','mi-m2','mi-m3','mi-m4','mi-m5','mi-sp'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  const ids = ['mi-ky','mi-date','mi-m1','mi-m2','mi-m3','mi-m4','mi-m5','mi-sp'];
+  for (let i = 0; i < ids.length; i++) {
+    const el = document.getElementById(ids[i]);
+    if (el) el.value = '';
+  }
 }
 
 function addManualSingle() {
-  const ky = document.getElementById('mi-ky').value.trim();
-  const date = document.getElementById('mi-date').value.trim();
-  const m = [1,2,3,4,5].map(i => parseInt(document.getElementById('mi-m'+i).value, 10));
-  const sp = parseInt(document.getElementById('mi-sp').value, 10);
+  const ky = $('mi-ky').value.trim();
+  const date = $('mi-date').value.trim();
+  const m = [
+    parseInt($('mi-m1').value, 10),
+    parseInt($('mi-m2').value, 10),
+    parseInt($('mi-m3').value, 10),
+    parseInt($('mi-m4').value, 10),
+    parseInt($('mi-m5').value, 10)
+  ];
+  const sp = parseInt($('mi-sp').value, 10);
 
   if (!ky) { setStatus('err', '⚠ Thiếu số kỳ.'); return; }
   if (m.some(n => !Number.isInteger(n) || n < 1 || n > 35)) {
@@ -1530,7 +1600,7 @@ function parseDrawLine(line) {
 
   // Try to find ky: "Kỳ NNN", "Ky NNN", "#NNN", or first 3-6 digit number
   let ky = '';
-  const kyRe = /(?:kỳ|ky|kì|kì|#)\s*[:0]*\s*(\d{1,6})/i;
+  const kyRe = /(?:kỳ|ky|kì|ki|#)\s*[:0]*\s*(\d{1,6})/i;
   const kyMatch = s.match(kyRe);
   if (kyMatch) {
     ky = kyMatch[1];
@@ -1549,7 +1619,7 @@ function parseDrawLine(line) {
   const nums = [...s.matchAll(/\b\d{1,2}\b/g)].map(m => parseInt(m[0], 10));
 
   // Need 5 mains (1-35) + 1 special (1-12)
-  // Look for last number ≤ 12 as special (535 convention: special comes last)
+  // Look for last number ≤ 12 as special (353 convention: special comes last)
   // and the 5 numbers before it that are 1-35 and distinct as mains
   if (nums.length < 6) return null;
 
@@ -1579,13 +1649,14 @@ function parseDrawLine(line) {
 }
 
 function previewBulk() {
-  const text = document.getElementById('mi-bulk').value;
+  const bulk = DOM['mi-bulk'] || $('mi-bulk');
+  const previewEl = DOM.manPreview || $('manPreview');
+  const addBtn = DOM.manAddBulkBtn || $('manAddBulkBtn');
+  const text = bulk.value;
   const lines = text.split(/\r?\n/).filter(l => l.trim());
-  const previewEl = document.getElementById('manPreview');
-  const addBtn = document.getElementById('manAddBulkBtn');
 
   MAN_PARSED_DRAWS = [];
-  let html = `<h5>Kết quả parse (${lines.length} dòng)</h5>`;
+  const parts = [`<h5>Kết quả parse (${lines.length} dòng)</h5>`];
   let okCount = 0;
 
   for (const line of lines) {
@@ -1594,15 +1665,15 @@ function previewBulk() {
       MAN_PARSED_DRAWS.push(parsed);
       okCount++;
       const mainsStr = parsed.main.map(n => String(n).padStart(2,'0')).join('-');
-      html += `<div class="man-pv-row ok"><span class="ky">✓ ${parsed.ky}</span><span class="nums">${mainsStr}</span><span class="sp">+${String(parsed.special).padStart(2,'0')}</span><span style="color:#666;font-size:.65rem;">${parsed.date || '?'}</span></div>`;
+      parts.push(`<div class="man-pv-row ok"><span class="ky">✓ ${parsed.ky}</span><span class="nums">${mainsStr}</span><span class="sp">+${String(parsed.special).padStart(2,'0')}</span><span style="color:#666;font-size:.65rem;">${parsed.date || '?'}</span></div>`);
     } else {
       const preview = line.substring(0, 50).replace(/\s+/g, ' ');
-      html += `<div class="man-pv-row bad"><span class="ky">✗</span><span class="nums">không parse được: "${preview}${line.length>50?'...':''}"</span></div>`;
+      parts.push(`<div class="man-pv-row bad"><span class="ky">✗</span><span class="nums">không parse được: "${preview}${line.length>50?'...':''}"</span></div>`);
     }
   }
-  html += `<div style="margin-top:8px;padding-top:6px;border-top:1px solid #2a2d32;font-size:.7rem;color:${okCount>0?'#5dd49a':'#f08080'};"><strong>${okCount}/${lines.length}</strong> dòng OK${okCount>0?' — sẵn sàng thêm vào dữ liệu':''}</div>`;
+  parts.push(`<div style="margin-top:8px;padding-top:6px;border-top:1px solid #2a2d32;font-size:.7rem;color:${okCount>0?'#5dd49a':'#f08080'};"><strong>${okCount}/${lines.length}</strong> dòng OK${okCount>0?' — sẵn sàng thêm vào dữ liệu':''}</div>`);
 
-  previewEl.innerHTML = html;
+  previewEl.innerHTML = parts.join('');
   previewEl.classList.add('on');
   addBtn.disabled = okCount === 0;
 }
@@ -1613,10 +1684,17 @@ function addManualBulk() {
     return;
   }
   commitManualDraws(MAN_PARSED_DRAWS);
-  document.getElementById('mi-bulk').value = '';
-  document.getElementById('manPreview').classList.remove('on');
-  document.getElementById('manAddBulkBtn').disabled = true;
+  clearManualBulk();
   MAN_PARSED_DRAWS = [];
+}
+
+function clearManualBulk() {
+  const bulk = DOM['mi-bulk'] || $('mi-bulk');
+  const prev = DOM.manPreview || $('manPreview');
+  const btn  = DOM.manAddBulkBtn || $('manAddBulkBtn');
+  if (bulk) bulk.value = '';
+  if (prev) prev.classList.remove('on');
+  if (btn)  btn.disabled = true;
 }
 
 async function commitManualDraws(newDraws) {
@@ -1641,10 +1719,11 @@ async function commitManualDraws(newDraws) {
   TOTAL_DRAWS += trulyNew.length;
   DATA_FRESHNESS = Math.min(100, DATA_FRESHNESS + trulyNew.length * 2);
   rebuildPairsFromDraws();
+  invalidateStatCache();
   await saveFreq(MFREQ, SFREQ, TOTAL_DRAWS, DATA_FRESHNESS);
 
   const now = new Date();
-  document.getElementById('lastUpdateLabel').textContent =
+  (DOM.lastUpdateLabel || $('lastUpdateLabel')).textContent =
     `Cập nhật thủ công lúc ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} · ${TOTAL_DRAWS} kỳ quay`;
 
   renderResultsList();
@@ -1711,18 +1790,24 @@ function toggleAutoUpdate() {
   }
 }
 
+let _lastAutoNextText = '';
 function updateAutoNextLabel() {
-  const el = document.getElementById('autoNext');
+  const el = DOM.autoNext || document.getElementById('autoNext');
   if (!el) return;
-  if (!AUTO_UPD_ENABLED) { el.innerHTML = ''; return; }
-  if (LAST_FETCH_TS === 0) {
-    el.innerHTML = '<span class="dot"></span>Đang chờ cập nhật đầu tiên';
-    return;
+  let txt;
+  if (!AUTO_UPD_ENABLED) txt = '';
+  else if (LAST_FETCH_TS === 0) txt = '__waiting__';
+  else {
+    const nextTs = LAST_FETCH_TS + AUTO_UPD_INTERVAL_MIN * 60 * 1000;
+    const diffSec = Math.max(0, Math.floor((nextTs - Date.now()) / 1000));
+    const mm = Math.floor(diffSec / 60), ss = diffSec % 60;
+    txt = `${mm}:${String(ss).padStart(2,'0')}`;
   }
-  const nextTs = LAST_FETCH_TS + AUTO_UPD_INTERVAL_MIN * 60 * 1000;
-  const diffSec = Math.max(0, Math.floor((nextTs - Date.now()) / 1000));
-  const mm = Math.floor(diffSec / 60), ss = diffSec % 60;
-  el.innerHTML = `<span class="dot"></span>Lần kế: ${mm}:${String(ss).padStart(2,'0')}`;
+  if (txt === _lastAutoNextText) return;
+  _lastAutoNextText = txt;
+  if (txt === '') el.innerHTML = '';
+  else if (txt === '__waiting__') el.innerHTML = '<span class="dot"></span>Đang chờ cập nhật đầu tiên';
+  else el.innerHTML = `<span class="dot"></span>Lần kế: ${txt}`;
 }
 
 /* Auto-update tick — runs every 30s while page is visible */
@@ -1730,7 +1815,7 @@ function tickAutoUpdate() {
   updateAutoNextLabel();
   if (!AUTO_UPD_ENABLED) return;
   if (document.hidden) return;            // pause when tab not visible
-  const btn = document.getElementById('updBtn');
+  const btn = DOM.updBtn || $('updBtn');
   if (btn && btn.disabled) return;        // currently fetching
   const dueAt = LAST_FETCH_TS + AUTO_UPD_INTERVAL_MIN * 60 * 1000;
   if (Date.now() >= dueAt) {
@@ -1764,8 +1849,9 @@ function computeForecastConfidence(mains, special) {
   const f_sample = Math.min(1, TOTAL_DRAWS / 250) * 30;
   const f_fresh  = (DATA_FRESHNESS / 100) * 25;
 
-  // Entropy of MFREQ distribution
-  const total = Object.values(MFREQ).reduce((a,b)=>a+b, 0) || 1;
+  // Entropy of MFREQ distribution (uses cached total)
+  const stats = getStats();
+  const total = stats.total || 1;
   let H = 0;
   for (let n = 1; n <= 35; n++) {
     const p = (MFREQ[n] || 0) / total;
@@ -1797,14 +1883,7 @@ function computeForecastConfidence(mains, special) {
   const f_filter = (passed / 5) * 15;
 
   // Chi-Square fit (penalty if data deviates too far from uniform)
-  const expected = TOTAL_DRAWS * 5 / 35;
-  let chisq = 0;
-  if (expected > 0) {
-    for (let n = 1; n <= 35; n++) {
-      const o = MFREQ[n] || 0;
-      chisq += Math.pow(o - expected, 2) / expected;
-    }
-  }
+  const chisq = stats.chi;
   // p-value approx via df=34: p ~ 1 when chisq close to 34, lower when far
   const pApprox = Math.max(0, Math.min(1, Math.exp(-Math.abs(chisq - 34) / 30)));
   const f_chi = pApprox * 10;
@@ -1825,25 +1904,30 @@ function computeForecastConfidence(mains, special) {
 
 /* Generate the single best forecast: try many composite picks, score them, return the top */
 function generateOptimalForecast() {
+  // Warm the stat cache once (it'd otherwise stay warm across the loop too,
+  // but make the intent explicit)
+  getStats();
   const candidates = [];
   const seen = new Set();
   for (let i = 0; i < 80; i++) {
     let mains;
     try { mains = algoComposite(); } catch(e) { mains = algoBayesBeta(); }
     if (!mains || mains.length !== 5) continue;
-    const key = [...mains].sort((a,b)=>a-b).join('-');
+    const sorted = mains.slice().sort((a,b)=>a-b);
+    const key = sorted.join('-');
     if (seen.has(key)) continue;
     seen.add(key);
     const special = pickSpecial('composite');
-    const conf = computeForecastConfidence(mains, special);
-    candidates.push({ mains: [...mains].sort((a,b)=>a-b), special, conf });
+    const conf = computeForecastConfidence(sorted, special);
+    candidates.push({ mains: sorted, special, conf });
   }
   if (candidates.length === 0) {
     const fallback = algoBayesBeta();
+    const fbSpecial = pickSpecial('bayes');
     return {
-      mains: [...fallback].sort((a,b)=>a-b),
-      special: pickSpecial('bayes'),
-      conf: computeForecastConfidence(fallback, 1)
+      mains: fallback.slice().sort((a,b)=>a-b),
+      special: fbSpecial,
+      conf: computeForecastConfidence(fallback, fbSpecial)
     };
   }
   candidates.sort((a, b) => b.conf.total - a.conf.total);
@@ -1857,8 +1941,8 @@ function refreshForecast() {
 }
 
 function renderForecastCard() {
-  const root = document.getElementById('fhContent');
-  const stale = document.getElementById('fhStale');
+  const root = DOM.fhContent || $('fhContent');
+  const stale = DOM.fhStale || $('fhStale');
   if (!root) return;
   if (!CURRENT_FORECAST) {
     root.innerHTML = '<div class="fh-empty">Đang tính toán bộ số tối ưu từ dữ liệu hiện tại...</div>';
@@ -1866,7 +1950,6 @@ function renderForecastCard() {
   }
   const f = CURRENT_FORECAST;
   const c = f.conf;
-  const ageMin = Math.floor((Date.now() - f.ts) / 60000);
 
   // Show stale banner if data is older than 12h
   if (LAST_FETCH_TS > 0 && Date.now() - LAST_FETCH_TS > 12 * 3600 * 1000) {
@@ -1875,7 +1958,7 @@ function renderForecastCard() {
     stale.textContent = `⚠ Dữ liệu cập nhật ${h} giờ trước — hãy bấm "Cập Nhật Ngay" hoặc bật tự động.`;
   } else if (LAST_FETCH_TS === 0) {
     stale.style.display = 'block';
-    stale.textContent = `ℹ Hiện đang dùng dữ liệu cơ sở 180 kỳ mẫu. Bấm "Cập Nhật Ngay" để lấy kỳ mới nhất từ 535.`;
+    stale.textContent = `ℹ Hiện đang dùng dữ liệu cơ sở 180 kỳ mẫu. Bấm "Cập Nhật Ngay" để lấy kỳ mới nhất từ 353.`;
   } else {
     stale.style.display = 'none';
   }
@@ -1884,12 +1967,11 @@ function renderForecastCard() {
                    `<div class="fh-num sep">+</div>` +
                    `<div class="fh-num sp">${String(f.special).padStart(2,'0')}</div>`;
 
-  const algos = [...activeFilters];
   const filterLabels = {
     sum:'Σ70–110', oe:'chẵn/lẻ', hl:'cao/thấp',
     ld:'chữ số cuối', con:'liên tiếp', ap:'cấp số cộng'
   };
-  const filterChips = algos.map(k => filterLabels[k] || k).join(', ') || 'không lọc';
+  const filterChips = [...activeFilters].map(k => filterLabels[k] || k).join(', ') || 'không lọc';
 
   root.innerHTML = `
     <div class="fh-nums">${numsHtml}</div>
@@ -1936,7 +2018,7 @@ function toggleForecastWhy() {
 async function copyForecast() {
   if (!CURRENT_FORECAST) return;
   const f = CURRENT_FORECAST;
-  const text = `535 5/35 — Bộ số gợi ý tối ưu\n` +
+  const text = `535 — Bộ số gợi ý tối ưu\n` +
                `Số chính: ${f.mains.map(n=>String(n).padStart(2,'0')).join(' - ')}\n` +
                `Số đặc biệt: ${String(f.special).padStart(2,'0')}\n` +
                `Điểm tin cậy: ${f.conf.total}/100 · ${TOTAL_DRAWS} kỳ mẫu\n` +
@@ -1951,16 +2033,15 @@ async function copyForecast() {
 
 /* ═══ REBUILD PAIRS MATRIX ═══ */
 function rebuildPairsFromDraws() {
-  PAIRS = {};
-  for (let i = 1; i <= 35; i++) {
-    PAIRS[i] = {};
-    for (let j = 1; j <= 35; j++) if (i !== j) PAIRS[i][j] = 0;
-  }
+  PAIRS.fill(0);
   for (const d of DRAWS) {
     if (!d.main) continue;
-    for (let i = 0; i < d.main.length; i++) {
-      for (let j = 0; j < d.main.length; j++) {
-        if (i !== j) PAIRS[d.main[i]][d.main[j]]++;
+    const m = d.main;
+    const len = m.length;
+    for (let i = 0; i < len; i++) {
+      const a = m[i];
+      for (let j = 0; j < len; j++) {
+        if (i !== j) PAIRS[a * 36 + m[j]]++;
       }
     }
   }
@@ -1969,8 +2050,8 @@ function rebuildPairsFromDraws() {
 
 /* ═══ RENDER RESULTS LIST ═══ */
 function renderResultsList() {
-  const el = document.getElementById('resultsList');
-  document.getElementById('drawCount').textContent = `${DRAWS.length} kỳ`;
+  const el = DOM.resultsList || $('resultsList');
+  (DOM.drawCount || $('drawCount')).textContent = `${DRAWS.length} kỳ`;
   if (DRAWS.length === 0) {
     el.innerHTML = '<div class="empty">Chưa có kết quả. Nhấn "Cập Nhật Ngay" để tải.</div>';
     return;
@@ -1981,25 +2062,16 @@ function renderResultsList() {
     ).join('');
     const newTag = d.isNew ? '<span class="new-tag">MỚI</span>' : '';
     const sess = d.session ? ` · ${d.session}` : '';
-    return `<div class="draw-row ${d.isNew?'new':''}">
-      <div class="draw-meta">
-        <div class="draw-ky">Kỳ #${d.ky}</div>
-        <div class="draw-date">${d.date}${sess}</div>
-      </div>
-      <div class="draw-nums">
-        ${balls}
-        <span class="b-sep">|</span>
-        <div class="b b-s" title="Số đặc biệt">${String(d.special).padStart(2,'0')}</div>
-        ${newTag}
-      </div>
-    </div>`;
+    return `<div class="draw-row ${d.isNew?'new':''}"><div class="draw-meta"><div class="draw-ky">Kỳ #${d.ky}</div><div class="draw-date">${d.date}${sess}</div></div><div class="draw-nums">${balls}<span class="b-sep">|</span><div class="b b-s" title="Số đặc biệt">${String(d.special).padStart(2,'0')}</div>${newTag}</div></div>`;
   }).join('');
 }
 
 /* ═══ HEAT CLASSIFICATION (Chi-Square Residual based) ═══ */
 function getHeat(n) {
-  const f = MFREQ[n];
-  const expected = TOTAL_DRAWS * 5 / 35;
+  const stats = getStats();
+  const expected = stats.expected;
+  if (expected <= 0) return '';
+  const f = MFREQ[n] || 0;
   const residual = (f - expected) / Math.sqrt(expected);
   if (residual >= 1.5) return 'hot';
   if (residual >= 0.5) return 'warm';
@@ -2008,15 +2080,43 @@ function getHeat(n) {
   return '';
 }
 
-/* ═══ CHI-SQUARE STATISTIC ═══ */
-function computeChiSquare() {
+/* ═══ CHI-SQUARE STATISTIC (memoized) ═══ */
+let _statCache = null;
+function invalidateStatCache() { _statCache = null; }
+
+function getStats() {
+  if (_statCache) return _statCache;
+  let total = 0;
+  for (let n = 1; n <= 35; n++) total += (MFREQ[n] || 0);
   const expected = TOTAL_DRAWS * 5 / 35;
   let chi = 0;
-  for (let n = 1; n <= 35; n++) {
-    const o = MFREQ[n] || 0;
-    chi += Math.pow(o - expected, 2) / expected;
+  if (expected > 0) {
+    for (let n = 1; n <= 35; n++) {
+      const o = MFREQ[n] || 0;
+      const diff = o - expected;
+      chi += (diff * diff) / expected;
+    }
   }
-  return chi;
+  // Gaps: idx of most recent draw containing n (smaller = more recent)
+  const gaps = new Array(36).fill(TOTAL_DRAWS);
+  for (let i = 0; i < DRAWS.length; i++) {
+    const d = DRAWS[i];
+    if (!d.main) continue;
+    for (const n of d.main) {
+      if (gaps[n] === TOTAL_DRAWS) gaps[n] = i;
+    }
+  }
+  _statCache = { total, expected, chi, gaps };
+  return _statCache;
+}
+
+function computeChiSquare() { return getStats().chi; }
+function computeGaps() {
+  // legacy API returning object map (some callers iterate by 1..35)
+  const arr = getStats().gaps;
+  const out = {};
+  for (let n = 1; n <= 35; n++) out[n] = arr[n];
+  return out;
 }
 
 /* p-value approximation cho chi-square với df=34 (chỉ ước lượng) */
@@ -2033,52 +2133,59 @@ function chiSqPValue(chi, df = 34) {
 
 /* ═══ RENDER STATS ═══ */
 function renderAllStats() {
-  const nums = Object.keys(MFREQ).map(Number);
-  const maxF = Math.max(...nums.map(n=>MFREQ[n]));
-  const minF = Math.min(...nums.map(n=>MFREQ[n]));
-  const sorted = [...nums].sort((a,b)=>MFREQ[b]-MFREQ[a]);
+  const stats = getStats();
+  const expected = stats.expected;
+  const sqrtExp = Math.sqrt(expected) || 1;
+
+  // Single-pass min/max/sorted (was 3 passes with spread Math.max/min)
+  const nums = [];
+  let maxF = -Infinity, minF = Infinity;
+  for (let n = 1; n <= 35; n++) {
+    nums.push(n);
+    const v = MFREQ[n] || 0;
+    if (v > maxF) maxF = v;
+    if (v < minF) minF = v;
+  }
+  const sorted = nums.slice().sort((a,b)=>(MFREQ[b]||0)-(MFREQ[a]||0));
   const hotNum = sorted[0];
   const coldNum = sorted[sorted.length-1];
-  const chi = computeChiSquare();
 
-  document.getElementById('st-draws').textContent = TOTAL_DRAWS;
-  document.getElementById('st-hotnum').textContent = String(hotNum).padStart(2,'0');
-  document.getElementById('st-coldnum').textContent = String(coldNum).padStart(2,'0');
-  document.getElementById('st-chisq').textContent = chi.toFixed(1);
+  (DOM['st-draws']  || $('st-draws')).textContent = TOTAL_DRAWS;
+  (DOM['st-hotnum'] || $('st-hotnum')).textContent = String(hotNum).padStart(2,'0');
+  (DOM['st-coldnum']|| $('st-coldnum')).textContent = String(coldNum).padStart(2,'0');
+  (DOM['st-chisq']  || $('st-chisq')).textContent = stats.chi.toFixed(1);
 
-  // Freq chart
-  const fcEl = document.getElementById('freqChart');
-  fcEl.innerHTML = nums.map(n => {
-    const v = MFREQ[n];
-    const pct = Math.round(((v-minF)/(maxF-minF||1))*80+15);
+  // Freq chart — build via parts[] then single innerHTML write
+  const fcEl = DOM.freqChart || $('freqChart');
+  const range = (maxF - minF) || 1;
+  const parts = new Array(nums.length);
+  for (let i = 0; i < nums.length; i++) {
+    const n = nums[i];
+    const v = MFREQ[n] || 0;
+    const pct = Math.round(((v-minF)/range)*80+15);
     const h = getHeat(n);
     const clr = h==='hot'?'#e84b4b':h==='warm'?'#e8974b':h==='cool'?'#7ab4f5':h==='cold'?'#4b8be8':'#5a5750';
-    return `<div class="fi" title="${n}: ${v} lần (residual: ${((v-TOTAL_DRAWS*5/35)/Math.sqrt(TOTAL_DRAWS*5/35)).toFixed(2)})">
-      <div class="fn">${String(n).padStart(2,'0')}</div>
-      <div class="fb-wrap"><div class="fb" style="height:${pct}%;background:${clr}"></div></div>
-      <div class="fc">${v}</div>
-    </div>`;
-  }).join('');
+    const resid = sqrtExp > 0 ? ((v-expected)/sqrtExp).toFixed(2) : '0.00';
+    parts[i] = `<div class="fi" title="${n}: ${v} lần (residual: ${resid})"><div class="fn">${String(n).padStart(2,'0')}</div><div class="fb-wrap"><div class="fb" style="height:${pct}%;background:${clr}"></div></div><div class="fc">${v}</div></div>`;
+  }
+  fcEl.innerHTML = parts.join('');
 
-  // Special chart
-  const spEl = document.getElementById('spChart');
-  const spMax = Math.max(...Object.values(SFREQ));
-  const spTotal = Object.values(SFREQ).reduce((a,b)=>a+b,0);
+  // Special chart — single pass for max + total
+  const spEl = DOM.spChart || $('spChart');
+  let spMax = 0, spTotal = 0;
+  for (const v of Object.values(SFREQ)) { spTotal += v; if (v > spMax) spMax = v; }
+  if (spMax === 0) spMax = 1;
   spEl.innerHTML = Object.entries(SFREQ).sort((a,b)=>b[1]-a[1]).map(([n,v])=>{
     const alpha = (0.3 + (v/spMax)*0.7).toFixed(2);
-    return `<div class="sp-item" style="border-color:rgba(212,168,67,${alpha})">
-      <div class="sp-n">${String(n).padStart(2,'0')}</div>
-      <div class="sp-c">${v} lần</div>
-      <div class="sp-c">${((v/spTotal)*100).toFixed(1)}%</div>
-    </div>`;
+    const pct = spTotal > 0 ? ((v/spTotal)*100).toFixed(1) : '0.0';
+    return `<div class="sp-item" style="border-color:rgba(212,168,67,${alpha})"><div class="sp-n">${String(n).padStart(2,'0')}</div><div class="sp-c">${v} lần</div><div class="sp-c">${pct}%</div></div>`;
   }).join('');
 
   // Hot/cold visual with residuals
-  const hcEl = document.getElementById('hotColdVis');
+  const hcEl = DOM.hotColdVis || $('hotColdVis');
   const top5hot = sorted.slice(0,5);
   const top5cold = sorted.slice(-5).reverse();
-  const expected = TOTAL_DRAWS * 5 / 35;
-  const resid = n => ((MFREQ[n] - expected) / Math.sqrt(expected)).toFixed(2);
+  const resid = n => sqrtExp > 0 ? ((MFREQ[n] - expected) / sqrtExp).toFixed(2) : '0.00';
   hcEl.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
       <div>
@@ -2088,9 +2195,9 @@ function renderAllStats() {
             <span style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);width:14px;">${i+1}</span>
             <div class="b b-m" style="border-color:var(--red);color:var(--red);background:rgba(232,75,75,.1);width:32px;height:32px;font-size:.72rem;">${String(n).padStart(2,'0')}</div>
             <div style="flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;">
-              <div style="height:100%;width:${Math.round((MFREQ[n]/maxF)*100)}%;background:var(--red);border-radius:3px;"></div>
+              <div style="height:100%;width:${Math.round(((MFREQ[n]||0)/maxF)*100)}%;background:var(--red);border-radius:3px;"></div>
             </div>
-            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]} <span style="color:var(--red);">+${resid(n)}σ</span></span>
+            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]||0} <span style="color:var(--red);">+${resid(n)}σ</span></span>
           </div>`).join('')}
       </div>
       <div>
@@ -2100,9 +2207,9 @@ function renderAllStats() {
             <span style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);width:14px;">${i+1}</span>
             <div class="b b-m" style="border-color:var(--blue);color:var(--blue);background:rgba(75,139,232,.1);width:32px;height:32px;font-size:.72rem;">${String(n).padStart(2,'0')}</div>
             <div style="flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;">
-              <div style="height:100%;width:${Math.round((MFREQ[n]/maxF)*100)}%;background:var(--blue);border-radius:3px;"></div>
+              <div style="height:100%;width:${Math.round(((MFREQ[n]||0)/maxF)*100)}%;background:var(--blue);border-radius:3px;"></div>
             </div>
-            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]} <span style="color:var(--blue);">${resid(n)}σ</span></span>
+            <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text2);text-align:right;min-width:55px;">${MFREQ[n]||0} <span style="color:var(--blue);">${resid(n)}σ</span></span>
           </div>`).join('')}
       </div>
     </div>`;
@@ -2112,25 +2219,30 @@ function renderAllStats() {
 
 function updateConfidence() {
   const total = Math.min(TOTAL_DRAWS, 1000);
-  document.getElementById('cf1').style.width = Math.round((total/1000)*100) + '%';
-  document.getElementById('cfv1').textContent = TOTAL_DRAWS;
+  (DOM.cf1 || $('cf1')).style.width = Math.round((total/1000)*100) + '%';
+  (DOM.cfv1 || $('cfv1')).textContent = TOTAL_DRAWS;
 
-  document.getElementById('cf2').style.width = DATA_FRESHNESS + '%';
-  document.getElementById('cfv2').textContent = DATA_FRESHNESS + '%';
+  (DOM.cf2 || $('cf2')).style.width = DATA_FRESHNESS + '%';
+  (DOM.cfv2 || $('cfv2')).textContent = DATA_FRESHNESS + '%';
 
   const vals = Object.values(MFREQ);
-  const mean = vals.reduce((a,b)=>a+b,0)/vals.length;
-  const variance = vals.reduce((a,b)=>a+Math.pow(b-mean,2),0)/vals.length;
-  const cv = (Math.sqrt(variance)/mean)*100;
+  const n = vals.length || 1;
+  let s = 0;
+  for (let i = 0; i < vals.length; i++) s += vals[i];
+  const mean = s / n;
+  let varSum = 0;
+  for (let i = 0; i < vals.length; i++) { const d = vals[i]-mean; varSum += d*d; }
+  const variance = varSum / n;
+  const cv = mean > 0 ? (Math.sqrt(variance)/mean)*100 : 0;
   const entropy = Math.max(50, Math.min(99, Math.round(100 - cv)));
-  document.getElementById('cf3').style.width = entropy + '%';
-  document.getElementById('cfv3').textContent = entropy + '%';
+  (DOM.cf3 || $('cf3')).style.width = entropy + '%';
+  (DOM.cfv3 || $('cfv3')).textContent = entropy + '%';
 
   const chi = computeChiSquare();
   const p = chiSqPValue(chi, 34);
   const pPct = Math.round(p * 100);
-  document.getElementById('cf4').style.width = Math.max(5, Math.min(95, pPct)) + '%';
-  document.getElementById('cfv4').textContent = p.toFixed(3);
+  (DOM.cf4 || $('cf4')).style.width = Math.max(5, Math.min(95, pPct)) + '%';
+  (DOM.cfv4 || $('cfv4')).textContent = p.toFixed(3);
 }
 
 /* ═══ RENDER PATTERNS (TAB) ═══ */
@@ -2189,66 +2301,55 @@ function renderPatterns() {
 
   // Render Sum chart
   const sumKeys = Object.keys(sumBuckets).map(Number).sort((a,b)=>a-b);
-  const sumMax = Math.max(...Object.values(sumBuckets), 1);
-  const sumEl = document.getElementById('sumChart');
+  let sumMax = 1;
+  for (const v of Object.values(sumBuckets)) if (v > sumMax) sumMax = v;
+  const sumEl = DOM.sumChart || $('sumChart');
   sumEl.innerHTML = sumKeys.map(bk => {
     const v = sumBuckets[bk];
     const pct = (v/sumMax)*100;
     const inGold = bk >= 70 && bk <= 110;
     const clr = inGold ? 'var(--gold)' : 'var(--text3)';
-    return `<div class="pat-bar-row">
-      <div class="pat-bar-lbl">${bk}–${bk+9}</div>
-      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div>
-      <div class="pat-bar-val">${v}</div>
-    </div>`;
+    return `<div class="pat-bar-row"><div class="pat-bar-lbl">${bk}–${bk+9}</div><div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div><div class="pat-bar-val">${v}</div></div>`;
   }).join('');
   const avgSum = sumCount > 0 ? (sumTotal/sumCount).toFixed(1) : '90.0 (lý thuyết)';
-  document.getElementById('sumStat').textContent = `μ = ${avgSum} · n = ${sumCount || 'no data'}`;
+  (DOM.sumStat || $('sumStat')).textContent = `μ = ${avgSum} · n = ${sumCount || 'no data'}`;
 
   // Odd/Even chart
-  renderRatioChart('oeChart', oeBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5'], 'Lẻ-Chẵn');
-  renderRatioChart('hlChart', hlBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5'], 'Thấp-Cao');
+  renderRatioChart('oeChart', oeBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5']);
+  renderRatioChart('hlChart', hlBuckets, ['5-0','4-1','3-2','2-3','1-4','0-5']);
 
   // Last digit duplicate
-  const ldEl = document.getElementById('ldChart');
-  const ldMax = Math.max(...Object.values(ldDup), 1);
+  const ldEl = DOM.ldChart || $('ldChart');
+  let ldMax = 1;
+  for (const v of Object.values(ldDup)) if (v > ldMax) ldMax = v;
   ldEl.innerHTML = Object.entries(ldDup).map(([k,v]) => {
     const pct = (v/ldMax)*100;
     const safe = k <= 2;
-    return `<div class="pat-bar-row">
-      <div class="pat-bar-lbl">Max ${k} đuôi</div>
-      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${safe?'var(--green)':'var(--orange)'}"></div></div>
-      <div class="pat-bar-val">${v}</div>
-    </div>`;
+    return `<div class="pat-bar-row"><div class="pat-bar-lbl">Max ${k} đuôi</div><div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${safe?'var(--green)':'var(--orange)'}"></div></div><div class="pat-bar-val">${v}</div></div>`;
   }).join('');
 
   // Consecutive
-  const conEl = document.getElementById('conChart');
-  const conMax = Math.max(...Object.values(conBuckets), 1);
+  const conEl = DOM.conChart || $('conChart');
+  let conMax = 1;
+  for (const v of Object.values(conBuckets)) if (v > conMax) conMax = v;
   conEl.innerHTML = Object.entries(conBuckets).map(([k,v]) => {
     const pct = (v/conMax)*100;
-    return `<div class="pat-bar-row">
-      <div class="pat-bar-lbl">${k}</div>
-      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%"></div></div>
-      <div class="pat-bar-val">${v}</div>
-    </div>`;
+    return `<div class="pat-bar-row"><div class="pat-bar-lbl">${k}</div><div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%"></div></div><div class="pat-bar-val">${v}</div></div>`;
   }).join('');
 }
 
-function renderRatioChart(elId, buckets, order, label) {
+function renderRatioChart(elId, buckets, order) {
   const el = document.getElementById(elId);
-  const max = Math.max(...Object.values(buckets), 1);
+  let max = 1;
+  for (const v of Object.values(buckets)) if (v > max) max = v;
   el.innerHTML = order.map(k => {
     const v = buckets[k] || 0;
     const pct = (v/max)*100;
-    const parts = k.split('-').map(Number);
-    const balanced = (parts[0]===2 && parts[1]===3) || (parts[0]===3 && parts[1]===2);
+    const parts = k.split('-');
+    const a = +parts[0], b = +parts[1];
+    const balanced = (a===2 && b===3) || (a===3 && b===2);
     const clr = balanced ? 'var(--gold)' : 'var(--text3)';
-    return `<div class="pat-bar-row">
-      <div class="pat-bar-lbl">${k}</div>
-      <div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div>
-      <div class="pat-bar-val">${v}</div>
-    </div>`;
+    return `<div class="pat-bar-row"><div class="pat-bar-lbl">${k}</div><div class="pat-bar-tr"><div class="pat-bar-fl" style="width:${pct}%;background:${clr}"></div></div><div class="pat-bar-val">${v}</div></div>`;
   }).join('');
 }
 
@@ -2266,12 +2367,15 @@ const ALGO_INFO = {
 };
 
 function selAlgo(el, algo) {
-  document.querySelectorAll('.ab').forEach(b => b.classList.remove('on'));
+  const grp = DOM.algoGrid || $('algoGrid');
+  if (grp) {
+    const btns = grp.children;
+    for (let i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  }
   el.classList.add('on');
   currentAlgo = algo;
-  document.getElementById('algoInfoBox').innerHTML = ALGO_INFO[algo];
+  (DOM.algoInfoBox || $('algoInfoBox')).innerHTML = ALGO_INFO[algo];
 }
-document.getElementById('algoInfoBox').innerHTML = ALGO_INFO['hot'];
 
 function toggleFilter(el) {
   const f = el.dataset.f;
@@ -2280,19 +2384,32 @@ function toggleFilter(el) {
   else activeFilters.delete(f);
 }
 
-/* ═══ WEIGHTED SAMPLE ═══ */
+/* ═══ WEIGHTED SAMPLE ═══
+   Picks `n` items from `pool` without replacement, biased by `weights`.
+   Optimization: track running total instead of calling reduce() each iter.
+*/
 function wSample(pool, n, weights) {
-  const r = []; const p = [...pool]; const w = [...weights];
+  const p = pool.slice();
+  const w = weights.slice();
+  let tot = 0;
+  for (let i = 0; i < w.length; i++) tot += w[i];
+
+  const r = [];
   for (let i = 0; i < n && p.length > 0; i++) {
-    const tot = w.reduce((a,b)=>a+b,0);
-    if (tot <= 0) { 
+    if (tot <= 0) {
       const idx = Math.floor(Math.random()*p.length);
       r.push(p[idx]); p.splice(idx,1); w.splice(idx,1);
       continue;
     }
     let rv = Math.random()*tot, c = 0, idx = 0;
-    for (let j = 0; j < w.length; j++) { c += w[j]; if (rv <= c) { idx = j; break; } }
-    r.push(p[idx]); p.splice(idx,1); w.splice(idx,1);
+    for (let j = 0; j < w.length; j++) {
+      c += w[j];
+      if (rv <= c) { idx = j; break; }
+    }
+    r.push(p[idx]);
+    tot -= w[idx];
+    p.splice(idx,1);
+    w.splice(idx,1);
   }
   return r.sort((a,b)=>a-b);
 }
@@ -2307,51 +2424,44 @@ function pickSpecial(algo) {
   return +wSample(e.map(x=>+x[0]),1,w)[0];
 }
 
-/* ═══ GAP ANALYSIS ═══ */
-function computeGaps() {
-  const lastSeen = {};
-  for (let n=1;n<=35;n++) lastSeen[n] = TOTAL_DRAWS;
-  DRAWS.forEach((d, idx) => {
-    if (!d.main) return;
-    d.main.forEach(n => { if (lastSeen[n] === TOTAL_DRAWS) lastSeen[n] = idx; });
-  });
-  return lastSeen;
-}
-
 /* ═══ STATISTICAL FILTERS ═══ */
 function passesFilters(nums) {
-  const arr = [...nums].sort((a,b)=>a-b);
-  const sum = arr.reduce((a,b)=>a+b,0);
-  
+  if (activeFilters.size === 0) return true;
+  const arr = nums.slice().sort((a,b)=>a-b);
+
   if (activeFilters.has('sum')) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) sum += arr[i];
     if (sum < 70 || sum > 110) return false;
   }
   if (activeFilters.has('oe')) {
-    const odds = arr.filter(n=>n%2===1).length;
+    let odds = 0;
+    for (let i = 0; i < arr.length; i++) if (arr[i] & 1) odds++;
     if (odds === 0 || odds === 5) return false;
-    // Prefer 2-3 or 3-2; accept 1-4, 4-1 too
-    // Reject 0-5, 5-0 (handled above)
   }
   if (activeFilters.has('hl')) {
-    const high = arr.filter(n=>n>=18).length;
+    let high = 0;
+    for (let i = 0; i < arr.length; i++) if (arr[i] >= 18) high++;
     if (high === 0 || high === 5) return false;
   }
   if (activeFilters.has('ld')) {
-    const dCount = {};
-    arr.forEach(n => { const d = n%10; dCount[d]=(dCount[d]||0)+1; });
-    if (Math.max(...Object.values(dCount)) >= 3) return false;
+    const dCount = [0,0,0,0,0,0,0,0,0,0];
+    for (let i = 0; i < arr.length; i++) dCount[arr[i]%10]++;
+    let maxD = 0;
+    for (let i = 0; i < 10; i++) if (dCount[i] > maxD) maxD = dCount[i];
+    if (maxD >= 3) return false;
   }
   if (activeFilters.has('con')) {
     let conLen = 1, maxConLen = 1;
     for (let i = 1; i < arr.length; i++) {
-      if (arr[i] === arr[i-1]+1) { conLen++; maxConLen = Math.max(maxConLen, conLen); }
+      if (arr[i] === arr[i-1]+1) { conLen++; if (conLen > maxConLen) maxConLen = conLen; }
       else conLen = 1;
     }
     if (maxConLen >= 3) return false;
   }
   if (activeFilters.has('ap')) {
-    // Arithmetic progression detection
-    for (let i = 0; i < arr.length-2; i++) {
+    // Arithmetic progression of length ≥ 4
+    for (let i = 0; i < arr.length-3; i++) {
       const d = arr[i+1] - arr[i];
       if (d === 0) continue;
       let count = 2;
@@ -2387,8 +2497,9 @@ function algoBalanced() {
 
 function algoChiSquare() {
   const expected = TOTAL_DRAWS * 5 / 35;
+  const sqrtExp = Math.sqrt(expected) || 1;
   const w = ALL35.map(n => {
-    const r = Math.abs(((MFREQ[n]||0) - expected) / Math.sqrt(expected));
+    const r = Math.abs(((MFREQ[n]||0) - expected) / sqrtExp);
     return Math.exp(r) + Math.random()*0.5;
   });
   return wSample(ALL35, 5, w);
@@ -2397,13 +2508,11 @@ function algoChiSquare() {
 function algoBayesBeta() {
   // Beta-Binomial: α₀=5 (prior expects ~5 from C(35,5)), β₀=30
   const alpha0 = 5, beta0 = 30;
-  const gaps = computeGaps();
+  const gaps = getStats().gaps;
+  const denom = alpha0 + beta0 + TOTAL_DRAWS;
   const w = ALL35.map(n => {
     const obs = MFREQ[n] || 0;
-    const miss = TOTAL_DRAWS - obs;
-    // Posterior mean = (α₀+obs) / (α₀+β₀+obs+miss) — but obs/(obs+miss) ≈ obs/N
-    // We use posterior weighted by gap boost
-    const posterior = (alpha0 + obs) / (alpha0 + beta0 + TOTAL_DRAWS);
+    const posterior = (alpha0 + obs) / denom;
     const gapBoost = 1 + Math.log(gaps[n] + 2) * 0.1;
     return posterior * gapBoost + Math.random()*0.001;
   });
@@ -2415,9 +2524,14 @@ function algoMarkov() {
   const anchorPool = [...ALL35].sort((a,b)=>(MFREQ[b]||0)-(MFREQ[a]||0)).slice(0,8);
   const anchor = anchorPool[Math.floor(Math.random()*anchorPool.length)];
   const result = [anchor];
-  const pairsAnchor = PAIRS[anchor] || {};
-  const hasPairs = Object.values(pairsAnchor).some(v => v > 0);
-  
+
+  // Check if anchor has any pair co-occurrences
+  let hasPairs = false;
+  const anchorRow = anchor * 36;
+  for (let j = 1; j <= 35; j++) {
+    if (PAIRS[anchorRow + j] > 0) { hasPairs = true; break; }
+  }
+
   if (hasPairs) {
     // Pick 4 more based on pair-correlation
     const remaining = ALL35.filter(n => n !== anchor);
@@ -2425,8 +2539,8 @@ function algoMarkov() {
       // sum pair-correlations of candidate with all current result
       const w = remaining.map(n => {
         let score = 0;
-        for (const r of result) score += (PAIRS[r] && PAIRS[r][n]) || 0;
-        return Math.pow(score + 0.5, 2) + Math.random()*0.5;
+        for (const r of result) score += PAIRS[r * 36 + n];
+        return (score + 0.5) * (score + 0.5) + Math.random()*0.5;
       });
       const tot = w.reduce((a,b)=>a+b,0);
       let rv = Math.random()*tot, c=0, idx=0;
@@ -2443,13 +2557,14 @@ function algoMarkov() {
 
 function algoMandelCC() {
   // Build pool of 12 using composite score
-  const expected = TOTAL_DRAWS * 5 / 35;
-  const gaps = computeGaps();
+  const stats = getStats();
+  const expected = stats.expected;
+  const gaps = stats.gaps;
+  const sqrtExp = Math.sqrt(expected) || 1;
   const scores = ALL35.map(n => {
     const freq = MFREQ[n] || 0;
-    const residual = Math.abs((freq - expected) / Math.sqrt(expected));
-    const gap = gaps[n];
-    const composite = freq * 0.5 + residual * 10 + Math.log(gap + 2) * 3 + Math.random() * 4;
+    const residual = Math.abs((freq - expected) / sqrtExp);
+    const composite = freq * 0.5 + residual * 10 + Math.log(gaps[n] + 2) * 3 + Math.random() * 4;
     return { n, score: composite };
   });
   scores.sort((a, b) => b.score - a.score);
@@ -2465,19 +2580,20 @@ function algoMandelCC() {
 }
 
 function algoComposite(maxAttempts = 200) {
+  // Fast-path: if no filters active, skip filter check entirely
+  if (activeFilters.size === 0) return algoBayesBeta();
+
   // Generate using bayes-beta, then filter
   for (let i = 0; i < maxAttempts; i++) {
     const nums = algoBayesBeta();
     if (passesFilters(nums)) return nums;
   }
-  // Fallback: relax filters by half
-  const relax = new Set([...activeFilters].slice(0, Math.floor(activeFilters.size / 2)));
+  // Fallback: relax filters — try with just the sum filter
   for (let i = 0; i < 50; i++) {
     const nums = algoBayesBeta();
-    const arr = [...nums].sort((a,b)=>a-b);
-    const sum = arr.reduce((a,b)=>a+b,0);
-    if (relax.has('sum') && (sum < 70 || sum > 110)) continue;
-    return nums;
+    const arr = nums.slice().sort((a,b)=>a-b);
+    let s = 0; for (let j = 0; j < arr.length; j++) s += arr[j];
+    if (s >= 70 && s <= 110) return nums;
   }
   return algoBayesBeta();
 }
@@ -2501,42 +2617,42 @@ function generate() {
   const sets = [];
   const seen = new Set();
   let attempts = 0;
-  
+
   while (sets.length < 6 && attempts < 100) {
     attempts++;
     const nums = genOne(currentAlgo);
-    const key = nums.join('-');
+    const arr = nums.slice().sort((a,b)=>a-b);
+    const key = arr.join('-');
     if (seen.has(key)) continue;
     seen.add(key);
     const sp = pickSpecial(currentAlgo);
-    
-    // Compute composite score for ranking
-    const expected = TOTAL_DRAWS * 5 / 35;
-    let score = 0;
-    nums.forEach(n => {
-      const f = MFREQ[n] || 0;
-      score += f;
-    });
-    // Pattern bonus
-    const arr = [...nums].sort((a,b)=>a-b);
-    const sumVal = arr.reduce((a,b)=>a+b,0);
+
+    // Single-pass: score + sum + odds count
+    let score = 0, sumVal = 0, odds = 0;
+    for (let i = 0; i < arr.length; i++) {
+      const n = arr[i];
+      score += (MFREQ[n] || 0);
+      sumVal += n;
+      if (n & 1) odds++;
+    }
     if (sumVal >= 70 && sumVal <= 110) score *= 1.1;
-    const odds = arr.filter(n=>n%2===1).length;
     if (odds === 2 || odds === 3) score *= 1.05;
-    
-    sets.push({nums, sp, score, sumVal, odds});
+
+    sets.push({nums: arr, sp, score, sumVal, odds});
   }
 
+  const listEl = DOM.setsList || $('setsList');
   if (sets.length === 0) {
-    document.getElementById('setsList').innerHTML = '<div class="empty">Bộ lọc quá nghiêm — hãy tắt bớt filter.</div>';
+    listEl.innerHTML = '<div class="empty">Bộ lọc quá nghiêm — hãy tắt bớt filter.</div>';
     return;
   }
 
   sets.sort((a,b)=>b.score-a.score);
   const maxS = sets[0].score, minS = sets[sets.length-1].score;
+  const range = maxS - minS;
 
   const html = sets.map((s, i) => {
-    const pct = maxS>minS ? Math.round(((s.score-minS)/(maxS-minS))*30+65) : 80;
+    const pct = range > 0 ? Math.round(((s.score-minS)/range)*30+65) : 80;
     const balls = s.nums.map(n => {
       const h = getHeat(n);
       const cls = h==='hot'?'style="border-color:var(--red);color:var(--red);background:rgba(232,75,75,.1)"':
@@ -2545,26 +2661,14 @@ function generate() {
                   h==='cold'?'style="border-color:var(--blue);color:var(--blue);background:rgba(75,139,232,.08)"':'';
       return `<div class="b b-m" ${cls} title="${n}: ${MFREQ[n]||0} lần">${String(n).padStart(2,'0')}</div>`;
     }).join('');
-    const arr = [...s.nums].sort((a,b)=>a-b);
     const evens = 5 - s.odds;
-    const high = arr.filter(n=>n>=18).length;
+    let high = 0;
+    for (let j = 0; j < s.nums.length; j++) if (s.nums[j] >= 18) high++;
     const low = 5 - high;
-    return `<div class="srow" style="animation-delay:${i*.07}s">
-      <div class="srnk">#${i+1}</div>
-      <div class="snums">
-        ${balls}
-        <span class="b-sep" style="color:var(--text3);">|</span>
-        <div class="b b-s" title="Số đặc biệt: ${s.sp}">${String(s.sp).padStart(2,'0')}</div>
-        <div class="s-meta">Σ=${s.sumVal} · ${s.odds}L-${evens}C · ${low}T-${high}C</div>
-      </div>
-      <div class="sscore">
-        <div class="sv2">${pct}%</div>
-        <div class="sl2">điểm</div>
-      </div>
-    </div>`;
+    return `<div class="srow" style="animation-delay:${i*.07}s"><div class="srnk">#${i+1}</div><div class="snums">${balls}<span class="b-sep" style="color:var(--text3);">|</span><div class="b b-s" title="Số đặc biệt: ${s.sp}">${String(s.sp).padStart(2,'0')}</div><div class="s-meta">Σ=${s.sumVal} · ${s.odds}L-${evens}C · ${low}T-${high}C</div></div><div class="sscore"><div class="sv2">${pct}%</div><div class="sl2">điểm</div></div></div>`;
   }).join('');
 
-  document.getElementById('setsList').innerHTML = html;
+  listEl.innerHTML = html;
 }
 
 
@@ -2580,22 +2684,24 @@ let wheelKeys = new Set();
 let wheelGuarantee = 3;
 let wheelSpecial = 1;
 
+let _pickerCells = null;
 function initNumPicker() {
-  const grid = document.getElementById('numPicker');
+  const grid = DOM.numPicker || $('numPicker');
   if (!grid) return;
-  let html = '';
+  const parts = new Array(35);
   for (let n = 1; n <= 35; n++) {
-    html += `<div class="np-cell" data-n="${n}" onclick="toggleNumPick(${n})" ondblclick="toggleKeyPick(${n})">${String(n).padStart(2,'0')}</div>`;
+    parts[n-1] = `<div class="np-cell" data-n="${n}" onclick="toggleNumPick(${n})" ondblclick="toggleKeyPick(${n})">${String(n).padStart(2,'0')}</div>`;
   }
-  grid.innerHTML = html;
+  grid.innerHTML = parts.join('');
+  _pickerCells = grid.children;
 }
 
 function initSpecialDropdown() {
-  const sel = document.getElementById('wSpecial');
+  const sel = DOM.wSpecial || $('wSpecial');
   if (!sel) return;
-  let html = '';
-  for (let i = 1; i <= 12; i++) html += `<option value="${i}">${String(i).padStart(2,'0')}</option>`;
-  sel.innerHTML = html;
+  const parts = new Array(12);
+  for (let i = 1; i <= 12; i++) parts[i-1] = `<option value="${i}">${String(i).padStart(2,'0')}</option>`;
+  sel.innerHTML = parts.join('');
   sel.onchange = () => { wheelSpecial = +sel.value; };
 }
 
@@ -2630,24 +2736,28 @@ function toggleKeyPick(n) {
 }
 
 function updatePickerUI() {
-  document.querySelectorAll('.np-cell').forEach(c => {
-    const n = +c.dataset.n;
-    c.classList.toggle('on', wheelPool.has(n));
-    c.classList.toggle('key', wheelKeys.has(n));
-  });
-  document.getElementById('wPickedCount').textContent = wheelPool.size;
-  document.getElementById('wKeyCount').textContent = wheelKeys.size;
+  if (_pickerCells) {
+    for (let i = 0; i < _pickerCells.length; i++) {
+      const c = _pickerCells[i];
+      const n = +c.dataset.n;
+      c.classList.toggle('on', wheelPool.has(n));
+      c.classList.toggle('key', wheelKeys.has(n));
+    }
+  }
+  (DOM.wPickedCount || $('wPickedCount')).textContent = wheelPool.size;
+  (DOM.wKeyCount || $('wKeyCount')).textContent = wheelKeys.size;
 }
 
 function autoPickPool() {
   // Use Mandel composite scoring to pick top 10
-  const expected = TOTAL_DRAWS * 5 / 35;
-  const gaps = computeGaps();
+  const stats = getStats();
+  const expected = stats.expected;
+  const gaps = stats.gaps;
+  const sqrtExp = Math.sqrt(expected) || 1;
   const scores = ALL35.map(n => {
     const freq = MFREQ[n] || 0;
-    const residual = Math.abs((freq - expected) / Math.sqrt(expected));
-    const gap = gaps[n];
-    return { n, score: freq * 0.6 + residual * 8 + Math.log(gap + 2) * 2 };
+    const residual = Math.abs((freq - expected) / sqrtExp);
+    return { n, score: freq * 0.6 + residual * 8 + Math.log(gaps[n] + 2) * 2 };
   });
   scores.sort((a, b) => b.score - a.score);
   wheelPool = new Set(scores.slice(0, 10).map(x => x.n));
@@ -2666,7 +2776,11 @@ function clearPool() {
 }
 
 function selGuarantee(el, g) {
-  document.querySelectorAll('.gn-card').forEach(c => c.classList.remove('on'));
+  const grp = el.parentNode;
+  if (grp) {
+    const cards = grp.children;
+    for (let i = 0; i < cards.length; i++) cards[i].classList.remove('on');
+  }
   el.classList.add('on');
   wheelGuarantee = g;
 }
@@ -2674,60 +2788,67 @@ function selGuarantee(el, g) {
 /* ═══ COVERING DESIGN GENERATION ═══
    Greedy algorithm: at each step, pick the 5-block
    that covers the most uncovered t-subsets.
-   For small (v,5,t) this is practical.
+   Optimization: pre-compute each candidate's t-subset keys once outside the loop
+   — this turns O(iter × cand × C(5,t)) work into O(cand × C(5,t)) precompute
+   plus O(iter × cand × C(5,t)) cheap Set.has() lookups.
 */
 function generateCoveringDesign(pool, t, keys = []) {
   const v = pool.length;
   if (v < 5) return [];
-  
+
   const sorted = [...pool].sort((a,b)=>a-b);
-  
+
   // For full guarantee (t = 5 = k), we need C(v, 5)
   if (t === 5) {
     return combinations(sorted, 5);
   }
-  
+
   // Generate all t-subsets that need coverage
   const allTSubsets = combinations(sorted, t);
-  const tKeys = allTSubsets.map(s => s.join(','));
-  const uncovered = new Set(tKeys);
-  
+  const uncovered = new Set(allTSubsets.map(s => s.join(',')));
+
   // Candidate blocks: all 5-subsets containing all keys
   let candidates;
   if (keys.length > 0) {
-    const nonKey = sorted.filter(n => !keys.includes(n));
+    const keySet = new Set(keys);
+    const nonKey = sorted.filter(n => !keySet.has(n));
     const restCombos = combinations(nonKey, 5 - keys.length);
     candidates = restCombos.map(c => [...keys, ...c].sort((a,b)=>a-b));
   } else {
     candidates = combinations(sorted, 5);
   }
-  
+
+  // ★ PRECOMPUTE: for each candidate, compute its t-subset key list once.
+  // This is the key optimization vs the original which recomputed inside the iter loop.
+  const candidateTKeys = candidates.map(block =>
+    combinations(block, t).map(s => s.join(','))
+  );
+
   const blocks = [];
-  const maxIters = 200; // safety
-  let iter = 0;
-  
-  while (uncovered.size > 0 && iter < maxIters) {
-    iter++;
-    // Find block that covers the most uncovered t-subsets
-    let bestBlock = null, bestCount = -1;
-    for (const block of candidates) {
-      const tSubs = combinations(block, t);
+  const used = new Uint8Array(candidates.length);
+  const maxIters = 200;
+
+  for (let iter = 0; iter < maxIters && uncovered.size > 0; iter++) {
+    let bestIdx = -1, bestCount = 0;
+    for (let i = 0; i < candidates.length; i++) {
+      if (used[i]) continue;
+      const tk = candidateTKeys[i];
       let count = 0;
-      for (const ts of tSubs) {
-        if (uncovered.has(ts.join(','))) count++;
+      for (let j = 0; j < tk.length; j++) {
+        if (uncovered.has(tk[j])) count++;
       }
       if (count > bestCount) {
         bestCount = count;
-        bestBlock = block;
+        bestIdx = i;
       }
     }
-    if (!bestBlock || bestCount === 0) break;
-    blocks.push(bestBlock);
-    // Remove covered subsets
-    const tSubs = combinations(bestBlock, t);
-    for (const ts of tSubs) uncovered.delete(ts.join(','));
+    if (bestIdx < 0) break;
+    used[bestIdx] = 1;
+    blocks.push(candidates[bestIdx]);
+    const tk = candidateTKeys[bestIdx];
+    for (let j = 0; j < tk.length; j++) uncovered.delete(tk[j]);
   }
-  
+
   return blocks;
 }
 
@@ -2755,77 +2876,66 @@ function generateWheel() {
   }
   
   // Show loading
-  document.getElementById('wheelList').innerHTML = '<div class="empty">⚙️ Đang tính toán covering design...</div>';
-  
+  const wheelListEl = DOM.wheelList || $('wheelList');
+  wheelListEl.innerHTML = '<div class="empty">⚙️ Đang tính toán covering design...</div>';
+
   setTimeout(() => {
     let blocks;
-    
+
     // Try to use known optimal design first
-    const key = `${pool.length},5,${wheelGuarantee}`;
-    if (KNOWN_COVERINGS[key] && keys.length === 0) {
-      // Map indices to actual numbers
-      blocks = KNOWN_COVERINGS[key].map(b => b.map(i => pool[i]).sort((a,b)=>a-b));
+    const cacheKey = `${pool.length},5,${wheelGuarantee}`;
+    if (KNOWN_COVERINGS[cacheKey] && keys.length === 0) {
+      blocks = KNOWN_COVERINGS[cacheKey].map(b => b.map(i => pool[i]).sort((a,b)=>a-b));
     } else {
-      // Use greedy algorithm
       blocks = generateCoveringDesign(pool, wheelGuarantee, keys);
     }
-    
+
     if (blocks.length === 0) {
-      document.getElementById('wheelList').innerHTML = '<div class="empty">Không thể tạo wheel với cấu hình hiện tại.</div>';
+      wheelListEl.innerHTML = '<div class="empty">Không thể tạo wheel với cấu hình hiện tại.</div>';
       return;
     }
-    
+
+    // Pre-compute key Set for O(1) lookup in render loop
+    const keySet = new Set(keys);
+
     // Calculate probability of pool containing t winning numbers
     // P(at least t of 5 winning numbers in pool of size v) = Σ hypergeom(35, v, 5, k) for k>=t
     let probContains = 0;
     for (let k = wheelGuarantee; k <= 5; k++) {
       probContains += hypergeom(35, pool.length, 5, k);
     }
-    
-    // EV approximation (very rough)
-    const ticketCost = 10000; // VND per ticket (535)
+
+    const ticketCost = 10000;
     const totalCost = blocks.length * ticketCost;
-    
-    // Render
+    const ticketCostFmt = ticketCost.toLocaleString('vi-VN') + 'đ';
+
     const html = blocks.map((b, i) => {
       const balls = b.map(n => {
-        const isKey = keys.includes(n);
-        const cls = isKey ? 'style="border-color:var(--orange);color:var(--orange);background:rgba(232,151,75,.12)"' : '';
+        const cls = keySet.has(n) ? 'style="border-color:var(--orange);color:var(--orange);background:rgba(232,151,75,.12)"' : '';
         return `<div class="b b-m" ${cls}>${String(n).padStart(2,'0')}</div>`;
       }).join('');
-      return `<div class="srow" style="animation-delay:${i*.05}s">
-        <div class="srnk">#${i+1}</div>
-        <div class="snums">
-          ${balls}
-          <span class="b-sep">|</span>
-          <div class="b b-s" title="Số đặc biệt">${String(wheelSpecial).padStart(2,'0')}</div>
-        </div>
-        <div class="sscore">
-          <div class="sv2">${(10000).toLocaleString('vi-VN')}đ</div>
-          <div class="sl2">1 vé</div>
-        </div>
-      </div>`;
+      return `<div class="srow" style="animation-delay:${i*.05}s"><div class="srnk">#${i+1}</div><div class="snums">${balls}<span class="b-sep">|</span><div class="b b-s" title="Số đặc biệt">${String(wheelSpecial).padStart(2,'0')}</div></div><div class="sscore"><div class="sv2">${ticketCostFmt}</div><div class="sl2">1 vé</div></div></div>`;
     }).join('');
-    
-    document.getElementById('wheelList').innerHTML = html;
-    
+
+    wheelListEl.innerHTML = html;
+
     // Update probability box
-    document.getElementById('wheelProbBox').style.display = 'block';
-    document.getElementById('wpTickets').textContent = `${blocks.length} vé`;
-    document.getElementById('wpCost').textContent = `${totalCost.toLocaleString('vi-VN')}đ`;
-    document.getElementById('wpProb').textContent = `${(probContains * 100).toFixed(3)}%`;
-    
+    (DOM.wheelProbBox || $('wheelProbBox')).style.display = 'block';
+    (DOM.wpTickets || $('wpTickets')).textContent = `${blocks.length} vé`;
+    (DOM.wpCost || $('wpCost')).textContent = `${totalCost.toLocaleString('vi-VN')}đ`;
+    (DOM.wpProb || $('wpProb')).textContent = `${(probContains * 100).toFixed(3)}%`;
+
     // Rough EV: if guarantee triggers, you win at least the t-tier prize
     // For 5/35: 3 tier ≈ 30,000đ, 4 tier ≈ 300,000đ, 5 tier (jackpot) starts at ~vài tỷ
     const tierValue = wheelGuarantee === 3 ? 30000 : wheelGuarantee === 4 ? 500000 : 1000000000;
     const ev = probContains * tierValue - totalCost;
-    document.getElementById('wpEV').textContent = (ev >= 0 ? '+' : '') + ev.toLocaleString('vi-VN') + 'đ';
-    document.getElementById('wpEV').style.color = ev >= 0 ? 'var(--green)' : 'var(--red)';
+    const evEl = DOM.wpEV || $('wpEV');
+    evEl.textContent = (ev >= 0 ? '+' : '') + ev.toLocaleString('vi-VN') + 'đ';
+    evEl.style.color = ev >= 0 ? 'var(--green)' : 'var(--red)';
   }, 100);
 }
 
-/* ═══ Initial render after init ═══ */
-renderAllStats();
+/* Note: initial render is done inside init() — no duplicate call here */
 </script>
 </body>
 </html>
